@@ -1,0 +1,62 @@
+/* Bootstrap Version */
+
+/* Extra Large Devices (Large Desktops, 1200px and up) */
+@media (min-width: 1200px) {
+
+}
+
+/* Large Devices (Desktops, 992px to .....) */
+@media (min-width: 992px) {
+
+}
+/* Large Devices (Desktops, 992px to .....) */
+@media (max-width: 991.98px) {
+
+}
+
+/* Large Devices (Desktops, 992px to 1200px) */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+
+}
+
+/* Medium Devices (Tablets, 768px to .....) */
+@media (min-width: 768px) {
+
+}
+
+/* Medium Devices (Tablets, 768px to 992px) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+
+}
+
+/* Small Devices (Landscape Phones, to 768px) */
+@media (max-width: 767.98px) {
+
+}
+
+/* Small Devices & Medium Devices (Landscape Phones & Tablets, 576px to 992px) */
+@media (min-width: 576px) and (max-width: 991.98px) {
+
+}
+
+/* Small Devices (Landscape Phones, 576px to 768px) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+
+}
+
+/* Extra Small Devices (Portrait Phones, Less than 576px) */
+@media (max-width: 575.98px) {
+
+}
+
+@media (min-width: 576px) {
+
+}
+
+@media (min-width: 490px) {
+
+}
+
+@media (max-width: 419.98px) {
+
+}
