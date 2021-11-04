@@ -19,51 +19,59 @@ class Department_Seeder extends Seeder
     // php artisan db:seed --class=Department_Seeder
 
     Department_Model::create([
-      'uid'  => Str::uuid(),
-      'name' => 'CI&DD',
-      'slug' => 'ci&dd',
+      'uid'        => Str::uuid(),
+      'name'       => 'CI&DD',
+      'slug'       => 'ci&dd',
+      'short_name' => null,
     ]);
 
     Department_Model::create([
-      'uid'  => Str::uuid(),
-      'name' => 'Marketing',
-      'slug' => 'marketing',
+      'uid'        => Str::uuid(),
+      'name'       => 'Marketing',
+      'slug'       => 'marketing',
+      'short_name' => null,
     ]);
 
     Department_Model::create([
-      'uid'  => Str::uuid(),
-      'name' => 'Sales',
-      'slug' => 'sales',
+      'uid'        => Str::uuid(),
+      'name'       => 'Sales',
+      'slug'       => 'sales',
+      'short_name' => null,
     ]);
 
     Department_Model::create([
-      'uid'  => Str::uuid(),
-      'name' => 'Audit',
-      'slug' => 'audit',
+      'uid'        => Str::uuid(),
+      'name'       => 'Audit',
+      'slug'       => 'audit',
+      'short_name' => null,
     ]);
 
     Department_Model::create([
-      'uid'  => Str::uuid(),
-      'name' => 'Accounts',
-      'slug' => 'accounts',
+      'uid'        => Str::uuid(),
+      'name'       => 'Accounts',
+      'slug'       => 'accounts',
+      'short_name' => null,
     ]);
 
     Department_Model::create([
-      'uid'  => Str::uuid(),
-      'name' => 'Finance',
-      'slug' => 'finance',
+      'uid'        => Str::uuid(),
+      'name'       => 'Finance',
+      'slug'       => 'finance',
+      'short_name' => null,
     ]);
 
     Department_Model::create([
-      'uid'  => Str::uuid(),
-      'name' => 'Admin',
-      'slug' => 'admin',
+      'uid'        => Str::uuid(),
+      'name'       => 'Admin',
+      'slug'       => 'admin',
+      'short_name' => null,
     ]);
 
     Department_Model::create([
-      'uid'  => Str::uuid(),
-      'name' => 'Factory',
-      'slug' => 'factory',
+      'uid'        => Str::uuid(),
+      'name'       => 'Factory',
+      'slug'       => 'factory',
+      'short_name' => null,
     ]);
 
   }

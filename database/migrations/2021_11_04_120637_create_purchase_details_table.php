@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 
-class CreateDesignationsTable extends Migration
+class CreatePurchaseDetailsTable extends Migration
 {
   /**
    * Run the migrations.
@@ -13,13 +13,15 @@ class CreateDesignationsTable extends Migration
    */
   public function up()
   {
-    Schema::create('designations', function (Blueprint $table) {
+    Schema::create('purchase_details', function (Blueprint $table) {
       $table->id();
       $table->uuid('uid')->unique();
-      $table->string('name')->unique();
-      $table->string('slug')->unique();
-      $table->string('short_name')->unique()->nullable();
-      
+      $table->unsignedBigInteger('purchase_id');
+      $table->unsignedBigInteger('parts_id');
+      $table->string('unit');
+      $table->integer('quantity');
+      $table->integer('amount');
+
       $table->timestamps();
     });
   }
@@ -31,6 +33,6 @@ class CreateDesignationsTable extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('designations');
+    Schema::dropIfExists('purchase_details');
   }
 }

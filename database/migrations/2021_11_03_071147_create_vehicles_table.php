@@ -18,11 +18,13 @@ class CreateVehiclesTable extends Migration
       $table->uuid('uid')->unique();
       $table->string('vehicle_no')->unique(); // Vehicle Registration Number
       $table->string('slug')->unique();
-      $table->unsignedBigInteger('brand_id')->nullable();
+      $table->unsignedBigInteger('brand_id');
       $table->unsignedBigInteger('department_id')->nullable(); // Allocated Department
-      $table->unsignedBigInteger('vehicleType_id')->nullable(); // Vehicle Type
-      $table->boolean('running')->default(1); // Is Vehicle Currently Running or Not
-      $table->tinyInteger('wheels')->nullable(); // Vehicle Wheels
+      $table->unsignedBigInteger('vehicleType_id'); // Vehicle Pickup, Cover-Van etc.
+      $table->unsignedBigInteger('driver_id')->nullable(); // Allocated Driver
+      $table->unsignedBigInteger('helper_id')->nullable(); // Allocated Helper
+      $table->boolean('is_running')->default(1); // Is Vehicle Currently Running or Not
+      $table->tinyInteger('wheels')->nullable(); // Vehicle Wheels Count
       $table->smallInteger('cubic_capacity')->nullable(); // Vehicle Engine CC
       $table->date('purchase_date')->nullable();
       $table->date('sold_date')->nullable();
@@ -33,6 +35,10 @@ class CreateVehiclesTable extends Migration
         ->references('id')->on('departments')->onUpdate('cascade');
       $table->foreign('vehicleType_id')
         ->references('id')->on('vehicle_types')->onUpdate('cascade');
+      $table->foreign('driver_id')
+        ->references('id')->on('employees')->onUpdate('cascade');
+      $table->foreign('helper_id')
+        ->references('id')->on('employees')->onUpdate('cascade');
 
       $table->timestamps();
     });
