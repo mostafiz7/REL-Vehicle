@@ -17,7 +17,6 @@ class CreateEmployeesTable extends Migration
       $table->id();
       $table->uuid('uid')->unique();
       $table->string('office_id')->unique(); // Company Given Employee ID
-      $table->unsignedBigInteger('user_id')->unique()->nullable(); // APPS User ID
       $table->string('name');
       $table->string('nickname')->nullable();
       $table->boolean('active')->default(1);
@@ -32,7 +31,7 @@ class CreateEmployeesTable extends Migration
       $table->string('gender')->nullable();
       $table->string('marital_status')->nullable();
       $table->string('religion')->nullable();
-      $table->string('phone')->unique()->nullable();
+      $table->string('contact_no')->unique()->nullable();
       $table->string('email_personal')->unique()->nullable();
       $table->string('email_official')->unique()->nullable();
       $table->string('address1')->nullable();
@@ -58,8 +57,6 @@ class CreateEmployeesTable extends Migration
       $table->json('salary_details')->nullable();
       */
 
-      $table->foreign('user_id')
-        ->references('id')->on('users')->onUpdate('cascade');
       $table->foreign('designation_id')
         ->references('id')->on('designations')->onUpdate('cascade');
       $table->foreign('department_id')
@@ -78,4 +75,5 @@ class CreateEmployeesTable extends Migration
   {
     Schema::dropIfExists('employees');
   }
+
 }

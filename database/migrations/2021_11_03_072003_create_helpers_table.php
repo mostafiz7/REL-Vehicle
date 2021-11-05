@@ -13,10 +13,10 @@ class CreateHelpersTable extends Migration
    */
   public function up()
   {
-    Schema::create('helpers', function (Blueprint $table) {
+    /*Schema::create('helpers', function (Blueprint $table) {
       $table->id();
       $table->timestamps();
-    });
+    });*/
   }
 
 
@@ -26,6 +26,6 @@ class CreateHelpersTable extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('helpers');
+    // Schema::dropIfExists('helpers');
   }
 }

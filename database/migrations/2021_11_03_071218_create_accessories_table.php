@@ -15,6 +15,15 @@ class CreateAccessoriesTable extends Migration
   {
     Schema::create('accessories', function (Blueprint $table) {
       $table->id();
+      $table->uuid('uid')->unique();
+      $table->string('name')->unique();
+      $table->string('slug')->unique();
+      $table->string('origin');
+      $table->string('sizes')->nullable();
+      $table->string('metals')->nullable();
+      $table->string('materials')->nullable();
+      $table->string('unit');
+
       $table->timestamps();
     });
   }

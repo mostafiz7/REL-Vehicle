@@ -10,6 +10,33 @@ class Parts_Model extends Model
 {
   use HasFactory;
 
+  // connect with db table
+  public $table = 'parts';
+
+
+  // protected $primaryKey = 'id';
+  // public $incrementing = false;
+
+
+  // protected $guarded = [];
+  // protected $guarded = array();
+  protected $fillable = [
+    'uid',
+    'name',
+    'slug',
+    'origin',
+    'sizes',
+    'metals',
+    'materials',
+    'unit',
+  ];
+
+
+  // Declare any field as json array
+  /*protected $casts = [
+    'materials' => 'array',
+  ];*/
+
 
 
 }

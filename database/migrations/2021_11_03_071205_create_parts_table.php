@@ -19,7 +19,10 @@ class CreatePartsTable extends Migration
       $table->string('name')->unique();
       $table->string('slug')->unique();
       $table->string('origin');
-      $table->string('metal')->nullable();
+      $table->string('sizes')->nullable();
+      $table->string('metals')->nullable();
+      $table->string('materials')->nullable();
+      $table->string('unit');
 
       $table->timestamps();
     });

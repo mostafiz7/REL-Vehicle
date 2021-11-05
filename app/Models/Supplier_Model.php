@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 
-class Employee_Model extends Model
+class Supplier_Model extends Model
 {
   use HasFactory;
 
   // connect with db table
-  public $table = 'employees';
+  public $table = 'suppliers';
 
 
   // protected $primaryKey = 'id';
@@ -22,18 +22,14 @@ class Employee_Model extends Model
   // protected $guarded = array();
   protected $fillable = [
     'uid',
-    'office_id',
     'name',
-    'nickname',
-    'active',
-    'designation_id',
-    'department_id',
+    'slug',
   ];
 
 
   // Declare any field as json array
   /*protected $casts = [
-    'employees' => 'array',
+    'materials' => 'array',
   ];*/
 
 

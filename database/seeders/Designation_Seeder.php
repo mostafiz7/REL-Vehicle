@@ -27,15 +27,22 @@ class Designation_Seeder extends Seeder
 
     Designation_Model::create([
       'uid'        => Str::uuid(),
-      'name'       => 'Executive',
-      'slug'       => 'executive',
+      'name'       => 'Manager',
+      'slug'       => 'manager',
       'short_name' => null,
     ]);
 
     Designation_Model::create([
       'uid'        => Str::uuid(),
-      'name'       => 'Manager',
-      'slug'       => 'manager',
+      'name'       => 'Electrician',
+      'slug'       => 'electrician',
+      'short_name' => null,
+    ]);
+
+    Designation_Model::create([
+      'uid'        => Str::uuid(),
+      'name'       => 'Technician',
+      'slug'       => 'technician',
       'short_name' => null,
     ]);
 

@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
   public function boot()
   {
     // database default string length
-    Schema::defaultStringLength(255);
+    Schema::defaultStringLength(191);
 
     // use view-name as class in body element
     View::composer('*', function($view){

@@ -19,52 +19,71 @@ class Parts_Seeder extends Seeder
     // php artisan db:seed --class=Parts_Seeder
 
     Parts_Model::create([
-      'uid'    => Str::uuid(),
-      'name'   => 'Wheel-Japan',
-      'slug'   => 'wheel-japan',
-      'origin' => 'Japan',
-      'metal'  => 'Rubber',
+      'uid'       => Str::uuid(),
+      'name'      => 'Wheel-Japan',
+      'slug'      => 'wheel-japan',
+      'origin'    => 'Japan',
+      'sizes'     => null,
+      'metals'    => null,
+      'materials' => null,
+      'unit'      => 'Pcs',
     ]);
 
     Parts_Model::create([
-      'uid'    => Str::uuid(),
-      'name'   => 'Wheel-China',
-      'slug'   => 'wheel-china',
-      'origin' => 'China',
-      'metal'  => 'Rubber',
+      'uid'       => Str::uuid(),
+      'name'      => 'Wheel-China',
+      'slug'      => 'wheel-china',
+      'origin'    => 'China',
+      'sizes'     => null,
+      'metals'    => null,
+      'materials' => null,
+      'unit'      => 'Pcs',
     ]);
 
     Parts_Model::create([
-      'uid'    => Str::uuid(),
-      'name'   => 'Wheel-India',
-      'slug'   => 'wheel-india',
-      'origin' => 'India',
-      'metal'  => 'Rubber',
+      'uid'       => Str::uuid(),
+      'name'      => 'Wheel-India',
+      'slug'      => 'wheel-india',
+      'origin'    => 'India',
+      'sizes'     => null,
+      'metals'    => null,
+      'materials' => null,
+      'unit'      => 'Pcs',
     ]);
 
     Parts_Model::create([
-      'uid'    => Str::uuid(),
-      'name'   => 'Headlight-Japan',
-      'slug'   => 'headlight-japan',
-      'origin' => 'Japan',
-      'metal'  => 'Glass & Aluminium',
+      'uid'       => Str::uuid(),
+      'name'      => 'Headlight-Japan',
+      'slug'      => 'headlight-japan',
+      'origin'    => 'Japan',
+      'sizes'     => null,
+      'metals'    => null,
+      'materials' => null,
+      'unit'      => 'Pcs',
     ]);
 
     Parts_Model::create([
-      'uid'    => Str::uuid(),
-      'name'   => 'Headlight-China',
-      'slug'   => 'headlight-china',
-      'origin' => 'China',
-      'metal'  => 'Glass & Aluminium',
+      'uid'       => Str::uuid(),
+      'name'      => 'Headlight-China',
+      'slug'      => 'headlight-china',
+      'origin'    => 'China',
+      'sizes'     => null,
+      'metals'    => null,
+      'materials' => null,
+      'unit'      => 'Pcs',
     ]);
 
     Parts_Model::create([
-      'uid'    => Str::uuid(),
-      'name'   => 'Headlight-India',
-      'slug'   => 'headlight-india',
-      'origin' => 'India',
-      'metal'  => 'Glass & Aluminium',
+      'uid'       => Str::uuid(),
+      'name'      => 'Headlight-India',
+      'slug'      => 'headlight-india',
+      'origin'    => 'India',
+      'sizes'     => null,
+      'metals'    => null,
+      'materials' => null,
+      'unit'      => 'Pcs',
     ]);
+
   }
 
 
