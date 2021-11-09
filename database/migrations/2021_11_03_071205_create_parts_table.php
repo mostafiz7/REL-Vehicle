@@ -18,11 +18,15 @@ class CreatePartsTable extends Migration
       $table->uuid('uid')->unique();
       $table->string('name')->unique();
       $table->string('slug')->unique();
+      $table->unsignedBigInteger('category_id'); // Parts-Category: Headlight, Backlight etc.
       $table->string('origin');
       $table->string('sizes')->nullable();
       $table->string('metals')->nullable();
       $table->string('materials')->nullable();
       $table->string('unit');
+
+      $table->foreign('category_id')
+        ->references('id')->on('parts_category')->onUpdate('cascade');
 
       $table->timestamps();
     });

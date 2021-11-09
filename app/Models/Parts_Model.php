@@ -24,6 +24,7 @@ class Parts_Model extends Model
     'uid',
     'name',
     'slug',
+    'category_id',
     'origin',
     'sizes',
     'metals',

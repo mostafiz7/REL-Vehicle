@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 
-class Vehicle_Model extends Model
+class VehicleCategory_Model extends Model
 {
   use HasFactory;
 
   // connect with db table
-  public $table = 'vehicles';
+  public $table = 'vehicle_category';
 
 
   // protected $primaryKey = 'id';
@@ -22,19 +22,8 @@ class Vehicle_Model extends Model
   // protected $guarded = array();
   protected $fillable = [
     'uid',
-    'vehicle_no',
+    'name',
     'slug',
-    'category_id',
-    'brand_id',
-    'department_id',
-    'driver_id',
-    'helper_id',
-    'helper_name',
-    'is_running',
-    'wheels',
-    'engine_cc',
-    'purchase_date',
-    'sold_date',
   ];
 
 

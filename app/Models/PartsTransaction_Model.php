@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 
-class VehicleType_Model extends Model
+class PartsTransaction_Model extends Model
 {
   use HasFactory;
 
   // connect with db table
-  public $table = 'vehicle_types';
+  public $table = 'parts_transactions';
 
 
   // protected $primaryKey = 'id';

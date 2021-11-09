@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 
-class CreateVehicleTypesTable extends Migration
+class CreateVehicleCategoryTable extends Migration
 {
   /**
    * Run the migrations.
@@ -13,7 +13,7 @@ class CreateVehicleTypesTable extends Migration
    */
   public function up()
   {
-    Schema::create('vehicle_types', function (Blueprint $table) {
+    Schema::create('vehicle_category', function (Blueprint $table) {
       $table->id();
       $table->uuid('uid')->unique();
       $table->string('name')->unique();
@@ -30,6 +30,7 @@ class CreateVehicleTypesTable extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('vehicle_types');
+    Schema::dropIfExists('vehicle_category');
   }
+
 }

@@ -34,14 +34,14 @@ class CreatePurchasesTable extends Migration
       $table->string('memo_no')->index(); // Shops Memo or Bill Number
       $table->integer('total_qty');
       $table->integer('total_amount'); // Memo or Bill Total Amount
-      $table->boolean('is_paid');
+      $table->boolean('is_paid')->default(0);
       $table->boolean('is_partial_paid')->nullable();
       $table->integer('paid_amount')->nullable();
       $table->integer('due_amount')->nullable();
       $table->boolean('is_billed')->default(0);
       $table->unsignedBigInteger('bill_id')->nullable(); // Is Bill done for this purchase?
       $table->string('bill_no')->index()->nullable();
-      $table->boolean('is_authorized');
+      $table->boolean('is_authorized')->default(0);
       $table->unsignedBigInteger('authorizer_id')->nullable(); // Authorized Employee ID
 
       $table->foreign('requisition_id')
