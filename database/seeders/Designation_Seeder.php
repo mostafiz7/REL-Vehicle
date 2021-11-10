@@ -67,6 +67,13 @@ class Designation_Seeder extends Seeder
       'short_name' => null,
     ]);
 
+    Designation_Model::create([
+      'uid'        => Str::uuid(),
+      'name'       => 'Asst. Manager',
+      'slug'       => 'asst-manager',
+      'short_name' => 'AM',
+    ]);
+
   }
 
 

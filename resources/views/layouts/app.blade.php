@@ -6,17 +6,16 @@
   
   {{--CSRF-Token--}}
   <meta name="csrf-token" content="{{ csrf_token() }}" />
-  
-  <title>@yield( 'title' )</title>
+
   <title>{{ config('app.name', 'REL-Vehicle Management') }}</title>
+  {{--<title>@yield('title')</title>--}}
   
   {{--Styles--}}
-  {{--<link href="{{ asset('css/spacer.css') }}" rel="stylesheet" type="text/css" />--}}
   <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" />
-  <link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css" />
+  {{--<link href="{{ asset('css/spacer.css') }}" rel="stylesheet" type="text/css" />--}}
+  {{--<link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css" />--}}
+  {{--<link href="{{ asset('css/responsive.css') }}" rel="stylesheet" type="text/css" />--}}
   @yield( 'backend-style' )
-  
-  <link href="{{ asset('css/responsive.css') }}" rel="stylesheet" type="text/css" />
 
   <script>
     window.User = @json( auth()->user() );
@@ -63,7 +62,7 @@
   
   {{--Scripts--}}
   <script src="{{ asset('js/app.js') }}"></script>
-  <script src="{{ asset('js/main.js') }}"></script>
+  {{--<script src="{{ asset('js/main.js') }}"></script>--}}
 
   {{--Custom-Script--}}
   @yield('custom-script')

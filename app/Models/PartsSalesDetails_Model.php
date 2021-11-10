@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 
-class PartsTransaction_Model extends Model
+class PartsSalesDetails_Model extends Model
 {
   use HasFactory;
 
   // connect with db table
-  public $table = 'parts_transactions';
+  public $table = 'parts_sales_details';
 
 
   // protected $primaryKey = 'id';
@@ -22,25 +22,19 @@ class PartsTransaction_Model extends Model
   // protected $guarded = array();
   protected $fillable = [
     'uid',
-    'tr_no',
-    'tr_type',
-    'condition',
+    'type',
+    'sales_id',
+    'sales_no',
     'parts_id',
     'vehicle_id',
+    'transaction_id',
+    'transaction_no',
     'purchase_id',
     'purchase_no',
-    'date',
     'serial',
     'quantity',
-    'note',
-    'requisition_id',
-    'requisition_no',
-    'mechanic_id',
-    'mechanic_name',
-    'is_authorized',
-    'authorizer_id',
-    'user_id',
-    'entry_by',
+    'amount',
+    'remarks',
   ];
 
 

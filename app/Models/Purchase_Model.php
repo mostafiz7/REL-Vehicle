@@ -24,15 +24,14 @@ class Purchase_Model extends Model
     'uid',
     'purchase_no',
     'type',
+    'vehicle_id',
     'requisition_id',
     'requisition_no',
-    'user_id',
-    'employee_id',
+    'purchaser_id',
     'purchaser_name',
     'supplier_id',
     'supplier_name',
-    'vehicle_id',
-    'purchase_date',
+    'date',
     'shop_name',
     'shop_slug',
     'shop_contact',
@@ -49,6 +48,8 @@ class Purchase_Model extends Model
     'bill_no',
     'is_authorized',
     'authorizer_id',
+    'user_id',
+    'entry_by',
   ];
 
 

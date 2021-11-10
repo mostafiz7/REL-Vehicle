@@ -8,11 +8,11 @@ window._ = require('lodash');
 
 try{
 	window.$ = window.jQuery = require('jquery');
-	// window.Popper = require('@popperjs/core');
+	window.Popper = require('@popperjs/core');
 	// window.Popper = require('popper.js').default;
 	
-	// require('bootstrap');
-} catch(e){}
+	require('bootstrap');
+} catch(e){ console.log(e); console.log(e.response); }
 
 /**
  * To load css & js resource from laravel asset

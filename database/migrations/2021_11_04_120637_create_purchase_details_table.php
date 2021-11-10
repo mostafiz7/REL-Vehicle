@@ -19,27 +19,24 @@ class CreatePurchaseDetailsTable extends Migration
       $table->string('type');
       // Purchase-Type: Vehicle, Vehicle-Parts, Electrical, Electronics, 'stationary', Furniture
       $table->unsignedBigInteger('purchase_id');
-      $table->string('purchase_no')->index();
+      $table->string('purchase_no');
+      $table->unsignedBigInteger('parts_id');
       $table->unsignedBigInteger('vehicle_id')->nullable();
-      $table->unsignedBigInteger('parts_id')->nullable();
-      $table->unsignedBigInteger('accessories_id')->nullable();
       $table->string('serial')->nullable();
       $table->string('size')->nullable();
       $table->string('unit');
-      $table->integer('rate')->nullable(); // Unit Price
-      $table->mediumInteger('quantity');
-      $table->integer('amount');
+      $table->decimal('rate', $precision = 10, $scale = 2)->nullable(); // Unit Price
+      $table->integer('quantity');
+      $table->decimal('amount', $precision = 12, $scale = 2)->nullable();
       $table->string('remarks')->nullable();
 
       $table->foreign('purchase_id')
         ->references('id')->on('purchases')
         ->onUpdate('cascade')->onDelete('cascade');
-      $table->foreign('vehicle_id')
-        ->references('id')->on('vehicles')->onUpdate('cascade');
       $table->foreign('parts_id')
         ->references('id')->on('parts')->onUpdate('cascade');
-      $table->foreign('accessories_id')
-        ->references('id')->on('accessories')->onUpdate('cascade');
+      $table->foreign('vehicle_id')
+        ->references('id')->on('vehicles')->onUpdate('cascade');
 
       $table->timestamps();
     });

@@ -22,12 +22,11 @@ class PurchaseDetails_Model extends Model
   // protected $guarded = array();
   protected $fillable = [
     'uid',
-    'purchase_type',
+    'type',
     'purchase_id',
     'purchase_no',
-    'vehicle_id',
     'parts_id',
-    'accessories_id',
+    'vehicle_id',
     'serial',
     'size',
     'unit',

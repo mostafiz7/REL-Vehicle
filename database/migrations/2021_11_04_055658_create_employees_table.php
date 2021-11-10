@@ -22,6 +22,9 @@ class CreateEmployeesTable extends Migration
       $table->boolean('active')->default(1);
       $table->unsignedBigInteger('designation_id')->nullable(); // APPS User ID
       $table->unsignedBigInteger('department_id')->nullable(); // APPS User ID
+      $table->boolean('authorize_power')->default(0);
+      // Employee has authorize-power to give order to purchase
+      $table->boolean('purchase_power')->default(0); // Employee has purchase-power
 
       // Personal Info
       /*

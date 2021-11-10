@@ -28,6 +28,8 @@ class Employee_Model extends Model
     'active',
     'designation_id',
     'department_id',
+    'authorize_power',
+    'purchase_power',
   ];
 
 
