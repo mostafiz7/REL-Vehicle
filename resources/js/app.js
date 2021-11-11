@@ -1,3 +1,13 @@
+import $ from 'jquery';
+window.jQuery = $;
+window.$ = $;
+
+import 'jquery-ui/ui/widgets/datepicker.js';
+
 require('./bootstrap');
 
-require('../../public/js/main');
+import 'overlayscrollbars/js/jquery.overlayScrollbars.min';
+
+require('./main');
+
+

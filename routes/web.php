@@ -9,4 +9,6 @@ Route::get('/', function (){
 });
 
 
-Route::get('/vehicle/parts/purchase/new', [Purchase_Controller::class, 'VehicleParts_Purchase_Form'])->name('vehicle.parts.new.purchase');
+Route::get('/vehicle/parts/new-purchase', [Purchase_Controller::class, 'VehicleParts_Purchase_Form'])->name('vehicle.parts.purchase.new');
+Route::post('/vehicle/parts/new-purchase', [Purchase_Controller::class, 'VehicleParts_Purchase_Store'])->name('vehicle.parts.purchase.new');
+

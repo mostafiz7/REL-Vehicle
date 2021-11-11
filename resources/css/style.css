@@ -15,7 +15,9 @@
 
 *, ::after, ::before { box-sizing: border-box !important; }
 
-html, body { margin: 0;overflow-x: hidden; }
+html, body { margin: 0;overflow: hidden; }
+
+html, body, body div, #MainContent { height: 100%; }
 
 body {
   color: #111111;
@@ -487,6 +489,27 @@ body.modal-open:not(.swal2-shown) {
 }
 
 
+#ui-datepicker-div {
+  height: auto !important;
+}
+
+
+/* Site-Header */
+#SiteHeader {
+  height: 50px;
+}
+
+
+/* Site-Wrapper */
+#SiteWrapper {
+  height: calc(100% - 50px) !important;
+}
+
+
+/* Page-Content */
+.page-content .page-body {
+  height: calc(100% - 42px) !important;
+}
 
 /* Frontend CSS */
 

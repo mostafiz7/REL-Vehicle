@@ -27,14 +27,25 @@ class Purchase_Controller extends Controller
 
     $supplier_all         = Supplier_Model::get()->all();
 
+    $purchase_type = ['vehicle', 'vehicle-parts', 'electrical', 'electronics', 'stationary', 'furniture'];
+
     return view('modules.vehicle.purchase-parts.purchase-new')->with([
       'parts_all'             => $parts_all,
       'vehicle_all'           => $vehicle_all,
+      'supplier_all'          => $supplier_all,
+      'purchase_type'         => $purchase_type,
       'purchaser_all'         => $purchaser_all,
       'authorizer_all'        => $authorizer_all,
       'parts_category_all'    => $parts_category_all,
       'vehicle_category_all'  => $vehicle_category_all,
     ]);
+  }
+
+
+  // Store Newly Purchased Vehicle-Parts
+  public function VehicleParts_Purchase_Store( Request $request )
+  {
+    return $request->all();
   }
 
 

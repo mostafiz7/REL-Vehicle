@@ -7,10 +7,10 @@ window._ = require('lodash');
  */
 
 try{
-	window.$ = window.jQuery = require('jquery');
-	window.Popper = require('@popperjs/core');
-	// window.Popper = require('popper.js').default;
+	// window.$ = window.jQuery = require('jquery');
+	// require('jquery-ui');
 	
+	window.Popper = require('@popperjs/core');
 	require('bootstrap');
 } catch(e){ console.log(e); console.log(e.response); }
 

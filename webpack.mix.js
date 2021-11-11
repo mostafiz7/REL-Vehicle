@@ -22,3 +22,23 @@ mix.js('resources/js/app.js', 'public/js')
 /*mix.js('resources/js/app.js', 'public/js')
 	.sass('resources/sass/app.scss', 'public/css')
 	.sourceMaps();*/
+
+
+/*mix.webpackConfig({
+	experiments: {
+		outputModule: true
+	},
+	output: {
+		// path: path.join( __dirname, 'dist' ),
+		library: { type: "module" },
+		environment: {
+			module: true,
+			dynamicImport: true
+		}
+	},
+	externalsType: "import"
+})
+	.js('resources/js/app.js', 'public/js')
+	.postCss('resources/css/app.css', 'public/css', [
+		// require('bootstrap'),
+	]);*/

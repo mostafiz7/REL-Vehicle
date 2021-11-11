@@ -17,7 +17,7 @@ class CreatePurchasesTable extends Migration
       $table->id();
       $table->uuid('uid')->unique();
       $table->string('purchase_no')->unique();
-      $table->set('type', ['vehicle', 'vehicle_parts', 'electrical', 'electronics', 'stationary', 'furniture']);
+      $table->set('type', ['vehicle', 'vehicle-parts', 'electrical', 'electronics', 'stationary', 'furniture']);
       $table->unsignedBigInteger('vehicle_id')->nullable();
       $table->unsignedBigInteger('requisition_id')->nullable(); // Requirement ID
       $table->string('requisition_no')->nullable();
