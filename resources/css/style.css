@@ -88,14 +88,15 @@ a, a:hover, a:focus { text-decoration: none; }
 .w-2 { width: 2% !important; }
 .w-1 { width: 1% !important; }
 .w-auto { width: auto !important; }
-.w-fit-content { width: fit-content !important; }
 .w-max-content { width: max-content !important; }
-.w-max-100 { max-width: 100% !important; }
 .w-min-content { width: min-content !important; }
+.w-fit-content { width: fit-content !important; }
+.w-max-100 { max-width: 100% !important; }
+
+.w-min-30px { min-width: 30px !important; }
 .w-min-100 { min-width: 100% !important; }
 .w-min-auto { min-width: auto !important; }
 
-.w-min-30px { min-width: 30px !important; }
 
 .h-400px { height: 400px !important; }
 .h-350px { height: 350px !important; }
