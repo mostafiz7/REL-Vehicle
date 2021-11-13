@@ -221,7 +221,7 @@
 
                     <div id="purchase-items" class="mb-30">
                       <div class="accordion" id="accordionParent">
-                        <div class="accordion-item item_1">
+                        <div class="accordion-item border-secondary-2 item_1">
                           <h2 class="accordion-header p-relative" id="accordionHeading_1">
                             <button class="accordion-button fw-bold p-15" type="button" data-bs-toggle="collapse" data-bs-target="#accordionCollapse_1" aria-expanded="true" aria-controls="accordionCollapse_1">
                               Item #<span class="item-count">1</span>
@@ -291,7 +291,7 @@
                     </div>
 
                     <div id="clone-accordion" class="d-none">
-                      <div class="accordion-item">
+                      <div class="accordion-item border-secondary-2">
                         <h2 class="accordion-header p-relative" id="accordionHeading">
                           <button class="accordion-button fw-bold p-15" type="button" data-bs-toggle="collapse" data-bs-target="#accordionCollapse" aria-expanded="true" aria-controls="accordionCollapse">
                             Item #<span class="item-count">#</span>
@@ -488,11 +488,7 @@
 		if( $("#accordionParent")[0].childElementCount > 1 ){
 			$(e).closest("#accordionParent .accordion-item").remove();
 		} else{
-			Swal.fire({
-				icon: 'error',
-				title: 'Oops! Sorry.',
-				text: 'At least one item should be kept.',
-			});
+      AlertErrorMessage("At least one item should be kept.", "");
 		}
 	}
 

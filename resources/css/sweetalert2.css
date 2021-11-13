@@ -4,13 +4,13 @@
   height: auto;
 }
 
-.swal2-modal.swal2-show .swal2-actions {
-  height: auto;
-  margin: 20px 0;
-}
-
 .swal2-icon-error .swal2-html-container {
   color: #DC3545;
+}
+
+.swal2-modal.swal2-show .swal2-actions {
+  height: auto;
+  margin: 40px 0 20px;
 }
 
 

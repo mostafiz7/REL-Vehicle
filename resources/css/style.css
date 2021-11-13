@@ -365,10 +365,10 @@ a, a:hover, a:focus { text-decoration: none; }
 .border-base-3 { border-color: #A62020 !important; }
 .border-base-4 { border-color: #B52121 !important; }
 .border-secondary-1 { border-color: rgba(167, 167, 167, 1) !important; }
-.border-secondary-2 { border-color: rgba(65, 70, 75, 0.24) !important; }
+.border-secondary-2 { border-color: rgba(167, 167, 167, .8) !important; }
 .border-secondary-3 { border-color: rgba(167, 167, 167, .6) !important; }
 .border-secondary-4 { border-color: rgba(167, 167, 167, .4) !important; }
-.border-secondary-5 { border-color: #DEE2E6 !important; }
+.border-secondary-5 { border-color: rgba(167, 167, 167, .2) !important; }
 .border-success-2 { border-color: #08A765 !important; }
 .border-success-3 { border-color: #04CF7A !important; }
 .border-success-4 { border-color: #0DD19D !important; }

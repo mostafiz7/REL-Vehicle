@@ -46,7 +46,12 @@
 
 /* Extra Small Devices (Portrait Phones, Less than 576px) */
 @media (max-width: 575.98px) {
-
+  .Vehicle-Parts-Purchase .purchase-items-block {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    border-left: 0;
+    border-right: 0;
+  }
 }
 
 @media (min-width: 576px) {
