@@ -7,6 +7,24 @@
 	
 	jQuery(document).ready(function($){
 		
+		$(document).on('click', function(e){
+			e = e || window.Event;
+			let target = e.target || e.srcElement;
+			let targetClass = target.classList;
+			
+			// Cancel-Remove-Icon-From-Accordion-Item
+			if( target.id !== "removeAccordionItem-btn" && (! targetClass.contains("remove-accordion-item") ) ){
+			// || ! target.closest(".remove-accordion-item")
+				$("#accordionParent .accordion-item .remove-accordion-item").each(function(){
+					if( ! $(this).hasClass("d-none") ){
+						$(this).addClass("d-none");
+					}
+				});
+			}
+			
+		});
+		
+		
 		// For Date-Picker
 		$(".date-select .input-date").datepicker({
 			dateFormat: 'dd-mm-yy',
@@ -37,7 +55,7 @@
 				clickScrolling: true,
 				snapHandle: true,
 			},
-			overflowBehavior : {
+			overflowBehavior: {
 				x: "hidden"
 			}
 		});

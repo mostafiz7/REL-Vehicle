@@ -14,6 +14,7 @@
 
 
 /* Custom-CSS */
+@import 'sweetalert2.css';
 @import 'spacer.css';
 @import 'style.css';
 @import 'responsive.css';

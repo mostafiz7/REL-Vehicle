@@ -217,34 +217,38 @@
 
                   {{--Purchase-Items-Details--}}
                   <div class="form-center purchase-items-block py-20 px-15 mb-30 border-1 brd-3">
-                    <h6 class="block-title bg-dark text-white text-center py-10 mb-20">Purchase Items</h6>
+                    <h6 class="block-title bg-dark text-white text-center py-10 mb-20 brd-3">Purchase Items</h6>
 
-                    <div id="purchase-items" class="mb-20">
-                      <div class="accordion" id="accordionPartsPurchaseNew">
-                        <div class="accordion-item">
-                          <h2 class="accordion-header" id="accordionHeading-1">
-                            <button class="accordion-button fw-bold py-10 px-15" type="button" data-bs-toggle="collapse" data-bs-target="#accordionCollapse-1" aria-expanded="true" aria-controls="accordionCollapse-1">
+                    <div id="purchase-items" class="mb-30">
+                      <div class="accordion" id="accordionParent">
+                        <div class="accordion-item item_1">
+                          <h2 class="accordion-header p-relative" id="accordionHeading_1">
+                            <button class="accordion-button fw-bold p-15" type="button" data-bs-toggle="collapse" data-bs-target="#accordionCollapse_1" aria-expanded="true" aria-controls="accordionCollapse_1">
                               Item #<span class="item-count">1</span>
                             </button>
+                            <span onclick="RemoveAccordionItem(this);"
+                                  class="remove-accordion-item d-none before-shadow p-absolute pos-top-right w-30px h-30px bg-danger text-white fz-20 text-center lh-1-5 mt-10 mr-50 brd-50 cur-pointer z-index-11">
+                              <i class="fa fa-close"></i>
+                            </span>
                           </h2>
-                          <div id="accordionCollapse-1" class="accordion-collapse collapse show" aria-labelledby="accordionHeading-1" data-bs-parent="#accordionPartsPurchaseNew">
+                          <div id="accordionCollapse_1" class="accordion-collapse collapse show" aria-labelledby="accordionHeading_1" data-bs-parent="#accordionParent">
                             <div class="accordion-body px-15 pb-5">
-                              <div class="row ml--4 mr--4 p-relative">
-                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 px-4 item-name">
+                              <div class="row gx-0 gx-sm-2 p-relative">
+                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-name">
                                   <input type="text" name="item_name[]" id="item_name-1" class="item_name form-control border-secondary brd-3" placeholder="Item Name" value="" />
                                   <input type="hidden" name="item_id[]" id="item_id-1" class="item_id" value="" />
                                   <input type="hidden" name="item_slug[]" id="item_slug-1" class="item_slug" value="" />
                                 </div>
 
-                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 px-4 item-size">
+                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-size">
                                   <input type="text" name="item_size[]" id="item_size-1" class="item_size form-control border-secondary brd-3" placeholder="Size" value="" />
                                 </div>
 
-                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 px-4 item-serials">
+                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-serials">
                                   <input type="text" name="item_serials[]" id="item_serials-1" class="item_serials form-control border-secondary brd-3" placeholder="Serials" value="" />
                                 </div>
 
-                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 px-4 item-unit">
+                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-unit">
                                   <select name="item_unit[]" id="item_unit-1" class="item_unit form-select border-secondary brd-3">
                                     <option value="pcs">Pcs</option>
                                     <option value="metre">Metre</option>
@@ -252,137 +256,96 @@
                                   </select>
                                 </div>
 
-                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 px-4 item-unit-price">
+                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-unit-price">
                                   <input type="number" min="0" step="0.10" name="item_unit_price[]" id="item_unit_price-1" class="item_unit_price form-control border-secondary brd-3" placeholder="Unit Price" value="" />
                                 </div>
 
-                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 px-4 item-qty">
+                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-qty">
                                   <input type="number" min="0" name="item_qty[]" id="item_qty-1" class="item_qty form-control border-secondary brd-3" placeholder="Quantity" value="" />
                                 </div>
 
-                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 px-4 item-amount">
+                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-amount">
                                   <input type="number" min="0" name="item_amount[]" id="item_amount-1" class="item_amount form-control border-secondary brd-3" placeholder="Item Amount" value="" />
                                 </div>
 
-                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 px-4 item-remarks">
+                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-remarks">
                                   <input type="text" name="item_remarks[]" id="item_remarks-1" class="item_remarks form-control border-secondary brd-3" placeholder="Remarks" value="" />
                                 </div>
                               </div>
                             </div>
                           </div>
-                        </div>{{--/.accordion-item--}}
+                        </div> {{--/.accordion-item-1--}}
+                      </div> {{--/.accordion--}}
+                    </div> {{--/#purchase-items--}}
 
-                        <div class="accordion-item">
-                          <h2 class="accordion-header" id="accordionHeading-2">
-                            <button class="accordion-button collapsed fw-bold py-10 px-15" type="button" data-bs-toggle="collapse" data-bs-target="#accordionCollapse-2" aria-expanded="false" aria-controls="accordionCollapse-2">
-                              Item #<span class="item-count">2</span>
-                            </button>
-                          </h2>
-                          <div id="accordionCollapse-2" class="accordion-collapse collapse" aria-labelledby="accordionHeading-2" data-bs-parent="#accordionPartsPurchaseNew">
-                            <div class="accordion-body px-15 pb-5">
-                              <div class="row ml--4 mr--4 p-relative">
-                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 px-4 item-name">
-                                  <input type="text" name="item_name[]" id="item_name-1" class="item_name form-control border-secondary brd-3" placeholder="Item Name" value="" />
-                                  <input type="hidden" name="item_id[]" id="item_id-1" class="item_id" value="" />
-                                  <input type="hidden" name="item_slug[]" id="item_slug-1" class="item_slug" value="" />
-                                </div>
+                    <div class="accordion-actions d-flex justify-content-between">
+                      <a href="#" id="removeAccordionItem-btn" class="btn btn-danger p-relative before-shadow z-index-11">
+                        <i class="fa fa-minus mr-5"></i>
+                        Remove Item
+                      </a>
 
-                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 px-4 item-size">
-                                  <input type="text" name="item_size[]" id="item_size-1" class="item_size form-control border-secondary brd-3" placeholder="Size" value="" />
-                                </div>
-
-                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 px-4 item-serials">
-                                  <input type="text" name="item_serials[]" id="item_serials-1" class="item_serials form-control border-secondary brd-3" placeholder="Serials" value="" />
-                                </div>
-
-                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 px-4 item-unit">
-                                  <select name="item_unit[]" id="item_unit-1" class="item_unit form-select border-secondary brd-3">
-                                    <option value="pcs">Pcs</option>
-                                    <option value="metre">Metre</option>
-                                    <option value="litre">Litre</option>
-                                  </select>
-                                </div>
-
-                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 px-4 item-unit-price">
-                                  <input type="number" min="0" step="0.10" name="item_unit_price[]" id="item_unit_price-1" class="item_unit_price form-control border-secondary brd-3" placeholder="Unit Price" value="" />
-                                </div>
-
-                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 px-4 item-qty">
-                                  <input type="number" min="0" name="item_qty[]" id="item_qty-1" class="item_qty form-control border-secondary brd-3" placeholder="Quantity" value="" />
-                                </div>
-
-                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 px-4 item-amount">
-                                  <input type="number" min="0" name="item_amount[]" id="item_amount-1" class="item_amount form-control border-secondary brd-3" placeholder="Item Amount" value="" />
-                                </div>
-
-                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 px-4 item-remarks">
-                                  <input type="text" name="item_remarks[]" id="item_remarks-1" class="item_remarks form-control border-secondary brd-3" placeholder="Remarks" value="" />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>{{--/.accordion-item--}}
-
-                        <div class="accordion-item">
-                          <h2 class="accordion-header" id="accordionHeading-3">
-                            <button class="accordion-button collapsed fw-bold py-10 px-15" type="button" data-bs-toggle="collapse" data-bs-target="#accordionCollapse-3" aria-expanded="false" aria-controls="accordionCollapse-3">
-                              Item #<span class="item-count">3</span>
-                            </button>
-                          </h2>
-                          <div id="accordionCollapse-3" class="accordion-collapse collapse" aria-labelledby="accordionHeading-3" data-bs-parent="#accordionPartsPurchaseNew">
-                            <div class="accordion-body px-15 pb-5">
-                              <div class="row ml--4 mr--4 p-relative">
-                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 px-4 item-name">
-                                  <input type="text" name="item_name[]" id="item_name-1" class="item_name form-control border-secondary brd-3" placeholder="Item Name" value="" />
-                                  <input type="hidden" name="item_id[]" id="item_id-1" class="item_id" value="" />
-                                  <input type="hidden" name="item_slug[]" id="item_slug-1" class="item_slug" value="" />
-                                </div>
-
-                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 px-4 item-size">
-                                  <input type="text" name="item_size[]" id="item_size-1" class="item_size form-control border-secondary brd-3" placeholder="Size" value="" />
-                                </div>
-
-                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 px-4 item-serials">
-                                  <input type="text" name="item_serials[]" id="item_serials-1" class="item_serials form-control border-secondary brd-3" placeholder="Serials" value="" />
-                                </div>
-
-                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 px-4 item-unit">
-                                  <select name="item_unit[]" id="item_unit-1" class="item_unit form-select border-secondary brd-3">
-                                    <option value="pcs">Pcs</option>
-                                    <option value="metre">Metre</option>
-                                    <option value="litre">Litre</option>
-                                  </select>
-                                </div>
-
-                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 px-4 item-unit-price">
-                                  <input type="number" min="0" step="0.10" name="item_unit_price[]" id="item_unit_price-1" class="item_unit_price form-control border-secondary brd-3" placeholder="Unit Price" value="" />
-                                </div>
-
-                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 px-4 item-qty">
-                                  <input type="number" min="0" name="item_qty[]" id="item_qty-1" class="item_qty form-control border-secondary brd-3" placeholder="Quantity" value="" />
-                                </div>
-
-                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 px-4 item-amount">
-                                  <input type="number" min="0" name="item_amount[]" id="item_amount-1" class="item_amount form-control border-secondary brd-3" placeholder="Item Amount" value="" />
-                                </div>
-
-                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 px-4 item-remarks">
-                                  <input type="text" name="item_remarks[]" id="item_remarks-1" class="item_remarks form-control border-secondary brd-3" placeholder="Remarks" value="" />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>{{--/.accordion-item--}}
-
-                      </div>{{--/.accordion--}}
-                    </div>
-
-                    <div class="add-more-btn text-end">
-                      <a href="#" id="add-more-purchase-item" class="btn btn-dark">
+                      <a href="#" id="addMoreAccordionItem-btn" class="btn btn-dark">
                         <i class="fa fa-plus mr-5"></i>
-                        Add More Item
+                        Add Item
                       </a>
                     </div>
+
+                    <div id="clone-accordion" class="d-none">
+                      <div class="accordion-item">
+                        <h2 class="accordion-header p-relative" id="accordionHeading">
+                          <button class="accordion-button fw-bold p-15" type="button" data-bs-toggle="collapse" data-bs-target="#accordionCollapse" aria-expanded="true" aria-controls="accordionCollapse">
+                            Item #<span class="item-count">#</span>
+                          </button>
+                          <span onclick="RemoveAccordionItem(this);"
+                                class="remove-accordion-item d-none before-shadow p-absolute pos-top-right w-30px h-30px bg-danger text-white fz-20 text-center lh-1-5 mt-10 mr-50 brd-50 cur-pointer z-index-11">
+                            <i class="fa fa-close"></i>
+                          </span>
+                        </h2>
+                        <div id="accordionCollapse" class="accordion-collapse collapse show" aria-labelledby="accordionHeading" data-bs-parent="#accordionParent">
+                          <div class="accordion-body px-15 pb-5">
+                            <div class="row gx-0 gx-sm-2 p-relative">
+                              <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-name">
+                                <input type="text" name="item_name[]" id="item_name" class="item_name form-control border-secondary brd-3" placeholder="Item Name" value="" />
+                                <input type="hidden" name="item_id[]" id="item_id" class="item_id" value="" />
+                                <input type="hidden" name="item_slug[]" id="item_slug" class="item_slug" value="" />
+                              </div>
+
+                              <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-size">
+                                <input type="text" name="item_size[]" id="item_size" class="item_size form-control border-secondary brd-3" placeholder="Size" value="" />
+                              </div>
+
+                              <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-serials">
+                                <input type="text" name="item_serials[]" id="item_serials" class="item_serials form-control border-secondary brd-3" placeholder="Serials" value="" />
+                              </div>
+
+                              <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-unit">
+                                <select name="item_unit[]" id="item_unit" class="item_unit form-select border-secondary brd-3">
+                                  <option value="pcs">Pcs</option>
+                                  <option value="metre">Metre</option>
+                                  <option value="litre">Litre</option>
+                                </select>
+                              </div>
+
+                              <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-unit-price">
+                                <input type="number" min="0" step="0.10" name="item_unit_price[]" id="item_unit_price" class="item_unit_price form-control border-secondary brd-3" placeholder="Unit Price" value="" />
+                              </div>
+
+                              <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-qty">
+                                <input type="number" min="0" name="item_qty[]" id="item_qty" class="item_qty form-control border-secondary brd-3" placeholder="Quantity" value="" />
+                              </div>
+
+                              <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-amount">
+                                <input type="number" min="0" name="item_amount[]" id="item_amount" class="item_amount form-control border-secondary brd-3" placeholder="Item Amount" value="" />
+                              </div>
+
+                              <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-remarks">
+                                <input type="text" name="item_remarks[]" id="item_remarks" class="item_remarks form-control border-secondary brd-3" placeholder="Remarks" value="" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div> {{--/#clone-accordion .d-none--}}
                   </div> {{--/.form-center--}}
 
 
@@ -432,6 +395,106 @@
     });
   }
 
+
+	function AlertErrorMessage(message, type = null){
+		Swal.fire({
+			icon: 'error',
+			title: 'Oops! Sorry.',
+			text: message + type,
+		});
+  }
+
+
+  // Add-More-Accordion-Item
+	AddMoreAccordionItem();
+  function AddMoreAccordionItem(){
+  	$("#addMoreAccordionItem-btn").click(function(){
+			let notFilledItems = [];
+			let message = "Fill-up previous item's name, quantity & amount!";
+
+			// Check all accordions multiple input field has value
+			$("#accordionParent input.item_name, #accordionParent input.item_qty, #accordionParent input.item_amount").each(function(){
+        if( ! $(this).val() ){
+					AlertErrorMessage(message, "");
+					notFilledItems.push($(this));
+        }
+      });
+
+      // If accordion all items input has filled
+			if( notFilledItems.length === 0 ){
+				let accordionParent = "", addAccordion = "", x = "";
+				let accordionTitleAttrs = "", accordionCollapseAttrs = "";
+
+				accordionParent = $("#accordionParent");
+				x = accordionParent[0].childElementCount + 1; // Accordion Items Length
+
+				$("#accordionParent .accordion-button").each(function(){
+					if( ! $(this).hasClass("collapsed") ){
+						$(this).addClass("collapsed");
+						$(this).attr("aria-expanded", "false");
+					}
+				});
+				$("#accordionParent .accordion-collapse.collapse.show").each(function(){
+					$(this).removeClass("show");
+				});
+
+				$("#clone-accordion .accordion-item").addClass("item_"+x);
+				$("#clone-accordion .accordion-header").attr('id', `accordionHeading_${x}`);
+				accordionTitleAttrs = {
+					"data-bs-target": "#accordionCollapse_" + x,
+					"aria-controls": "accordionCollapse_" + x,
+				};
+				accordionCollapseAttrs = {
+					"id": "accordionCollapse_" + x,
+					"aria-labelledby": "accordionHeading_" + x,
+				};
+				$("#clone-accordion .accordion-button").attr(accordionTitleAttrs);
+				$("#clone-accordion span.item-count").text(x);
+				$("#clone-accordion .accordion-collapse").attr(accordionCollapseAttrs);
+				$("#clone-accordion .accordion-body input.item_name").attr("id", `item_name-${x}`);
+				$("#clone-accordion .accordion-body input.item_id").attr("id", `item_id-${x}`);
+				$("#clone-accordion .accordion-body input.item_slug").attr("id", `item_slug-${x}`);
+				$("#clone-accordion .accordion-body input.item_size").attr("id", `item_size-${x}`);
+				$("#clone-accordion .accordion-body input.item_serials").attr("id", `item_serials-${x}`);
+				$("#clone-accordion .accordion-body select.item_unit").attr("id", `item_unit-${x}`);
+				$("#clone-accordion .accordion-body input.item_unit_price").attr("id", `item_unit_price-${x}`);
+				$("#clone-accordion .accordion-body input.item_qty").attr("id", `item_qty-${x}`);
+				$("#clone-accordion .accordion-body input.item_amount").attr("id", `item_amount-${x}`);
+				$("#clone-accordion .accordion-body input.item_remarks").attr("id", `item_remarks-${x}`);
+
+				addAccordion = $("#clone-accordion").html();
+				$(addAccordion).clone().appendTo(accordionParent);
+
+				$("#clone-accordion .accordion-item").removeClass("item_"+x);
+      }
+    });
+  }
+
+
+	// Activate-Remove-Icon-to-Accordion-Item
+	ActivateRemoveIconToAccordionItem();
+	function ActivateRemoveIconToAccordionItem(){
+		$("#removeAccordionItem-btn").click(function(){
+			$("#accordionParent .accordion-item .remove-accordion-item").each(function(){
+				if( $(this).hasClass("d-none") ){
+					$(this).removeClass("d-none");
+				}
+			});
+		});
+	}
+
+	// Remove-Accordion-Item
+	function RemoveAccordionItem(e){
+		if( $("#accordionParent")[0].childElementCount > 1 ){
+			$(e).closest("#accordionParent .accordion-item").remove();
+		} else{
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops! Sorry.',
+				text: 'At least one item should be kept.',
+			});
+		}
+	}
 
 
 </script>
