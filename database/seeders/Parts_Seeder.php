@@ -23,11 +23,12 @@ class Parts_Seeder extends Seeder
       'name'        => 'Wheel-Japan',
       'slug'        => 'wheel-japan',
       'category_id' => 1,
-      'origin'      => 'Japan',
+      'description' => null,
       'sizes'       => null,
       'metals'      => null,
       'materials'   => null,
       'unit'        => 'Pcs',
+      'origin'      => 'Japan',
     ]);
 
     Parts_Model::create([
@@ -35,11 +36,12 @@ class Parts_Seeder extends Seeder
       'name'        => 'Wheel-China',
       'slug'        => 'wheel-china',
       'category_id' => 1,
-      'origin'      => 'China',
+      'description' => null,
       'sizes'       => null,
       'metals'      => null,
       'materials'   => null,
       'unit'        => 'Pcs',
+      'origin'      => 'China',
     ]);
 
     Parts_Model::create([
@@ -47,11 +49,12 @@ class Parts_Seeder extends Seeder
       'name'        => 'Wheel-India',
       'slug'        => 'wheel-india',
       'category_id' => 2,
-      'origin'      => 'India',
+      'description' => null,
       'sizes'       => null,
       'metals'      => null,
       'materials'   => null,
       'unit'        => 'Pcs',
+      'origin'      => 'India',
     ]);
 
     Parts_Model::create([
@@ -59,11 +62,12 @@ class Parts_Seeder extends Seeder
       'name'        => 'Headlight-Japan',
       'slug'        => 'headlight-japan',
       'category_id' => 2,
-      'origin'      => 'Japan',
+      'description' => null,
       'sizes'       => null,
       'metals'      => null,
       'materials'   => null,
       'unit'        => 'Pcs',
+      'origin'      => 'Japan',
     ]);
 
     Parts_Model::create([
@@ -71,11 +75,12 @@ class Parts_Seeder extends Seeder
       'name'        => 'Headlight-China',
       'slug'        => 'headlight-china',
       'category_id' => 1,
-      'origin'      => 'China',
+      'description' => null,
       'sizes'       => null,
       'metals'      => null,
       'materials'   => null,
       'unit'        => 'Pcs',
+      'origin'      => 'China',
     ]);
 
     Parts_Model::create([
@@ -83,11 +88,12 @@ class Parts_Seeder extends Seeder
       'name'        => 'Headlight-India',
       'slug'        => 'headlight-india',
       'category_id' => 2,
-      'origin'      => 'India',
+      'description' => null,
       'sizes'       => null,
       'metals'      => null,
       'materials'   => null,
       'unit'        => 'Pcs',
+      'origin'      => 'India',
     ]);
 
   }

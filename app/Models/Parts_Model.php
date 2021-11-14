@@ -25,11 +25,12 @@ class Parts_Model extends Model
     'name',
     'slug',
     'category_id',
-    'origin',
+    'description',
     'sizes',
     'metals',
     'materials',
     'unit',
+    'origin',
   ];
 
 

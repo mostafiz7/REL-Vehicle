@@ -44,6 +44,10 @@
 
 }
 
+@media (min-width: 576px) {
+
+}
+
 /* Extra Small Devices (Portrait Phones, Less than 576px) */
 @media (max-width: 575.98px) {
   .Vehicle-Parts-Purchase .purchase-items-block {
@@ -52,10 +56,9 @@
     border-left: 0;
     border-right: 0;
   }
-}
-
-@media (min-width: 576px) {
-
+  .Vehicle-Parts-Purchase .row.form-top > div {
+    margin-bottom: 30px !important;
+  }
 }
 
 @media (min-width: 490px) {

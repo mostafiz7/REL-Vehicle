@@ -7,21 +7,47 @@
 	
 	jQuery(document).ready(function($){
 		
+		// Show & Hide any html block
+		$.fn.BlockVisible = function(selector){
+			if( $(selector).hasClass("d-none") ){ $(selector).removeClass("d-none"); }
+		}
+		$.fn.BlockHidden = function(selector){
+			if( ! $(selector).hasClass('d-none') ){ $(selector).addClass('d-none'); }
+		};
+		
+		
 		$(document).on('click', function(e){
 			e = e || window.Event;
 			let target = e.target || e.srcElement;
 			let targetClass = target.classList;
 			
-			// Cancel-Remove-Icon-From-Accordion-Item
+			// Hide Accordion-Item Remove-Icon
 			if( target.id !== "removeAccordionItem-btn" && (! targetClass.contains("remove-accordion-item") ) ){
-			// || ! target.closest(".remove-accordion-item")
-				$("#accordionParent .accordion-item .remove-accordion-item").each(function(){
-					if( ! $(this).hasClass("d-none") ){
-						$(this).addClass("d-none");
-					}
+				$("#Accordion-Parent .accordion-item .remove-accordion-item").each(function(){
+					$.fn.BlockHidden($(this));
 				});
 			}
 			
+			// Hide Parts-List
+			if( ! targetClass.contains("item_name") ){
+				$.fn.BlockHidden(".parts-purchase #Vehicle-Parts-List");
+			}
+			
+		});
+		
+		
+		// Escape-Key & Tab-Key - Exit from any block / window
+		// $(document).on('keyup', function(e){});
+		$(document).on('keydown', function(e){
+			if( e.key === "Escape" ){
+				// Hide Parts-List
+				$.fn.BlockHidden(".parts-purchase #Vehicle-Parts-List");
+			}
+			
+			if( e.key === "Tab" ){
+				// Hide Parts-List
+				$.fn.BlockHidden(".parts-purchase #Vehicle-Parts-List");
+			}
 		});
 		
 		
