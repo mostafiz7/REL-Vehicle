@@ -16707,13 +16707,22 @@ body.modal-open:not(.swal2-shown) {
   height: calc(100% - 50px) !important;
 }
 
-
 /* Page-Content */
+.page-content .page-header {
+  height: auto !important;
+}
 .page-content .page-body {
   height: calc(100% - 42px) !important;
 }
 
 /* Frontend CSS */
+
+.Vehicle-Parts-Purchase.New #total_qty,
+.Vehicle-Parts-Purchase.New #total_amount,
+.Vehicle-Parts-Purchase.New .form-bottom .paid-due-amount > div > .amount {
+  width: calc(100% - 120px);
+}
+
 
 
 /* Bootstrap Version */
@@ -16774,8 +16783,11 @@ body.modal-open:not(.swal2-shown) {
     border-left: 0;
     border-right: 0;
   }
-  .Vehicle-Parts-Purchase .row.form-top > div {
+  .Vehicle-Parts-Purchase .form-top .row > div {
     margin-bottom: 30px !important;
+  }
+  .Vehicle-Parts-Purchase .form-bottom > .row > div {
+    margin-bottom: 20px !important;
   }
 }
 

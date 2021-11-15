@@ -44,6 +44,7 @@ class CreatePurchasesTable extends Migration
       $table->unsignedBigInteger('authorizer_id')->nullable(); // Authorized Employee ID
       $table->unsignedBigInteger('user_id')->nullable(); // Purchase Entry-By APP User
       $table->string('entry_by')->nullable(); // If Purchase Entry-By other than APP User
+      $table->text('notes')->nullable();
 
       $table->foreign('vehicle_id')
         ->references('id')->on('vehicles')->onUpdate('cascade');

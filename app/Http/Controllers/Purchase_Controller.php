@@ -25,6 +25,9 @@ class Purchase_Controller extends Controller
     $authorizer_all       = Employee_Model::where('authorize_power', 1)
       ->where('active', 1)->get()->all();
 
+    $employee_all         = Employee_Model::where('active', 1)
+      ->orderBy('name', 'asc')->get()->all();
+
     $supplier_all         = Supplier_Model::get()->all();
 
     $purchase_type = ['vehicle', 'vehicle-parts', 'electrical', 'electronics', 'stationary', 'furniture'];
@@ -34,6 +37,7 @@ class Purchase_Controller extends Controller
       'vehicle_all'           => $vehicle_all,
       'supplier_all'          => $supplier_all,
       'purchase_type'         => $purchase_type,
+      'employee_all'          => $employee_all,
       'purchaser_all'         => $purchaser_all,
       'authorizer_all'        => $authorizer_all,
       'parts_category_all'    => $parts_category_all,

@@ -50,6 +50,7 @@ class Purchase_Model extends Model
     'authorizer_id',
     'user_id',
     'entry_by',
+    'notes',
   ];
 
 

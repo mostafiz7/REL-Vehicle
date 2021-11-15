@@ -56,8 +56,11 @@
     border-left: 0;
     border-right: 0;
   }
-  .Vehicle-Parts-Purchase .row.form-top > div {
+  .Vehicle-Parts-Purchase .form-top .row > div {
     margin-bottom: 30px !important;
+  }
+  .Vehicle-Parts-Purchase .form-bottom > .row > div {
+    margin-bottom: 20px !important;
   }
 }
 

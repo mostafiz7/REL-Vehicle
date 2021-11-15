@@ -4,26 +4,26 @@
 
 @section('content')
 <div class="Page Vehicle-Parts-Purchase New">
-  <div class="page-wrapper">
-    <div class="new-parts-purchase-page">
-      <div class="container-lg">
-        <div class="page-content">
-          <div class="card">
-            <div class="card-header page-header h-auto bg-success text-white">
-              <h5 class="title mb-0">Parts New Purchase</h5>
-            </div>
+  <div class="container-lg">
+    <div class="page-content">
+      <div class="card">
+        <div class="card-header page-header bg-success text-white">
+          <h5 class="title mb-0">Parts New Purchase</h5>
+        </div>
 
 
-            <div class="card-body page-body p-0">
-              <div class="parts-new-purchase-area overlay-scrollbar">
-                <form method="post" action="{{ route('vehicle.parts.purchase.new') }}" autocomplete="off"
-                      name="partsPurchaseForm" id="partsPurchaseForm" class="parts-purchase new p-20">
-                  @csrf
+        <div class="card-body page-body p-0">
+          <div class="parts-new-purchase-area overlay-scrollbar">
+            <form method="post" action="{{ route('vehicle.parts.purchase.new') }}" autocomplete="off"
+                  name="partsPurchaseForm" id="partsPurchaseForm" class="parts-purchase new p-20 pb-0">
+              @csrf
 
-                  <div class="row form-top mb-sm-3">
+              <div class="form-top-and-center">
+                <div class="form-top">
+                  <div class="row mb-sm-3">
                     {{--Purchase-Number--}}
                     <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 purchase_no">
-                      <label for="" class="required w-100 fw-bold mr-15"><span>Purchase No.#</span></label>
+                      <label for="" class="required w-100 mr-15"><span>Purchase No.#</span></label>
                       <input readonly type="text" name="purchase_no" id="purchase_no" class="required form-control fw-bold border-secondary brd-3 @error('purchase_no') is-invalid @enderror" value="{{ old('purchase_no') }}" />
 
                       @if ( $errors->has('purchase_no') )
@@ -35,7 +35,7 @@
 
                     {{--Purchase-Date--}}
                     <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 purchase_date">
-                      <label for="" class="w-100 fw-bold mr-15"><span>Purchase Date</span></label>
+                      <label for="" class="w-100 mr-15"><span>Purchase Date</span></label>
                       <div class="p-relative date-select">
                         <input type="text" name="date" id="purchase_date" class="input-date form-control d-inline-block text-start border-secondary brd-3 z-index-9 @error('date') is-invalid @enderror" placeholder="dd-mm-yyyy" value="{{ old('date') }}" />
                         <label for="purchase_date" class="input-label-icon p-absolute pos-top-right text-danger-deep fz-19 lh-1-3 mr-1 p-5 cur-pointer z-index-11"><i class="fa fa-calendar"></i></label>
@@ -50,7 +50,7 @@
 
                     {{--Memo-Number--}}
                     <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 memo_no">
-                      <label for="" class="required w-100 fw-bold mr-15"><span>Memo No.#</span></label>
+                      <label for="" class="required w-100 mr-15"><span>Memo No.#</span></label>
                       <input type="text" name="memo_no" id="memo_no" class="required form-control border-secondary brd-3 @error('memo_no') is-invalid @enderror" placeholder="0253" value="{{ old('memo_no') }}" />
 
                       @if ( $errors->has('memo_no') )
@@ -62,7 +62,7 @@
 
                     {{--Purchase-Type--}}
                     <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 purchase_type">
-                      <label for="" class="required w-100 fw-bold mr-15"><span>Purchase Type</span></label>
+                      <label for="" class="required w-100 mr-15"><span>Purchase Type</span></label>
                       <select name="type" id="type" class="required form-select border-secondary brd-3 @error('type') is-invalid @enderror">
                         @foreach ( $purchase_type as $type )
                           <option value="{{ $type }}" {{ $type == 'vehicle-parts' ? 'selected' : '' }}>
@@ -80,7 +80,7 @@
 
                     {{--Vehicle-Number--}}
                     <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 vehicle_id">
-                      <label for="" class="required w-100 fw-bold mr-15"><span>Vehicle No.#</span></label>
+                      <label for="" class="required w-100 mr-15"><span>Vehicle No.#</span></label>
                       <select name="vehicle_id" id="vehicle_id" class="required form-select border-secondary brd-3 @error('type') is-invalid @enderror">
                         <option value="">Select Vehicle</option>
                         @if ( $vehicle_all )
@@ -101,7 +101,7 @@
 
                     {{--Requisition-Number--}}
                     {{--<div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 requisition_no">
-                      <label for="" class="w-100 fw-bold mr-15"><span>Requisition No.#</span></label>
+                      <label for="" class="w-100 mr-15"><span>Requisition No.#</span></label>
                       <input type="text" name="requisition_no" id="requisition_no" class="form-control border-secondary brd-3 @error('requisition_no') is-invalid @enderror" placeholder="{{ 'RQ-' . date('Y') . '/0526' }}" value="{{ old('requisition_no') }}" />
 
                       @if ( $errors->has('requisition_no') )
@@ -113,7 +113,7 @@
 
                     {{--Purchase-By--}}
                     <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 purchaser_id">
-                      <label for="" class="w-100 fw-bold mr-15"><span>Purchase By</span></label>
+                      <label for="" class="w-100 mr-15"><span>Purchase By</span></label>
                       <select name="purchaser_id" id="purchaser_id" class="form-select border-secondary brd-3 @error('purchaser_id') is-invalid @enderror">
                         <option value="">Select Purchaser</option>
                         @if ( $purchaser_all )
@@ -134,7 +134,7 @@
 
                     {{--Purchaser-Name--}}
                     {{--<div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 purchaser_name">
-                      <label for="" class="w-100 fw-bold mr-15"><span>Purchaser Name</span></label>
+                      <label for="" class="w-100 mr-15"><span>Purchaser Name</span></label>
                       <input type="text" name="purchaser_name" id="purchaser_name" class="form-control border-secondary brd-3 @error('purchaser_name') is-invalid @enderror" placeholder="John Doe" value="{{ old('purchaser_name') }}" />
 
                       @if ( $errors->has('purchaser_name') )
@@ -146,7 +146,7 @@
 
                     {{--Registered-Supplier--}}
                     {{--<div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 supplier_id">
-                      <label for="" class="w-100 fw-bold mr-15"><span>Supplier</span></label>
+                      <label for="" class="w-100 mr-15"><span>Supplier</span></label>
                       <select name="supplier_id" id="supplier_id" class="form-select border-secondary brd-3 @error('supplier_id') is-invalid @enderror">
                         <option value="">Select Supplier</option>
                         @if ( $supplier_all )
@@ -167,7 +167,7 @@
 
                     {{--Unregistered-Supplier-Name--}}
                     {{--<div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 supplier_name">
-                      <label for="" class="w-100 fw-bold mr-15"><span>Supplier Name</span></label>
+                      <label for="" class="w-100 mr-15"><span>Supplier Name</span></label>
                       <input type="text" name="supplier_name" id="supplier_name" class="form-control border-secondary brd-3 @error('supplier_name') is-invalid @enderror" placeholder="ABC Enterprise Ltd." value="{{ old('supplier_name') }}" />
 
                       @if ( $errors->has('supplier_name') )
@@ -179,7 +179,7 @@
 
                     {{--Shop-Name--}}
                     <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 shop_name">
-                      <label for="" class="w-100 fw-bold mr-15"><span>Shop Name</span></label>
+                      <label for="" class="w-100 mr-15"><span>Shop Name</span></label>
                       <input type="text" name="shop_name" id="shop_name" class="form-control border-secondary brd-3 @error('shop_name') is-invalid @enderror" placeholder="Dhaka Traders" value="{{ old('shop_name') }}" />
 
                       @if ( $errors->has('shop_name') )
@@ -191,7 +191,7 @@
 
                     {{--Shop-Contact--}}
                     <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 shop_contact">
-                      <label for="" class="w-100 fw-bold mr-15"><span>Shop Contact</span></label>
+                      <label for="" class="w-100 mr-15"><span>Shop Contact</span></label>
                       <input type="text" name="shop_contact" id="shop_contact" class="form-control border-secondary brd-3 @error('shop_contact') is-invalid @enderror" placeholder="01712-445566" value="{{ old('shop_contact') }}" />
 
                       @if ( $errors->has('shop_contact') )
@@ -203,7 +203,7 @@
 
                     {{--Shop-Location--}}
                     <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 shop_location">
-                      <label for="" class="w-100 fw-bold mr-15"><span>Shop Location</span></label>
+                      <label for="" class="w-100 mr-15"><span>Shop Location</span></label>
                       <input type="text" name="shop_location" id="shop_location" class="form-control border-secondary brd-3 @error('shop_location') is-invalid @enderror" placeholder="Mohakhali" value="{{ old('shop_location') }}" />
 
                       @if ( $errors->has('shop_location') )
@@ -212,175 +212,304 @@
                         </div>
                       @endif
                     </div>
-                  </div> {{--/.row .form-top--}}
+
+                    {{--Bill-Number--}}
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 bill_no">
+                      <label for="" class="w-100 mr-15">
+                        <span>Bill No.#</span>
+                        <span class="text-secondary fz-14">(If already bill done)</span>
+                      </label>
+                      <input type="text" name="bill_no" id="bill_no" class="form-control border-secondary brd-3 @error('bill_no') is-invalid @enderror" placeholder="Bill-{{date('Y')}}/00246" value="{{ old('bill_no') }}" />
+
+                      @if ( $errors->has('bill_no') )
+                        <div class="text-danger fz-14 fw-bold" role="alert">
+                          {{ $errors->first('bill_no') }}
+                        </div>
+                      @endif
+                    </div>
+
+                    {{--Authorized-By--}}
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 authorizer_id">
+                      <label for="" class="w-100 mr-15"><span>Authorized By</span></label>
+                      <select name="authorizer_id" id="authorizer_id" class="form-select border-secondary brd-3 @error('authorizer_id') is-invalid @enderror">
+                        <option value="">Select Authorizer</option>
+                        @if ( $authorizer_all )
+                          @foreach ( $authorizer_all as $authorizer )
+                            <option value="{{ $authorizer->uid }}">
+                              {{ $authorizer->name }}
+                            </option>
+                          @endforeach
+                        @endif
+                      </select>
+
+                      @if ( $errors->has('authorizer_id') )
+                        <div class="text-danger fz-14 fw-bold" role="alert">
+                          {{ $errors->first('authorizer_id') }}
+                        </div>
+                      @endif
+                    </div>
+                  </div> {{--/.row--}}
+                </div> {{--/.form-top--}}
 
 
-                  {{--Purchase-Items-Details--}}
-                  <div class="form-center purchase-items-block py-20 px-15 mb-30 border-1 brd-3">
-                    <h6 class="block-title bg-dark text-white text-center py-10 mb-20 brd-3">Purchase Items</h6>
+                {{--Purchase-Items-Details--}}
+                <div class="form-center purchase-items-block py-20 px-15 mb-30 border-1 brd-3">
+                  <h6 class="block-title bg-dark text-white text-center py-10 mb-20 brd-3">Purchase Items</h6>
 
-                    <div id="Purchase-Items" class="p-relative mb-30">
-                      <div class="accordion" id="Accordion-Parent">
-                        <div class="accordion-item border-secondary-2" id="item_1">
-                          <h2 class="accordion-header p-relative" id="accordionHeading_1">
-                            <button class="accordion-button fw-bold p-15" type="button" data-bs-toggle="collapse" data-bs-target="#accordionCollapse_1" aria-expanded="true" aria-controls="accordionCollapse_1">
-                              Item #<span class="item-count">1</span>
-                            </button>
-                            <span onclick="RemoveAccordionItem(this);"
-                                  class="remove-accordion-item d-none before-shadow p-absolute pos-top-right w-30px h-30px bg-danger text-white fz-20 text-center lh-1-5 mt-10 mr-50 brd-50 cur-pointer z-index-11">
-                              <i class="fa fa-close"></i>
-                            </span>
-                          </h2>
-                          <div id="accordionCollapse_1" class="accordion-collapse collapse show" aria-labelledby="accordionHeading_1" data-bs-parent="#Accordion-Parent">
-                            <div class="accordion-body px-15 pb-5">
-                              <div class="row gx-0 gx-sm-2 p-relative">
-                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-name">
-                                  <input type="text" name="item_name[]" id="item_name-1" class="item_name form-control border-secondary brd-3" placeholder="Item Name" value="" />
-                                  <input type="hidden" name="item_id[]" id="item_id-1" class="item_id" value="" />
-                                  <input type="hidden" name="item_uid[]" id="item_uid-1" class="item_uid" value="" />
-                                  <input type="hidden" name="item_slug[]" id="item_slug-1" class="item_slug" value="" />
-                                </div>
+                  <div id="Purchase-Items" class="p-relative mb-30">
+                    <div class="accordion" id="Accordion-Parent">
+                      <div class="accordion-item border-secondary-2" id="item_1">
+                        <h2 class="accordion-header p-relative" id="accordionHeading_1">
+                          <button class="accordion-button fw-bold p-15" type="button" data-bs-toggle="collapse" data-bs-target="#accordionCollapse_1" aria-expanded="true" aria-controls="accordionCollapse_1">
+                            Item #<span class="item-count">1</span>
+                          </button>
+                          <span onclick="RemoveAccordionItem(this);"
+                                class="remove-accordion-item d-none before-shadow p-absolute pos-top-right w-30px h-30px bg-danger text-white fz-20 text-center lh-1-5 mt-10 mr-50 brd-50 cur-pointer z-index-11">
+                          <i class="fa fa-close"></i>
+                        </span>
+                        </h2>
+                        <div id="accordionCollapse_1" class="accordion-collapse collapse show" aria-labelledby="accordionHeading_1" data-bs-parent="#Accordion-Parent">
+                          <div class="accordion-body px-15 pb-5">
+                            <div class="row gx-0 gx-sm-2 p-relative">
+                              <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-name">
+                                <input type="text" name="item_name[]" id="item_name-1" class="item_name form-control border-secondary brd-3" placeholder="Item Name" value="" />
+                                <input type="hidden" name="item_id[]" id="item_id-1" class="item_id" value="" />
+                                <input type="hidden" name="item_uid[]" id="item_uid-1" class="item_uid" value="" />
+                                <input type="hidden" name="item_slug[]" id="item_slug-1" class="item_slug" value="" />
+                              </div>
 
-                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-size">
-                                  <input type="text" name="item_size[]" id="item_size-1" class="item_size form-control border-secondary brd-3" placeholder="Size" value="" />
-                                </div>
+                              <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-size">
+                                <input type="text" name="item_size[]" id="item_size-1" class="item_size form-control border-secondary brd-3" placeholder="Size" value="" />
+                              </div>
 
-                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-serials">
-                                  <input type="text" name="item_serials[]" id="item_serials-1" class="item_serials form-control border-secondary brd-3" placeholder="Serials" value="" />
-                                </div>
+                              <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-serials">
+                                <input type="text" name="item_serials[]" id="item_serials-1" class="item_serials form-control border-secondary brd-3" placeholder="Serials" value="" />
+                              </div>
 
-                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-unit">
-                                  <select name="item_unit[]" id="item_unit-1" class="item_unit form-select border-secondary brd-3">
-                                    <option value="pcs">Pcs</option>
-                                    <option value="metre">Metre</option>
-                                    <option value="litre">Litre</option>
-                                  </select>
-                                </div>
+                              <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-unit">
+                                <select name="item_unit[]" id="item_unit-1" class="item_unit form-select border-secondary brd-3">
+                                  <option value="pcs">Pcs</option>
+                                  <option value="metre">Metre</option>
+                                  <option value="litre">Litre</option>
+                                </select>
+                              </div>
 
-                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-unit-price">
-                                  <input type="number" min="0" step="0.10" name="item_unit_price[]" id="item_unit_price-1" class="item_unit_price form-control border-secondary brd-3" placeholder="Unit Price" value="" />
-                                </div>
+                              <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-unit-price">
+                                <input type="number" min="0" step="0.10" name="item_unit_price[]" id="item_unit_price-1" class="item_unit_price form-control border-secondary brd-3" placeholder="Unit Price" value="" />
+                              </div>
 
-                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-qty">
-                                  <input type="number" min="0" name="item_qty[]" id="item_qty-1" class="item_qty form-control border-secondary brd-3" placeholder="Quantity" value="" />
-                                </div>
+                              <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-qty">
+                                <input type="number" min="0" name="item_qty[]" id="item_qty-1" class="item_qty form-control border-secondary brd-3" placeholder="Quantity" value="" />
+                              </div>
 
-                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-amount">
-                                  <input type="number" min="0" name="item_amount[]" id="item_amount-1" class="item_amount form-control border-secondary brd-3" placeholder="Item Amount" value="" />
-                                </div>
+                              <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-amount">
+                                <input type="number" min="0" name="item_amount[]" id="item_amount-1" class="item_amount form-control border-secondary brd-3" placeholder="Item Amount" value="" />
+                              </div>
 
-                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-remarks">
-                                  <input type="text" name="item_remarks[]" id="item_remarks-1" class="item_remarks form-control border-secondary brd-3" placeholder="Remarks" value="" />
-                                </div>
+                              <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-remarks">
+                                <input type="text" name="item_remarks[]" id="item_remarks-1" class="item_remarks form-control border-secondary brd-3" placeholder="Remarks" value="" />
                               </div>
                             </div>
                           </div>
-                        </div> {{--/.accordion-item-1--}}
-                      </div> {{--/#Accordion-Parent .accordion--}}
-
-                      {{--Vehicle-Parts-List Hidden--}}
-                      <div id="Vehicle-Parts-List" class="d-none overlay-scrollbar p-absolute pos-top-left h-250px fw-bold ml-15 z-index-1100">
-                        <ul class="parts-list list-style-none bg-off-white border-1 z-index-1100" data-id="">
-                          @if ( $parts_all )
-                            @foreach ( $parts_all as $index => $parts )
-                              <li data-name="{{$parts->name}}" data-id="{{$parts->id}}" data-uid="{{$parts->uid}}"
-                                  data-slug="{{$parts->slug}}" data-category="{{$parts->category_id}}"
-                                  data-description="{{$parts->description}}" data-unit="{{$parts->unit}}" data-origin="{{$parts->origin}}"
-                                  class="parts-item py-10 px-15 bb-1 cur-pointer">{{$parts->name}}</li>
-                            @endforeach
-                          @endif
-                        </ul> {{--/.parts-list--}}
-                      </div> {{--/#Vehicle-Parts-List--}}
-                    </div> {{--/#Purchase-Items--}}
-
-                    <div class="accordion-actions d-flex justify-content-between">
-                      <a href="#" id="removeAccordionItem-btn" class="btn btn-danger p-relative before-shadow z-index-11">
-                        <i class="fa fa-minus mr-5"></i>
-                        Remove Item
-                      </a>
-
-                      <a href="#" id="addMoreAccordionItem-btn" class="btn btn-dark">
-                        <i class="fa fa-plus mr-5"></i>
-                        Add Item
-                      </a>
-                    </div>
-                  </div> {{--/.form-center--}}
-
-
-                  <div class="row form-bottom">
-                    {{--Submit--}}
-                    <div class="col-12 mb-30 text-end">
-                      <button class="btn btn-primary">Submit</button>
-                    </div>
-                  </div> {{--/.row .form-bottom--}}
-                </form>
-
-
-                <div id="Clone-Accordion" class="d-none">
-                  <div class="accordion-item border-secondary-2" id="">
-                    <h2 class="accordion-header p-relative" id="accordionHeading">
-                      <button class="accordion-button fw-bold p-15" type="button" data-bs-toggle="collapse" data-bs-target="#accordionCollapse" aria-expanded="true" aria-controls="accordionCollapse">
-                        Item #<span class="item-count">#</span>
-                      </button>
-                      <span onclick="RemoveAccordionItem(this);"
-                            class="remove-accordion-item d-none before-shadow p-absolute pos-top-right w-30px h-30px bg-danger text-white fz-20 text-center lh-1-5 mt-10 mr-50 brd-50 cur-pointer z-index-11">
-                        <i class="fa fa-close"></i>
-                      </span>
-                    </h2>
-                    <div id="accordionCollapse" class="accordion-collapse collapse show" aria-labelledby="accordionHeading" data-bs-parent="#Accordion-Parent">
-                      <div class="accordion-body px-15 pb-5">
-                        <div class="row gx-0 gx-sm-2 p-relative">
-                          <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-name">
-                            <input type="text" name="item_name[]" id="item_name" class="item_name form-control border-secondary brd-3" placeholder="Item Name" value="" />
-                            <input type="hidden" name="item_id[]" id="item_id" class="item_id" value="" />
-                            <input type="hidden" name="item_uid[]" id="item_uid" class="item_uid" value="" />
-                            <input type="hidden" name="item_slug[]" id="item_slug" class="item_slug" value="" />
-                          </div>
-
-                          <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-size">
-                            <input type="text" name="item_size[]" id="item_size" class="item_size form-control border-secondary brd-3" placeholder="Size" value="" />
-                          </div>
-
-                          <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-serials">
-                            <input type="text" name="item_serials[]" id="item_serials" class="item_serials form-control border-secondary brd-3" placeholder="Serials" value="" />
-                          </div>
-
-                          <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-unit">
-                            <select name="item_unit[]" id="item_unit" class="item_unit form-select border-secondary brd-3">
-                              <option value="pcs">Pcs</option>
-                              <option value="metre">Metre</option>
-                              <option value="litre">Litre</option>
-                            </select>
-                          </div>
-
-                          <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-unit-price">
-                            <input type="number" min="0" step="0.10" name="item_unit_price[]" id="item_unit_price" class="item_unit_price form-control border-secondary brd-3" placeholder="Unit Price" value="" />
-                          </div>
-
-                          <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-qty">
-                            <input type="number" min="0" name="item_qty[]" id="item_qty" class="item_qty form-control border-secondary brd-3" placeholder="Quantity" value="" />
-                          </div>
-
-                          <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-amount">
-                            <input type="number" min="0" name="item_amount[]" id="item_amount" class="item_amount form-control border-secondary brd-3" placeholder="Item Amount" value="" />
-                          </div>
-
-                          <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-remarks">
-                            <input type="text" name="item_remarks[]" id="item_remarks" class="item_remarks form-control border-secondary brd-3" placeholder="Remarks" value="" />
-                          </div>
                         </div>
+                      </div> {{--/.accordion-item-1--}}
+                    </div> {{--/#Accordion-Parent .accordion--}}
+
+                    {{--Vehicle-Parts-List Hidden--}}
+                    <div id="Vehicle-Parts-List" class="d-none overlay-scrollbar p-absolute pos-top-left h-250px fw-bold ml-15 z-index-1100">
+                      <ul class="parts-list list-style-none bg-off-white border-1 z-index-1100" data-id="">
+                        @if ( $parts_all )
+                          @foreach ( $parts_all as $index => $parts )
+                            <li data-name="{{$parts->name}}" data-id="{{$parts->id}}" data-uid="{{$parts->uid}}"
+                                data-slug="{{$parts->slug}}" data-category="{{$parts->category_id}}"
+                                data-description="{{$parts->description}}" data-unit="{{$parts->unit}}" data-origin="{{$parts->origin}}"
+                                class="parts-item py-10 px-15 bb-1 cur-pointer">{{$parts->name}}</li>
+                          @endforeach
+                        @endif
+                      </ul> {{--/.parts-list--}}
+                    </div> {{--/#Vehicle-Parts-List--}}
+                  </div> {{--/#Purchase-Items--}}
+
+                  <div class="accordion-actions d-flex justify-content-between">
+                    <a href="#" id="removeAccordionItem-btn" class="btn btn-danger p-relative before-shadow z-index-11">
+                      <i class="fa fa-minus mr-5"></i>
+                      Remove Item
+                    </a>
+
+                    <a href="#" id="addMoreAccordionItem-btn" class="btn btn-dark">
+                      <i class="fa fa-plus mr-5"></i>
+                      Add Item
+                    </a>
+                  </div>
+                </div> {{--/.form-center--}}
+              </div> {{--/.form-top-and-center--}}
+
+
+              <div class="form-bottom bg-secondary-5 ml--20 mr--20 p-15 border-1 border-secondary-3">
+                <div class="row">
+                  {{--Total-Quantity-&-Amount--}}
+                  <div class="order-lg-3 order-sm-2 col-lg-3 col-md-4 col-sm-6 col-12 mb-10 total-qty-amount">
+                    {{--Total-Quantity--}}
+                    <div class="total-qty d-flex justify-content-between mb-5">
+                      <label for="" class="fw-bold"><span>Total Qty.</span></label>
+                      {{--<input type="text" readonly name="total_qty" id="total_qty" class="form-control border-secondary brd-3 bg-dark text-white no-shadow cur-default" value="" />--}}
+                      <div id="total_qty" class="d-inline-block h-30px bg-dark text-warning text-center lh-1-8 border-secondary brd-3">0</div>
+                    </div>
+
+                    {{--Total-Amount--}}
+                    <div class="total-amount d-flex justify-content-between mb-5">
+                      <label for="" class="fw-bold"><span>Total Amount</span></label>
+                      {{--<input type="text" readonly name="total_amount" id="total_amount" class="form-control border-secondary brd-3 bg-dark text-white no-shadow cur-default" value="" />--}}
+                      <div id="total_amount" class="d-inline-block h-30px bg-dark text-warning text-center lh-1-8 border-secondary brd-3">0.00</div>
+                    </div>
+                  </div>
+
+                  {{--Payment-Status--}}
+                  <div class="order-lg-2 order-sm-1 col-lg-3 col-md-4 col-sm-6 col-12 mb-10 payment-status">
+                    <label for="" class="fw-bold mr-15 mb-5"><span>Payment Status</span></label>
+                    <div class="d-flex flex-row flex-sm-column">
+                      <div class="form-check me-4 me-sm-0 mb-5 full-paid">
+                        <input type="checkbox" name="is_paid" id="is_paid" class="form-check-input border-secondary" value="full-paid" />
+                        <label class="form-check-label" for="is_paid">Full Paid</label>
+                      </div>
+
+                      <div class="form-check partial-paid">
+                        <input type="checkbox" name="is_partial_paid" id="is_partial_paid" class="form-check-input border-secondary" value="partial-paid" />
+                        <label class="form-check-label" for="is_partial_paid">Partial Paid</label>
                       </div>
                     </div>
                   </div>
-                </div> {{--/#Clone-Accordion .d-none--}}
 
-              </div> {{-- ./page-content-area --}}
-            </div> {{-- ./card-body --}}
-          </div> {{-- ./card --}}
-        </div> {{-- ./page-content --}}
-      </div> {{-- ./container --}}
-    </div> {{-- ./page-name --}}
-  </div> {{-- ./page-wrapper --}}
+                  {{--Paid-&-Due-Amount--}}
+                  <div class="order-lg-4 order-md-3 order-sm-4 col-lg-3 col-md-4 col-sm-6 col-12 mb-10 paid-due-amount">
+                    {{--Paid-Amount--}}
+                    <div class="paid-amount d-flex justify-content-between mb-5">
+                      <label for="" class="fw-bold"><span>Paid Amount</span></label>
+                      <div class="amount">
+                        <input type="number" min="0" step="1" name="paid_amount" id="paid_amount" class="form-control border-secondary brd-3 @error('paid_amount') is-invalid @enderror" value="{{ old('paid_amount') }}" />
+
+                        @if ( $errors->has('paid_amount') )
+                          <div class="text-danger fz-14 fw-bold" role="alert">
+                            {{ $errors->first('paid_amount') }}
+                          </div>
+                        @endif
+                      </div>
+                    </div>
+
+                    {{--Due-Amount--}}
+                    <div class="due-amount d-flex justify-content-between">
+                      <label for="" class="fw-bold"><span>Due Amount</span></label>
+                      <div class="amount">
+                        <input type="number" min="0" step="1" name="due_amount" id="due_amount" class="form-control border-secondary brd-3 @error('due_amount') is-invalid @enderror" value="{{ old('due_amount') }}" />
+
+                        @if ( $errors->has('due_amount') )
+                          <div class="text-danger fz-14 fw-bold" role="alert">
+                            {{ $errors->first('due_amount') }}
+                          </div>
+                        @endif
+                      </div>
+                    </div>
+                  </div>
+
+                  {{--Notes--}}
+                  <div class="order-lg-1 order-sm-3 col-lg-3 col-md-4 col-sm-6 col-12 mb-10 lh-1 notes">
+                    {{--<label for="" class="fw-bold mr-15"><span>Notes</span></label>--}}
+                    <textarea name="notes" id="notes" class="h-100 form-control d-inline-block border-secondary brd-3" rows="3" placeholder="Notes"></textarea>
+                  </div>
+
+                  {{--Entry-By--}}
+                  <div class="order-lg-5 order-sm-5 align-self-end col-lg-3 col-md-4 col-sm-6 col-12 mb-10 entry_by">
+                    {{--<label for="" class="w-100 mr-15"><span>Entry By</span></label>--}}
+                    <select name="entry_by" id="entry_by" class="form-select border-secondary brd-3 @error('entry_by') is-invalid @enderror">
+                      <option value="">Entry By</option>
+                      @if ( $employee_all )
+                        @foreach ( $employee_all as $employee )
+                          <option value="{{ $employee->uid }}">
+                            {{ $employee->name }}
+                          </option>
+                        @endforeach
+                      @endif
+                    </select>
+
+                    @if ( $errors->has('entry_by') )
+                      <div class="text-danger fz-14 fw-bold" role="alert">
+                        {{ $errors->first('entry_by') }}
+                      </div>
+                    @endif
+                  </div>
+
+                  {{--Submit--}}
+                  <div class="order-last align-self-end offset-lg-6 col-lg-3 col-md-4 col-sm-6 col-12 mb-10 text-end">
+                    <button class="btn btn-primary w-100 py-sm-1">Submit</button>
+                  </div>
+                </div> {{--/.row--}}
+              </div> {{--/.form-bottom--}}
+            </form>
+
+
+            <div id="Clone-Accordion" class="d-none">
+              <div class="accordion-item border-secondary-2" id="">
+                <h2 class="accordion-header p-relative" id="accordionHeading">
+                  <button class="accordion-button fw-bold p-15" type="button" data-bs-toggle="collapse" data-bs-target="#accordionCollapse" aria-expanded="true" aria-controls="accordionCollapse">
+                    Item #<span class="item-count">#</span>
+                  </button>
+                  <span onclick="RemoveAccordionItem(this);"
+                        class="remove-accordion-item d-none before-shadow p-absolute pos-top-right w-30px h-30px bg-danger text-white fz-20 text-center lh-1-5 mt-10 mr-50 brd-50 cur-pointer z-index-11">
+                    <i class="fa fa-close"></i>
+                  </span>
+                </h2>
+                <div id="accordionCollapse" class="accordion-collapse collapse show" aria-labelledby="accordionHeading" data-bs-parent="#Accordion-Parent">
+                  <div class="accordion-body px-15 pb-5">
+                    <div class="row gx-0 gx-sm-2 p-relative">
+                      <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-name">
+                        <input type="text" name="item_name[]" id="item_name" class="item_name form-control border-secondary brd-3" placeholder="Item Name" value="" />
+                        <input type="hidden" name="item_id[]" id="item_id" class="item_id" value="" />
+                        <input type="hidden" name="item_uid[]" id="item_uid" class="item_uid" value="" />
+                        <input type="hidden" name="item_slug[]" id="item_slug" class="item_slug" value="" />
+                      </div>
+
+                      <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-size">
+                        <input type="text" name="item_size[]" id="item_size" class="item_size form-control border-secondary brd-3" placeholder="Size" value="" />
+                      </div>
+
+                      <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-serials">
+                        <input type="text" name="item_serials[]" id="item_serials" class="item_serials form-control border-secondary brd-3" placeholder="Serials" value="" />
+                      </div>
+
+                      <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-unit">
+                        <select name="item_unit[]" id="item_unit" class="item_unit form-select border-secondary brd-3">
+                          <option value="pcs">Pcs</option>
+                          <option value="metre">Metre</option>
+                          <option value="litre">Litre</option>
+                        </select>
+                      </div>
+
+                      <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-unit-price">
+                        <input type="number" min="0" step="0.10" name="item_unit_price[]" id="item_unit_price" class="item_unit_price form-control border-secondary brd-3" placeholder="Unit Price" value="" />
+                      </div>
+
+                      <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-qty">
+                        <input type="number" min="0" name="item_qty[]" id="item_qty" class="item_qty form-control border-secondary brd-3" placeholder="Quantity" value="" />
+                      </div>
+
+                      <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-amount">
+                        <input type="number" min="0" name="item_amount[]" id="item_amount" class="item_amount form-control border-secondary brd-3" placeholder="Item Amount" value="" />
+                      </div>
+
+                      <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-remarks">
+                        <input type="text" name="item_remarks[]" id="item_remarks" class="item_remarks form-control border-secondary brd-3" placeholder="Remarks" value="" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div> {{--/#Clone-Accordion .d-none--}}
+
+          </div> {{-- ./page-content-area --}}
+        </div> {{-- ./card-body --}}
+      </div> {{-- ./card --}}
+    </div> {{-- ./page-content --}}
+  </div> {{-- ./container --}}
 </div> {{-- ./Page View-Name --}}
 @endsection
 
@@ -495,31 +624,131 @@
   }
 
 
+	// Calculate Total-Amount
+  function CalculateTotalAmount(){
+		let total_amount = 0;
+		$("#Accordion-Parent input.item_amount").each(function(){
+			total_amount += Number( $(this).val() );
+		});
+		$(".total-qty-amount #total_amount").text( total_amount.toFixed(2) );
+  }
+
+	// Get Total-Amount
+	function GetTotalAmount(){
+    return Number( $(".total-qty-amount #total_amount").text() );
+  }
+
+	// Calculate Total-Quantity
+  function CalculateTotalQuantity(){
+		let total_qty = 0;
+		$("#Accordion-Parent input.item_qty").each(function(){
+			total_qty += Number( $(this).val() );
+		});
+		$(".total-qty-amount #total_qty").text( total_qty );
+  }
+
+	// Get Total-Quantity
+	function GetTotalQuantity(){
+		return Number( $(".total-qty-amount #total_qty").text() );
+	}
+
+	// If Amount Is Full Paid
+	function IsFullPaid(){
+		return $(".payment-status #is_paid").prop("checked") === true;
+  }
+
+  // If Amount Is Partial Paid
+	function IsPartialPaid(){
+		return $(".payment-status #is_partial_paid").prop("checked") === true;
+  }
+
+  // Set Paid Amount
+  function SetPaidAmount(getAmount){
+		$(".paid-due-amount #paid_amount").val( getAmount.toFixed(2) );
+  }
+
+	// Set Due Amount
+  function SetDueAmount(getAmount){
+		$(".paid-due-amount #due_amount").val( getAmount.toFixed(2) );
+  }
+
+
   // Calculate Quantity & Amount
 	CalculateAmountByUnitPriceAndQuantity();
 	function CalculateAmountByUnitPriceAndQuantity(){
+		// Calculate Item-Quantity-Amount & Total-Quantity-Amount
 		$("#Accordion-Parent input.item_unit_price").each(function(){
 			$(this).keyup(function(){
 				let inputParentId = $(this).closest(".accordion-item")[0].id;
 				let quantity = $(`#${inputParentId} input.item_qty`).val();
-				if( quantity !== "" ){
+
+				if( $(this).val() !== "" && quantity !== "" ){
 					let item_amount = Number($(this).val()) * Number(quantity);
-					$(`#${inputParentId} input.item_amount`).val( item_amount );
-				}
+					$(`#${inputParentId} input.item_amount`).val( item_amount.toFixed(2) );
+					CalculateTotalQuantity();
+					CalculateTotalAmount();
+					if( IsFullPaid() ) SetPaidAmount( GetTotalAmount() );
+					if( IsPartialPaid() ) SetDueAmount( GetTotalAmount() );
+
+					// let total_qty = 0, total_amount = 0;
+					// Calculate Total-Quantity
+					/*$("#Accordion-Parent input.item_qty").each(function(){
+						total_qty += Number( $(this).val() );
+					});
+					$(".total-qty-amount #total_qty").text( total_qty );*/
+
+					// Calculate Total-Amount
+					/*$("#Accordion-Parent input.item_amount").each(function(){
+						total_amount += Number( $(this).val() );
+					});
+					$(".total-qty-amount #total_amount").text( total_amount.toFixed(2) );*/
+
+				} else{
+					$(`#${inputParentId} input.item_amount`).val("");
+					CalculateTotalAmount();
+					if( IsFullPaid() ) SetPaidAmount(0);
+					if( IsPartialPaid() ) SetDueAmount(0);
+        }
 			});
     });
 
+		// Calculate Item-Unit-Price-Amount & Total-Quantity-Amount
 		$("#Accordion-Parent input.item_qty").each(function(){
 			$(this).keyup(function(){
 				let inputParentId = $(this).closest(".accordion-item")[0].id;
 				let unit_price = $(`#${inputParentId} input.item_unit_price`).val();
-				if( unit_price !== "" ){
+				if( $(this).val() !== "" && unit_price !== "" ){
 					let item_amount = Number($(this).val()) * Number(unit_price);
-					$(`#${inputParentId} input.item_amount`).val( item_amount );
+					$(`#${inputParentId} input.item_amount`).val( item_amount.toFixed(2) );
+
+				} else{
+					$(`#${inputParentId} input.item_amount`).val("");
+				}
+
+				let total_qty = 0, total_amount = 0;
+				// Calculate Total Quantity
+				$("#Accordion-Parent input.item_qty").each(function(){
+					total_qty += Number( $(this).val() );
+        });
+				$(".total-qty-amount #total_qty").text( total_qty );
+
+				// Calculate Total Amount
+				$("#Accordion-Parent input.item_amount").each(function(){
+					total_amount += Number( $(this).val() );
+				});
+				$(".total-qty-amount #total_amount").text( total_amount.toFixed(2) );
+
+				// If payment-status checked full / partial paid
+				if( $(".payment-status #is_paid").prop("checked") === true ){
+					$(".paid-due-amount #paid_amount").val( total_amount.toFixed(2) );
+				}
+				if( $(".payment-status #is_partial_paid").prop("checked") === true ){
+					$(".paid-due-amount #due_amount").val( total_amount.toFixed(2) );
 				}
 			});
 		});
 
+		// Calculate Item-Quantity-Unit-Price & Total-Quantity-Amount
 		$("#Accordion-Parent input.item_amount").each(function(){
 			$(this).keyup(function(){
 				let inputParentId = $(this).closest(".accordion-item")[0].id;
@@ -534,12 +763,29 @@
 
 				if( $(item_qty).val() !== "" ){
 					let unit_price = Number($(this).val()) / Number($(item_qty).val());
-          $(`#${inputParentId} input.item_unit_price`).val( unit_price );
+          $(item_unit_price).val( unit_price.toFixed(2) );
+
+					let total_qty = 0, total_amount = 0;
+					// Calculate Total-Quantity
+					$("#Accordion-Parent input.item_qty").each(function(){
+						total_qty += Number( $(this).val() );
+					});
+					$(".total-qty-amount #total_qty").text( total_qty );
+
+					// Calculate Total-Amount
+					$("#Accordion-Parent input.item_amount").each(function(){
+						total_amount += Number( $(this).val() );
+					});
+					$(".total-qty-amount #total_amount").text( total_amount.toFixed(2) );
+
+					// If payment-status checked full / partial paid
+					if( $(".payment-status #is_paid").prop("checked") === true ){
+						$(".paid-due-amount #paid_amount").val( total_amount.toFixed(2) );
+					}
+					if( $(".payment-status #is_partial_paid").prop("checked") === true ){
+						$(".paid-due-amount #due_amount").val( total_amount.toFixed(2) );
+					}
 				}
-				/*if( $(item_unit_price).val() !== "" && $(item_qty).val() === "" ){
-					let quantity = Number($(this).val()) / Number($(item_unit_price).val());
-					$(`#${inputParentId} input.item_qty`).val( quantity );
-				}*/
 			});
 		});
   }
@@ -678,6 +924,31 @@
       AlertErrorMessage("At least one item should be kept.", "");
 		}
 	}
+
+
+  // Payment Status Change to Full-Paid / Partial-Paid
+	PaymentStatusChange();
+	function PaymentStatusChange(){
+		$(".payment-status #is_paid").click(function(){
+			if( $(this).prop("checked") === true ){
+				$(".payment-status #is_partial_paid").prop("checked", false);
+
+				let total_amount = Number( $(".total-qty-amount #total_amount").text() ).toFixed(2);
+				$(".paid-due-amount #paid_amount").val( total_amount );
+				$(".paid-due-amount #due_amount").val("0.00");
+			}
+    });
+
+		$(".payment-status #is_partial_paid").click(function(){
+			if( $(this).prop("checked") === true ){
+				$(".payment-status #is_paid").prop("checked", false);
+
+				let total_amount = Number( $(".total-qty-amount #total_amount").text() ).toFixed(2);
+				$(".paid-due-amount #paid_amount").val("0.00");
+				$(".paid-due-amount #due_amount").val( total_amount );
+			}
+		});
+  }
 
 
 </script>
