@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="Page Vehicle-Parts-Purchase New">
-  <div class="container-lg">
+  <div class="container-fluid">
     <div class="page-content">
       <div class="card">
         <div class="card-header page-header bg-success text-white">
@@ -21,61 +21,69 @@
               <div class="form-top-and-center">
                 <div class="form-top">
                   <div class="row mb-sm-3">
-                    {{--Purchase-Number--}}
-                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 purchase_no">
-                      <label for="" class="required w-100 mr-15"><span>Purchase No.#</span></label>
-                      <input readonly type="text" name="purchase_no" id="purchase_no" class="required form-control fw-bold border-secondary brd-3 @error('purchase_no') is-invalid @enderror" value="{{ old('purchase_no') }}" />
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 purchase-no-date">
+                      <div class="row gx-2">
+                        {{--Purchase-Number--}}
+                        <div class="col-6 purchase_no">
+                          <label for="" class="required w-100 mr-15"><span>Purchase No.#</span></label>
+                          <input readonly type="text" name="purchase_no" id="purchase_no" class="required form-control bg-dark text-warning fw-bold border-secondary brd-3 @error('purchase_no') is-invalid @enderror" value="{{$newPurchaseNo}}" />
 
-                      @if ( $errors->has('purchase_no') )
-                        <div class="text-danger fz-14 fw-bold" role="alert">
-                          {{ $errors->first('purchase_no') }}
+                          @if ( $errors->has('purchase_no') )
+                            <div class="text-danger fz-14 fw-bold" role="alert">
+                              {{ $errors->first('purchase_no') }}
+                            </div>
+                          @endif
                         </div>
-                      @endif
-                    </div>
 
-                    {{--Purchase-Date--}}
-                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 purchase_date">
-                      <label for="" class="w-100 mr-15"><span>Purchase Date</span></label>
-                      <div class="p-relative date-select">
-                        <input type="text" name="date" id="purchase_date" class="input-date form-control d-inline-block text-start border-secondary brd-3 z-index-9 @error('date') is-invalid @enderror" placeholder="dd-mm-yyyy" value="{{ old('date') }}" />
-                        <label for="purchase_date" class="input-label-icon p-absolute pos-top-right text-danger-deep fz-19 lh-1-3 mr-1 p-5 cur-pointer z-index-11"><i class="fa fa-calendar"></i></label>
+                        {{--Purchase-Type--}}
+                        <div class="col-6 purchase-type">
+                          <label for="" class="required w-100 mr-15"><span>Type</span></label>
+                          <select name="purchase_type" id="purchase_type" class="required form-select border-secondary brd-3 @error('purchase_type') is-invalid @enderror">
+                            @foreach ( $purchase_type as $type )
+                              <option value="{{$type}}" {{ $type == 'vehicle-parts' ? 'selected' : '' }}>
+                                {{ ucwords(str_replace('-', ' ', $type)) }}
+                              </option>
+                            @endforeach
+                          </select>
+
+                          @if ( $errors->has('purchase_type') )
+                            <div class="text-danger fz-14 fw-bold" role="alert">
+                              {{ $errors->first('purchase_type') }}
+                            </div>
+                          @endif
+                        </div>
                       </div>
-
-                      @if ( $errors->has('date') )
-                        <div class="text-danger fz-14 fw-bold" role="alert">
-                          {{ $errors->first('date') }}
-                        </div>
-                      @endif
                     </div>
 
-                    {{--Memo-Number--}}
-                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 memo_no">
-                      <label for="" class="required w-100 mr-15"><span>Memo No.#</span></label>
-                      <input type="text" name="memo_no" id="memo_no" class="required form-control border-secondary brd-3 @error('memo_no') is-invalid @enderror" placeholder="0253" value="{{ old('memo_no') }}" />
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 memo-date-no">
+                      <div class="row gx-2">
+                        {{--Purchase/Memo-Date--}}
+                        <div class="col-6 purchase_date">
+                          <label for="" class="required w-100 mr-15"><span>Memo Date</span></label>
+                          <div class="p-relative date-select">
+                            <input type="text" name="date" id="purchase_date" class="input-date required form-control d-inline-block text-start border-secondary brd-3 z-index-9 @error('date') is-invalid @enderror" placeholder="dd-mm-yyyy" value="{{ old('date') }}" />
+                            <label for="purchase_date" class="input-label-icon p-absolute pos-top-right text-danger-deep fz-19 lh-1-3 mr-1 p-5 cur-pointer z-index-11"><i class="fa fa-calendar"></i></label>
+                          </div>
 
-                      @if ( $errors->has('memo_no') )
-                        <div class="text-danger fz-14 fw-bold" role="alert">
-                          {{ $errors->first('memo_no') }}
+                          @if ( $errors->has('date') )
+                            <div class="text-danger fz-14 fw-bold" role="alert">
+                              {{ $errors->first('date') }}
+                            </div>
+                          @endif
                         </div>
-                      @endif
-                    </div>
 
-                    {{--Purchase-Type--}}
-                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 purchase_type">
-                      <label for="" class="required w-100 mr-15"><span>Purchase Type</span></label>
-                      <select name="type" id="type" class="required form-select border-secondary brd-3 @error('type') is-invalid @enderror">
-                        @foreach ( $purchase_type as $type )
-                          <option value="{{ $type }}" {{ $type == 'vehicle-parts' ? 'selected' : '' }}>
-                            {{ ucwords(str_replace('-', ' ', $type)) }}
-                          </option>
-                        @endforeach
-                      </select>
+                        {{--Memo-Number--}}
+                        <div class="col-6 memo_no">
+                          <label for="" class="required w-100 mr-15"><span>Memo No.#</span></label>
+                          <input type="text" name="memo_no" id="memo_no" class="required form-control border-secondary brd-3 @error('memo_no') is-invalid @enderror" placeholder="0253" value="{{ old('memo_no') }}" />
 
-                      @if ( $errors->has('type') )
-                        <div class="text-danger fz-14 fw-bold" role="alert">
-                          {{ $errors->first('type') }}
+                          @if ( $errors->has('memo_no') )
+                            <div class="text-danger fz-14 fw-bold" role="alert">
+                              {{ $errors->first('memo_no') }}
+                            </div>
+                          @endif
                         </div>
-                      @endif
+                      </div>
                     </div>
 
                     {{--Vehicle-Number--}}
@@ -85,7 +93,7 @@
                         <option value="">Select Vehicle</option>
                         @if ( $vehicle_all )
                           @foreach ( $vehicle_all as $vehicle )
-                            <option value="{{ $vehicle->uid }}">
+                            <option value="{{$vehicle->id}}">
                               {{ $vehicle->vehicle_no }}
                             </option>
                           @endforeach
@@ -95,6 +103,21 @@
                       @if ( $errors->has('vehicle_id') )
                         <div class="text-danger fz-14 fw-bold" role="alert">
                           {{ $errors->first('vehicle_id') }}
+                        </div>
+                      @endif
+                    </div>
+
+                    {{--Bill-Number--}}
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 bill_no">
+                      <label for="" class="w-100 mr-15">
+                        <span>Bill No.#</span>
+                        <span class="text-secondary fz-14">(If already bill done)</span>
+                      </label>
+                      <input type="text" name="bill_no" id="bill_no" class="form-control border-secondary brd-3 @error('bill_no') is-invalid @enderror" placeholder="BL-{{date('Y')}}/00246" value="{{ old('bill_no') }}" />
+
+                      @if ( $errors->has('bill_no') )
+                        <div class="text-danger fz-14 fw-bold" role="alert">
+                          {{ $errors->first('bill_no') }}
                         </div>
                       @endif
                     </div>
@@ -110,27 +133,6 @@
                         </div>
                       @endif
                     </div>--}}
-
-                    {{--Purchase-By--}}
-                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 purchaser_id">
-                      <label for="" class="w-100 mr-15"><span>Purchase By</span></label>
-                      <select name="purchaser_id" id="purchaser_id" class="form-select border-secondary brd-3 @error('purchaser_id') is-invalid @enderror">
-                        <option value="">Select Purchaser</option>
-                        @if ( $purchaser_all )
-                          @foreach ( $purchaser_all as $purchaser )
-                            <option value="{{ $purchaser->uid }}">
-                              {{ $purchaser->name }}
-                            </option>
-                          @endforeach
-                        @endif
-                      </select>
-
-                      @if ( $errors->has('purchaser_id') )
-                        <div class="text-danger fz-14 fw-bold" role="alert">
-                          {{ $errors->first('purchaser_id') }}
-                        </div>
-                      @endif
-                    </div>
 
                     {{--Purchaser-Name--}}
                     {{--<div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 purchaser_name">
@@ -151,7 +153,7 @@
                         <option value="">Select Supplier</option>
                         @if ( $supplier_all )
                           @foreach ( $supplier_all as $supplier )
-                            <option value="{{ $supplier->uid }}">
+                            <option value="{{$supplier->id}}">
                               {{ $supplier->name }}
                             </option>
                           @endforeach
@@ -189,62 +191,73 @@
                       @endif
                     </div>
 
-                    {{--Shop-Contact--}}
-                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 shop_contact">
-                      <label for="" class="w-100 mr-15"><span>Shop Contact</span></label>
-                      <input type="text" name="shop_contact" id="shop_contact" class="form-control border-secondary brd-3 @error('shop_contact') is-invalid @enderror" placeholder="01712-445566" value="{{ old('shop_contact') }}" />
+                    {{--Shop-Contact-Location--}}
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 shop-contact-Location">
+                      <div class="row gx-2">
+                        {{--Shop-Contact--}}
+                        <div class="col-6 shop_contact">
+                          <label for="" class="w-100 mr-15"><span>Shop Contact</span></label>
+                          <input type="text" name="shop_contact" id="shop_contact" class="form-control border-secondary brd-3 @error('shop_contact') is-invalid @enderror" placeholder="01712-445566" value="{{ old('shop_contact') }}" />
 
-                      @if ( $errors->has('shop_contact') )
-                        <div class="text-danger fz-14 fw-bold" role="alert">
-                          {{ $errors->first('shop_contact') }}
+                          @if ( $errors->has('shop_contact') )
+                            <div class="text-danger fz-14 fw-bold" role="alert">
+                              {{ $errors->first('shop_contact') }}
+                            </div>
+                          @endif
                         </div>
-                      @endif
+
+                        {{--Shop-Location--}}
+                        <div class="col-6 shop_location">
+                          <label for="" class="w-100 mr-15"><span>Shop Location</span></label>
+                          <input type="text" name="shop_location" id="shop_location" class="form-control border-secondary brd-3 @error('shop_location') is-invalid @enderror" placeholder="Mohakhali" value="{{ old('shop_location') }}" />
+
+                          @if ( $errors->has('shop_location') )
+                            <div class="text-danger fz-14 fw-bold" role="alert">
+                              {{ $errors->first('shop_location') }}
+                            </div>
+                          @endif
+                        </div>
+                      </div>
                     </div>
 
-                    {{--Shop-Location--}}
-                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 shop_location">
-                      <label for="" class="w-100 mr-15"><span>Shop Location</span></label>
-                      <input type="text" name="shop_location" id="shop_location" class="form-control border-secondary brd-3 @error('shop_location') is-invalid @enderror" placeholder="Mohakhali" value="{{ old('shop_location') }}" />
+                    {{--Purchase-By--}}
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 purchased_by">
+                      <label for="" class="w-100 mr-15"><span>Purchase By</span></label>
+                      <select name="purchased_by" id="purchased_by" class="form-select border-secondary brd-3 @error('purchased_by') is-invalid @enderror">
+                        <option value="">Select Purchaser</option>
+                        @if ( $purchaser_all )
+                          @foreach ( $purchaser_all as $purchaser )
+                            <option value="{{$purchaser->id}}">
+                              {{ $purchaser->name }}
+                            </option>
+                          @endforeach
+                        @endif
+                      </select>
 
-                      @if ( $errors->has('shop_location') )
+                      @if ( $errors->has('purchased_by') )
                         <div class="text-danger fz-14 fw-bold" role="alert">
-                          {{ $errors->first('shop_location') }}
-                        </div>
-                      @endif
-                    </div>
-
-                    {{--Bill-Number--}}
-                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 bill_no">
-                      <label for="" class="w-100 mr-15">
-                        <span>Bill No.#</span>
-                        <span class="text-secondary fz-14">(If already bill done)</span>
-                      </label>
-                      <input type="text" name="bill_no" id="bill_no" class="form-control border-secondary brd-3 @error('bill_no') is-invalid @enderror" placeholder="Bill-{{date('Y')}}/00246" value="{{ old('bill_no') }}" />
-
-                      @if ( $errors->has('bill_no') )
-                        <div class="text-danger fz-14 fw-bold" role="alert">
-                          {{ $errors->first('bill_no') }}
+                          {{ $errors->first('purchased_by') }}
                         </div>
                       @endif
                     </div>
 
                     {{--Authorized-By--}}
-                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 authorizer_id">
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 authorized_by">
                       <label for="" class="w-100 mr-15"><span>Authorized By</span></label>
-                      <select name="authorizer_id" id="authorizer_id" class="form-select border-secondary brd-3 @error('authorizer_id') is-invalid @enderror">
+                      <select name="authorized_by" id="authorized_by" class="form-select border-secondary brd-3 @error('authorized_by') is-invalid @enderror">
                         <option value="">Select Authorizer</option>
                         @if ( $authorizer_all )
                           @foreach ( $authorizer_all as $authorizer )
-                            <option value="{{ $authorizer->uid }}">
+                            <option value="{{$authorizer->id}}">
                               {{ $authorizer->name }}
                             </option>
                           @endforeach
                         @endif
                       </select>
 
-                      @if ( $errors->has('authorizer_id') )
+                      @if ( $errors->has('authorized_by') )
                         <div class="text-danger fz-14 fw-bold" role="alert">
-                          {{ $errors->first('authorizer_id') }}
+                          {{ $errors->first('authorized_by') }}
                         </div>
                       @endif
                     </div>
@@ -369,13 +382,13 @@
                     <label for="" class="fw-bold mr-15 mb-5"><span>Payment Status</span></label>
                     <div class="d-flex flex-row flex-sm-column">
                       <div class="form-check me-4 me-sm-0 mb-5 full-paid">
-                        <input type="checkbox" name="is_paid" id="is_paid" class="form-check-input border-secondary" value="full-paid" />
-                        <label class="form-check-label" for="is_paid">Full Paid</label>
+                        <input type="checkbox" name="is_paid" id="is_paid" class="form-check-input border-secondary cur-pointer" value="full-paid" />
+                        <label class="form-check-label cur-pointer" for="is_paid">Full Paid</label>
                       </div>
 
                       <div class="form-check partial-paid">
-                        <input type="checkbox" name="is_partial_paid" id="is_partial_paid" class="form-check-input border-secondary" value="partial-paid" />
-                        <label class="form-check-label" for="is_partial_paid">Partial Paid</label>
+                        <input type="checkbox" name="is_partial_paid" id="is_partial_paid" class="form-check-input border-secondary cur-pointer" value="partial-paid" />
+                        <label class="form-check-label cur-pointer" for="is_partial_paid">Partial Paid</label>
                       </div>
                     </div>
                   </div>
@@ -420,11 +433,11 @@
                   {{--Entry-By--}}
                   <div class="order-lg-5 order-sm-5 align-self-end col-lg-3 col-md-4 col-sm-6 col-12 mb-10 entry_by">
                     {{--<label for="" class="w-100 mr-15"><span>Entry By</span></label>--}}
-                    <select name="entry_by" id="entry_by" class="form-select border-secondary brd-3 @error('entry_by') is-invalid @enderror">
+                    <select {{auth()->user() ? 'disabled' : ''}} name="entry_by" id="entry_by" class="form-select border-secondary brd-3 @error('entry_by') is-invalid @enderror">
                       <option value="">Entry By</option>
                       @if ( $employee_all )
                         @foreach ( $employee_all as $employee )
-                          <option value="{{ $employee->uid }}">
+                          <option value="{{$employee->id}}">
                             {{ $employee->name }}
                           </option>
                         @endforeach
@@ -624,8 +637,12 @@
   }
 
 
-	// Calculate Total-Amount
-  function CalculateTotalAmount(){
+	// Get Total-Amount
+	function GetTotalAmount(){
+		return Number( $(".total-qty-amount #total_amount").text() );
+	}
+	// Print Total-Amount
+  function PrintTotalAmount(){
 		let total_amount = 0;
 		$("#Accordion-Parent input.item_amount").each(function(){
 			total_amount += Number( $(this).val() );
@@ -633,13 +650,12 @@
 		$(".total-qty-amount #total_amount").text( total_amount.toFixed(2) );
   }
 
-	// Get Total-Amount
-	function GetTotalAmount(){
-    return Number( $(".total-qty-amount #total_amount").text() );
-  }
-
-	// Calculate Total-Quantity
-  function CalculateTotalQuantity(){
+	// Get Total-Quantity
+	function GetTotalQuantity(){
+		return Number( $(".total-qty-amount #total_qty").text() );
+	}
+	// Print Total-Quantity
+  function PrintTotalQuantity(){
 		let total_qty = 0;
 		$("#Accordion-Parent input.item_qty").each(function(){
 			total_qty += Number( $(this).val() );
@@ -647,35 +663,54 @@
 		$(".total-qty-amount #total_qty").text( total_qty );
   }
 
-	// Get Total-Quantity
-	function GetTotalQuantity(){
-		return Number( $(".total-qty-amount #total_qty").text() );
-	}
-
 	// If Amount Is Full Paid
 	function IsFullPaid(){
 		return $(".payment-status #is_paid").prop("checked") === true;
   }
+	// Check Full-Paid
+	function CheckFullPaid(){
+		$(".payment-status #is_paid").prop("checked", true);
+	}
+	// Uncheck Full-Paid
+	function UncheckFullPaid(){
+		$(".payment-status #is_paid").prop("checked", false);
+	}
 
   // If Amount Is Partial Paid
 	function IsPartialPaid(){
 		return $(".payment-status #is_partial_paid").prop("checked") === true;
   }
+	// Check Partial-Paid
+	function CheckPartialPaid(){
+		$(".payment-status #is_partial_paid").prop("checked", true);
+	}
+	// Uncheck Partial-Paid
+	function UncheckPartialPaid(){
+		$(".payment-status #is_partial_paid").prop("checked", false);
+	}
 
-  // Set Paid Amount
-  function SetPaidAmount(getAmount){
-		$(".paid-due-amount #paid_amount").val( getAmount.toFixed(2) );
+	// Get Paid Amount
+	function GetPaidAmount(){
+		return Number( $(".paid-due-amount #paid_amount").val() );
+	}
+  // Print Paid Amount
+  function PrintPaidAmount(getAmount){
+		$(".paid-due-amount #paid_amount").val( getAmount.toFixed(0) );
   }
 
-	// Set Due Amount
-  function SetDueAmount(getAmount){
-		$(".paid-due-amount #due_amount").val( getAmount.toFixed(2) );
+	// Get Due Amount
+	function GetDueAmount(){
+		return Number( $(".paid-due-amount #due_amount").val() );
+	}
+	// Print Due Amount
+  function PrintDueAmount(getAmount){
+		$(".paid-due-amount #due_amount").val( getAmount.toFixed(0) );
   }
 
 
-  // Calculate Quantity & Amount
-	CalculateAmountByUnitPriceAndQuantity();
-	function CalculateAmountByUnitPriceAndQuantity(){
+  // Calculate Unit-Price Quantity & Amount
+	Calculate_UnitPrice_Quantity_Amount();
+	function Calculate_UnitPrice_Quantity_Amount(){
 		// Calculate Item-Quantity-Amount & Total-Quantity-Amount
 		$("#Accordion-Parent input.item_unit_price").each(function(){
 			$(this).keyup(function(){
@@ -684,30 +719,19 @@
 
 				if( $(this).val() !== "" && quantity !== "" ){
 					let item_amount = Number($(this).val()) * Number(quantity);
-					$(`#${inputParentId} input.item_amount`).val( item_amount.toFixed(2) );
-					CalculateTotalQuantity();
-					CalculateTotalAmount();
-					if( IsFullPaid() ) SetPaidAmount( GetTotalAmount() );
-					if( IsPartialPaid() ) SetDueAmount( GetTotalAmount() );
-
-					// let total_qty = 0, total_amount = 0;
-					// Calculate Total-Quantity
-					/*$("#Accordion-Parent input.item_qty").each(function(){
-						total_qty += Number( $(this).val() );
-					});
-					$(".total-qty-amount #total_qty").text( total_qty );*/
-
-					// Calculate Total-Amount
-					/*$("#Accordion-Parent input.item_amount").each(function(){
-						total_amount += Number( $(this).val() );
-					});
-					$(".total-qty-amount #total_amount").text( total_amount.toFixed(2) );*/
+					$(`#${inputParentId} input.item_amount`).val( item_amount.toFixed(0) );
 
 				} else{
 					$(`#${inputParentId} input.item_amount`).val("");
-					CalculateTotalAmount();
-					if( IsFullPaid() ) SetPaidAmount(0);
-					if( IsPartialPaid() ) SetDueAmount(0);
+				}
+
+        PrintTotalQuantity();
+        PrintTotalAmount();
+        if( IsFullPaid() ) PrintPaidAmount( GetTotalAmount() );
+        if( IsPartialPaid() ) PrintDueAmount( GetTotalAmount() );
+        if( !IsFullPaid() && !IsPartialPaid() ){
+          PrintPaidAmount(0);
+          PrintDueAmount( GetTotalAmount() );
         }
 			});
     });
@@ -719,31 +743,19 @@
 				let unit_price = $(`#${inputParentId} input.item_unit_price`).val();
 				if( $(this).val() !== "" && unit_price !== "" ){
 					let item_amount = Number($(this).val()) * Number(unit_price);
-					$(`#${inputParentId} input.item_amount`).val( item_amount.toFixed(2) );
+					$(`#${inputParentId} input.item_amount`).val( item_amount.toFixed(0) );
 
 				} else{
 					$(`#${inputParentId} input.item_amount`).val("");
 				}
 
-				let total_qty = 0, total_amount = 0;
-				// Calculate Total Quantity
-				$("#Accordion-Parent input.item_qty").each(function(){
-					total_qty += Number( $(this).val() );
-        });
-				$(".total-qty-amount #total_qty").text( total_qty );
-
-				// Calculate Total Amount
-				$("#Accordion-Parent input.item_amount").each(function(){
-					total_amount += Number( $(this).val() );
-				});
-				$(".total-qty-amount #total_amount").text( total_amount.toFixed(2) );
-
-				// If payment-status checked full / partial paid
-				if( $(".payment-status #is_paid").prop("checked") === true ){
-					$(".paid-due-amount #paid_amount").val( total_amount.toFixed(2) );
-				}
-				if( $(".payment-status #is_partial_paid").prop("checked") === true ){
-					$(".paid-due-amount #due_amount").val( total_amount.toFixed(2) );
+				PrintTotalQuantity();
+				PrintTotalAmount();
+				if( IsFullPaid() ) PrintPaidAmount( GetTotalAmount() );
+				if( IsPartialPaid() ) PrintDueAmount( GetTotalAmount() );
+				if( !IsFullPaid() && !IsPartialPaid() ){
+					PrintPaidAmount(0);
+					PrintDueAmount( GetTotalAmount() );
 				}
 			});
 		});
@@ -755,36 +767,24 @@
 				let item_qty = $(`#${inputParentId} input.item_qty`);
 				let item_unit_price = $(`#${inputParentId} input.item_unit_price`);
 
-				if( $(item_unit_price).val() === "" && $(item_qty).val() === "" ){
+				if( Number($(item_qty).val()) === 0 ){
 					$(this).val("");
 					item_qty[0].focus();
-          AlertErrorMessage('Please, first add "quantity" or "unit-price".', "");
+          AlertErrorMessage("Please, first add quantity!", "");
         }
 
 				if( $(item_qty).val() !== "" ){
 					let unit_price = Number($(this).val()) / Number($(item_qty).val());
-          $(item_unit_price).val( unit_price.toFixed(2) );
+          $(item_unit_price).val( unit_price.toFixed(1) );
+				}
 
-					let total_qty = 0, total_amount = 0;
-					// Calculate Total-Quantity
-					$("#Accordion-Parent input.item_qty").each(function(){
-						total_qty += Number( $(this).val() );
-					});
-					$(".total-qty-amount #total_qty").text( total_qty );
-
-					// Calculate Total-Amount
-					$("#Accordion-Parent input.item_amount").each(function(){
-						total_amount += Number( $(this).val() );
-					});
-					$(".total-qty-amount #total_amount").text( total_amount.toFixed(2) );
-
-					// If payment-status checked full / partial paid
-					if( $(".payment-status #is_paid").prop("checked") === true ){
-						$(".paid-due-amount #paid_amount").val( total_amount.toFixed(2) );
-					}
-					if( $(".payment-status #is_partial_paid").prop("checked") === true ){
-						$(".paid-due-amount #due_amount").val( total_amount.toFixed(2) );
-					}
+				PrintTotalQuantity();
+				PrintTotalAmount();
+				if( IsFullPaid() ) PrintPaidAmount( GetTotalAmount() );
+				if( IsPartialPaid() ) PrintDueAmount( GetTotalAmount() );
+				if( !IsFullPaid() && !IsPartialPaid() ){
+					PrintPaidAmount(0);
+					PrintDueAmount( GetTotalAmount() );
 				}
 			});
 		});
@@ -884,7 +884,7 @@
 			ShowPartsLists();
 			SelectPartsFromList();
 			FilterPartsList();
-			CalculateAmountByUnitPriceAndQuantity();
+			Calculate_UnitPrice_Quantity_Amount();
     });
   }
 
@@ -919,7 +919,7 @@
 			ShowPartsLists();
 			SelectPartsFromList();
 			FilterPartsList();
-			CalculateAmountByUnitPriceAndQuantity();
+			Calculate_UnitPrice_Quantity_Amount();
 		} else{
       AlertErrorMessage("At least one item should be kept.", "");
 		}
@@ -930,22 +930,70 @@
 	PaymentStatusChange();
 	function PaymentStatusChange(){
 		$(".payment-status #is_paid").click(function(){
-			if( $(this).prop("checked") === true ){
-				$(".payment-status #is_partial_paid").prop("checked", false);
+			if( IsFullPaid() ){
+				UncheckPartialPaid();
+        PrintPaidAmount( GetTotalAmount() );
+				PrintDueAmount(0);
 
-				let total_amount = Number( $(".total-qty-amount #total_amount").text() ).toFixed(2);
-				$(".paid-due-amount #paid_amount").val( total_amount );
-				$(".paid-due-amount #due_amount").val("0.00");
+      } else if( ! IsFullPaid() && ! IsPartialPaid() ){
+				PrintPaidAmount(0);
+				PrintDueAmount( GetTotalAmount() );
 			}
     });
 
 		$(".payment-status #is_partial_paid").click(function(){
-			if( $(this).prop("checked") === true ){
-				$(".payment-status #is_paid").prop("checked", false);
+			if( IsPartialPaid() ){
+				UncheckFullPaid();
+				PrintDueAmount( GetTotalAmount() );
+				// PrintPaidAmount(0);
+				$(".paid-due-amount #paid_amount").val("").focus();
+			}
+		});
+  }
 
-				let total_amount = Number( $(".total-qty-amount #total_amount").text() ).toFixed(2);
-				$(".paid-due-amount #paid_amount").val("0.00");
-				$(".paid-due-amount #due_amount").val( total_amount );
+
+  // Change Paid-And-Due-Amount
+	PaidAndDueAmount();
+	function PaidAndDueAmount(){
+    $(".paid-due-amount #paid_amount").keyup(function(){
+			if( Number($(this).val()) === 0 ) {
+				PrintDueAmount( GetTotalAmount() );
+				UncheckFullPaid(); UncheckPartialPaid();
+
+      } else if( Number($(this).val()) === GetTotalAmount() ) {
+				PrintDueAmount(0);
+				UncheckPartialPaid(); CheckFullPaid();
+
+			} else if( Number($(this).val()) > GetTotalAmount() ) {
+				PrintPaidAmount( GetTotalAmount() );
+				PrintDueAmount(0);
+				UncheckPartialPaid(); CheckFullPaid();
+				AlertErrorMessage('Paid amount should be less than or equal to total amount!', '');
+
+			} else{
+				PrintDueAmount( GetTotalAmount() - Number($(this).val()) );
+				if( ! IsPartialPaid() ) UncheckFullPaid(); CheckPartialPaid();
+			}
+    });
+
+		$(".paid-due-amount #due_amount").keyup(function(){
+			if( Number($(this).val()) === 0 ) {
+				PrintPaidAmount( GetTotalAmount() );
+				UncheckPartialPaid(); CheckFullPaid();
+
+			} else if( Number($(this).val()) === GetTotalAmount() ) {
+				PrintPaidAmount(0);
+				UncheckPartialPaid(); UncheckFullPaid();
+
+			} else if( Number($(this).val()) > GetTotalAmount() ) {
+				PrintPaidAmount(0);
+				PrintDueAmount( GetTotalAmount() );
+				UncheckPartialPaid(); UncheckFullPaid();
+				AlertErrorMessage('Due amount should be less than or equal to total amount!', '');
+
+			} else{
+				PrintPaidAmount( GetTotalAmount() - Number($(this).val()) );
+				if( ! IsPartialPaid() ) UncheckFullPaid(); CheckPartialPaid();
 			}
 		});
   }

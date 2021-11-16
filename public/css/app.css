@@ -16783,8 +16783,8 @@ body.modal-open:not(.swal2-shown) {
     border-left: 0;
     border-right: 0;
   }
-  .Vehicle-Parts-Purchase .form-top .row > div {
-    margin-bottom: 30px !important;
+  .Vehicle-Parts-Purchase .form-top > .row > div {
+    margin-bottom: 20px !important;
   }
   .Vehicle-Parts-Purchase .form-bottom > .row > div {
     margin-bottom: 20px !important;
