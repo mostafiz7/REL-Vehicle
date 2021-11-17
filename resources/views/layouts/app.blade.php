@@ -43,7 +43,7 @@
     @show
 
 
-    <div class="site-wrapper expand-default" id="SiteWrapper">
+    <div class="site-wrapper expand-default" id="Site-Wrapper">
       <main class="main-content" id="MainContent">
 
         @yield('content')

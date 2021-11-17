@@ -5,7 +5,7 @@
 @section('content')
 <div class="Page Vehicle-Parts-Purchase New">
   <div class="container-fluid">
-    <div class="page-content">
+    <div class="page-content pt-10">
       <div class="card">
         <div class="card-header page-header bg-success text-white">
           <h5 class="title mb-0">Parts New Purchase</h5>
@@ -26,13 +26,7 @@
                         {{--Purchase-Number--}}
                         <div class="col-6 purchase_no">
                           <label for="" class="required w-100 mr-15"><span>Purchase No.#</span></label>
-                          <input readonly type="text" name="purchase_no" id="purchase_no" class="required form-control bg-dark text-warning fw-bold border-secondary brd-3 @error('purchase_no') is-invalid @enderror" value="{{$newPurchaseNo}}" />
-
-                          @if ( $errors->has('purchase_no') )
-                            <div class="text-danger fz-14 fw-bold" role="alert">
-                              {{ $errors->first('purchase_no') }}
-                            </div>
-                          @endif
+                          <input readonly type="text" name="purchase_no" id="purchase_no" class="required form-control bg-dark text-warning fw-bold border-secondary brd-3" value="{{$newPurchaseNo}}" />
                         </div>
 
                         {{--Purchase-Type--}}
@@ -93,7 +87,7 @@
                         <option value="">Select Vehicle</option>
                         @if ( $vehicle_all )
                           @foreach ( $vehicle_all as $vehicle )
-                            <option value="{{$vehicle->id}}">
+                            <option value="{{$vehicle->id}}" {{$vehicle->id == old('vehicle_id') ? 'selected' : ''}}>
                               {{ $vehicle->vehicle_no }}
                             </option>
                           @endforeach
@@ -122,18 +116,6 @@
                       @endif
                     </div>
 
-                    {{--Requisition-Number--}}
-                    {{--<div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 requisition_no">
-                      <label for="" class="w-100 mr-15"><span>Requisition No.#</span></label>
-                      <input type="text" name="requisition_no" id="requisition_no" class="form-control border-secondary brd-3 @error('requisition_no') is-invalid @enderror" placeholder="{{ 'RQ-' . date('Y') . '/0526' }}" value="{{ old('requisition_no') }}" />
-
-                      @if ( $errors->has('requisition_no') )
-                        <div class="text-danger fz-14 fw-bold" role="alert">
-                          {{ $errors->first('requisition_no') }}
-                        </div>
-                      @endif
-                    </div>--}}
-
                     {{--Purchaser-Name--}}
                     {{--<div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 purchaser_name">
                       <label for="" class="w-100 mr-15"><span>Purchaser Name</span></label>
@@ -142,6 +124,18 @@
                       @if ( $errors->has('purchaser_name') )
                         <div class="text-danger fz-14 fw-bold" role="alert">
                           {{ $errors->first('purchaser_name') }}
+                        </div>
+                      @endif
+                    </div>--}}
+
+                    {{--Requisition-Number--}}
+                    {{--<div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 requisition_no">
+                      <label for="" class="w-100 mr-15"><span>Requisition No.#</span></label>
+                      <input type="text" name="requisition_no" id="requisition_no" class="form-control border-secondary brd-3 @error('requisition_no') is-invalid @enderror" placeholder="{{ 'RQ-' . date('Y') . '/0526' }}" value="{{ old('requisition_no') }}" />
+
+                      @if ( $errors->has('requisition_no') )
+                        <div class="text-danger fz-14 fw-bold" role="alert">
+                          {{ $errors->first('requisition_no') }}
                         </div>
                       @endif
                     </div>--}}
@@ -222,12 +216,12 @@
 
                     {{--Purchase-By--}}
                     <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 purchased_by">
-                      <label for="" class="w-100 mr-15"><span>Purchase By</span></label>
-                      <select name="purchased_by" id="purchased_by" class="form-select border-secondary brd-3 @error('purchased_by') is-invalid @enderror">
+                      <label for="" class="required w-100 mr-15"><span>Purchase By</span></label>
+                      <select name="purchased_by" id="purchased_by" class="required form-select border-secondary brd-3 @error('purchased_by') is-invalid @enderror">
                         <option value="">Select Purchaser</option>
                         @if ( $purchaser_all )
                           @foreach ( $purchaser_all as $purchaser )
-                            <option value="{{$purchaser->id}}">
+                            <option value="{{$purchaser->id}}" {{$purchaser->id == old('purchased_by') ? 'selected' : ''}}>
                               {{ $purchaser->name }}
                             </option>
                           @endforeach
@@ -248,7 +242,7 @@
                         <option value="">Select Authorizer</option>
                         @if ( $authorizer_all )
                           @foreach ( $authorizer_all as $authorizer )
-                            <option value="{{$authorizer->id}}">
+                            <option value="{{$authorizer->id}}" {{$authorizer->id == old('authorized_by') ? 'selected' : ''}}>
                               {{ $authorizer->name }}
                             </option>
                           @endforeach
@@ -365,15 +359,15 @@
                     {{--Total-Quantity--}}
                     <div class="total-qty d-flex justify-content-between mb-5">
                       <label for="" class="fw-bold"><span>Total Qty.</span></label>
-                      {{--<input type="text" readonly name="total_qty" id="total_qty" class="form-control border-secondary brd-3 bg-dark text-white no-shadow cur-default" value="" />--}}
-                      <div id="total_qty" class="d-inline-block h-30px bg-dark text-warning text-center lh-1-8 border-secondary brd-3">0</div>
+                      <div id="item_total_qty" class="d-inline-block h-30px bg-dark text-warning text-center lh-1-8 border-secondary brd-3">0</div>
+                      <input type="hidden" name="total_qty" id="total_qty" class="total_qty form-control border-secondary brd-3" value="" />
                     </div>
 
                     {{--Total-Amount--}}
                     <div class="total-amount d-flex justify-content-between mb-5">
                       <label for="" class="fw-bold"><span>Total Amount</span></label>
-                      {{--<input type="text" readonly name="total_amount" id="total_amount" class="form-control border-secondary brd-3 bg-dark text-white no-shadow cur-default" value="" />--}}
-                      <div id="total_amount" class="d-inline-block h-30px bg-dark text-warning text-center lh-1-8 border-secondary brd-3">0.00</div>
+                      <div id="item_total_amount" class="d-inline-block h-30px bg-dark text-warning text-center lh-1-8 border-secondary brd-3">0.00</div>
+                      <input type="hidden" name="total_amount" id="total_amount" class="total_amount form-control border-secondary brd-3" value="" />
                     </div>
                   </div>
 
@@ -437,7 +431,7 @@
                       <option value="">Entry By</option>
                       @if ( $employee_all )
                         @foreach ( $employee_all as $employee )
-                          <option value="{{$employee->id}}">
+                          <option value="{{$employee->id}}" {{$employee->id == old('entry_by') ? 'selected' : ''}}>
                             {{ $employee->name }}
                           </option>
                         @endforeach
@@ -639,28 +633,30 @@
 
 	// Get Total-Amount
 	function GetTotalAmount(){
-		return Number( $(".total-qty-amount #total_amount").text() );
+		return Number( $(".total-qty-amount #item_total_amount").text() );
 	}
 	// Print Total-Amount
   function PrintTotalAmount(){
-		let total_amount = 0;
+		let item_total_amount = 0;
 		$("#Accordion-Parent input.item_amount").each(function(){
-			total_amount += Number( $(this).val() );
+			item_total_amount += Number( $(this).val() );
 		});
-		$(".total-qty-amount #total_amount").text( total_amount.toFixed(2) );
+		$(".total-qty-amount #item_total_amount").text( item_total_amount.toFixed(2) );
+		$(".total-qty-amount input#total_amount").val( item_total_amount.toFixed(0) );
   }
 
 	// Get Total-Quantity
 	function GetTotalQuantity(){
-		return Number( $(".total-qty-amount #total_qty").text() );
+		return Number( $(".total-qty-amount #item_total_qty").text() );
 	}
 	// Print Total-Quantity
   function PrintTotalQuantity(){
-		let total_qty = 0;
+		let item_total_qty = 0;
 		$("#Accordion-Parent input.item_qty").each(function(){
-			total_qty += Number( $(this).val() );
+			item_total_qty += Number( $(this).val() );
 		});
-		$(".total-qty-amount #total_qty").text( total_qty );
+		$(".total-qty-amount #item_total_qty").text( item_total_qty );
+		$(".total-qty-amount input#total_qty").val( item_total_qty );
   }
 
 	// If Amount Is Full Paid

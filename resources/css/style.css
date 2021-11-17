@@ -307,7 +307,8 @@ a, a:hover, a:focus { text-decoration: none; }
 .color-secondary-4 { color: rgba(167, 167, 167, .4) !important; }
 .color-secondary-5 { color: rgba(167, 167, 167, .2) !important; }
 .color-red { color: #FF0000 !important; }
-.color-white { color: #FFFFFF !important; }
+.color-white,
+.color-white-hover:hover { color: #FFFFFF !important; }
 .color-blue { color: #0000FF !important; }
 .color-blue-5 { color: #05059e !important; }
 .color-light-blue { color: #006CFF !important; }
@@ -507,14 +508,15 @@ body.modal-open:not(.swal2-shown) {
 
 
 /* Site-Header */
-#SiteHeader {
+#Site-Header {
   height: 50px;
+  /*background-color: #0A2150 !important;*/
 }
 
 
 /* Site-Wrapper */
-#SiteWrapper {
-  height: calc(100% - 50px) !important;
+#Site-Wrapper {
+  height: calc(100% - 100px) !important;
 }
 
 /* Page-Content */
@@ -525,12 +527,21 @@ body.modal-open:not(.swal2-shown) {
   height: calc(100% - 42px) !important;
 }
 
-/* Frontend CSS */
 
-.Vehicle-Parts-Purchase.New #total_qty,
-.Vehicle-Parts-Purchase.New #total_amount,
+/* Vehicle Parts New Purchase Form */
+.Vehicle-Parts-Purchase.New #item_total_qty,
+.Vehicle-Parts-Purchase.New #item_total_amount,
 .Vehicle-Parts-Purchase.New .form-bottom .paid-due-amount > div > .amount {
   width: calc(100% - 120px);
+}
+
+
+
+
+/* Site-Footer */
+#Site-Footer {
+  height: 50px;
+  /*background-color: #0A2150 !important;*/
 }
 
 
