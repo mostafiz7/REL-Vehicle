@@ -27,11 +27,11 @@ class PurchaseDetails_Model extends Model
     'purchase_no',
     'parts_id',
     'vehicle_id',
-    'serials',
     'size',
+    'serials',
+    'quantity',
     'unit',
     'unit_price',
-    'quantity',
     'amount',
     'remarks',
   ];

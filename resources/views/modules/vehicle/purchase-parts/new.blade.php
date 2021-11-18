@@ -14,7 +14,7 @@
 
         <div class="card-body page-body p-0">
           <div class="parts-new-purchase-area overlay-scrollbar">
-            <form method="post" action="{{ route('vehicle.parts.purchase.new') }}" autocomplete="off"
+            <form method="post" action="{{ route('vehicle.parts.purchase.new') }}"
                   name="partsPurchaseForm" id="partsPurchaseForm" class="parts-purchase new p-20 pb-0">
               @csrf
 
@@ -55,7 +55,7 @@
                         <div class="col-6 purchase_date">
                           <label for="" class="required w-100 mr-15"><span>Memo Date</span></label>
                           <div class="p-relative date-select">
-                            <input type="text" name="date" id="purchase_date" class="input-date required form-control d-inline-block text-start border-secondary brd-3 z-index-9 @error('date') is-invalid @enderror" placeholder="dd-mm-yyyy" value="{{ old('date') }}" />
+                            <input type="text" name="date" id="purchase_date" class="input-date required form-control d-inline-block text-start border-secondary brd-3 z-index-9 @error('date') is-invalid @enderror" autocomplete="off" placeholder="dd-mm-yyyy" value="{{ old('date') }}" />
                             <label for="purchase_date" class="input-label-icon p-absolute pos-top-right text-danger-deep fz-19 lh-1-3 mr-1 p-5 cur-pointer z-index-11"><i class="fa fa-calendar"></i></label>
                           </div>
 
@@ -279,7 +279,7 @@
                           <div class="accordion-body px-15 pb-5">
                             <div class="row gx-0 gx-sm-2 p-relative">
                               <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-name">
-                                <input type="text" name="item_name[]" id="item_name-1" class="item_name form-control border-secondary brd-3" placeholder="Item Name" value="" />
+                                <input type="text" name="item_name[]" id="item_name-1" class="item_name form-control border-secondary brd-3" autocomplete="off" placeholder="Item Name" value="" />
                                 <input type="hidden" name="item_id[]" id="item_id-1" class="item_id" value="" />
                                 <input type="hidden" name="item_uid[]" id="item_uid-1" class="item_uid" value="" />
                                 <input type="hidden" name="item_slug[]" id="item_slug-1" class="item_slug" value="" />
@@ -293,6 +293,10 @@
                                 <input type="text" name="item_serials[]" id="item_serials-1" class="item_serials form-control border-secondary brd-3" placeholder="Serials" value="" />
                               </div>
 
+                              <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-qty">
+                                <input type="number" min="0" name="item_qty[]" id="item_qty-1" class="item_qty form-control border-secondary brd-3" placeholder="Quantity" value="" />
+                              </div>
+
                               <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-unit">
                                 <select name="item_unit[]" id="item_unit-1" class="item_unit form-select border-secondary brd-3">
                                   <option value="pcs">Pcs</option>
@@ -303,10 +307,6 @@
 
                               <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-unit-price">
                                 <input type="number" min="0" step="0.10" name="item_unit_price[]" id="item_unit_price-1" class="item_unit_price form-control border-secondary brd-3" placeholder="Unit Price" value="" />
-                              </div>
-
-                              <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-qty">
-                                <input type="number" min="0" name="item_qty[]" id="item_qty-1" class="item_qty form-control border-secondary brd-3" placeholder="Quantity" value="" />
                               </div>
 
                               <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-amount">
@@ -469,7 +469,7 @@
                   <div class="accordion-body px-15 pb-5">
                     <div class="row gx-0 gx-sm-2 p-relative">
                       <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-name">
-                        <input type="text" name="item_name[]" id="item_name" class="item_name form-control border-secondary brd-3" placeholder="Item Name" value="" />
+                        <input type="text" name="item_name[]" id="item_name" class="item_name form-control border-secondary brd-3" autocomplete="off" placeholder="Item Name" value="" />
                         <input type="hidden" name="item_id[]" id="item_id" class="item_id" value="" />
                         <input type="hidden" name="item_uid[]" id="item_uid" class="item_uid" value="" />
                         <input type="hidden" name="item_slug[]" id="item_slug" class="item_slug" value="" />
@@ -483,6 +483,10 @@
                         <input type="text" name="item_serials[]" id="item_serials" class="item_serials form-control border-secondary brd-3" placeholder="Serials" value="" />
                       </div>
 
+                      <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-qty">
+                        <input type="number" min="0" name="item_qty[]" id="item_qty" class="item_qty form-control border-secondary brd-3" placeholder="Quantity" value="" />
+                      </div>
+
                       <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-unit">
                         <select name="item_unit[]" id="item_unit" class="item_unit form-select border-secondary brd-3">
                           <option value="pcs">Pcs</option>
@@ -493,10 +497,6 @@
 
                       <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-unit-price">
                         <input type="number" min="0" step="0.10" name="item_unit_price[]" id="item_unit_price" class="item_unit_price form-control border-secondary brd-3" placeholder="Unit Price" value="" />
-                      </div>
-
-                      <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-qty">
-                        <input type="number" min="0" name="item_qty[]" id="item_qty" class="item_qty form-control border-secondary brd-3" placeholder="Quantity" value="" />
                       </div>
 
                       <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-amount">

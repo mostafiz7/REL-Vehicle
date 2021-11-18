@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Bill_Model;
 use App\Models\Parts_Model;
+use App\Models\PurchaseDetails_Model;
 use App\Models\Vehicle_Model;
 use App\Models\Purchase_Model;
 use App\Models\Supplier_Model;
@@ -63,6 +64,37 @@ class Purchase_Controller extends Controller
   }
 
 
+  // Vehicle-Parts Purchase-Index
+  public function VehicleParts_Purchase_Index( Request $request )
+  {
+    $vehicleParts_purchase_all = Purchase_Model::where('purchase_type', 'vehicle-parts')
+      ->orderBy('date', 'desc')->get()->all();
+
+    $parts_all            = Parts_Model::orderBy('name', 'asc')->get()->all();
+    $vehicle_all          = Vehicle_Model::orderBy('vehicle_no', 'asc')->get()->all();
+    $parts_category_all   = PartsCategory_Model::orderBy('name', 'asc')->get()->all();
+    $vehicle_category_all = VehicleCategory_Model::orderBy('name', 'asc')->get()->all();
+
+    $purchaser_all        = Employee_Model::where('purchase_power', 1)
+      ->where('active', 1)->orderBy('name', 'asc')->get()->all();
+    $authorizer_all       = Employee_Model::where('authorize_power', 1)
+      ->where('active', 1)->orderBy('name', 'asc')->get()->all();
+
+    $supplier_all         = Supplier_Model::orderBy('name', 'asc')->get()->all();
+
+    return view('modules.vehicle.purchase-parts.index')->with([
+      'purchase_all'          => $vehicleParts_purchase_all,
+      'parts_all'             => $parts_all,
+      'vehicle_all'           => $vehicle_all,
+      'supplier_all'          => $supplier_all,
+      'purchaser_all'         => $purchaser_all,
+      'authorizer_all'        => $authorizer_all,
+      'parts_category_all'    => $parts_category_all,
+      'vehicle_category_all'  => $vehicle_category_all,
+    ]);
+  }
+
+
   // Show Vehicle-Parts Purchase-Form
   public function VehicleParts_Purchase_Form( Request $request )
   {
@@ -82,7 +114,7 @@ class Purchase_Controller extends Controller
 
     $purchase_type = ['vehicle', 'vehicle-parts', 'electrical', 'electronics', 'stationary', 'furniture'];
 
-    return view('modules.vehicle.purchase-parts.purchase-new')->with([
+    return view('modules.vehicle.purchase-parts.new')->with([
       'newPurchaseNo'         => $this->VehiclePartsPurchaseNo(),
       'parts_all'             => $parts_all,
       'vehicle_all'           => $vehicle_all,
@@ -113,14 +145,15 @@ class Purchase_Controller extends Controller
     $type           = 'vehicle-parts';
     $purchase_date  = $request->date ? DateTime::createFromFormat('d-m-Y', $request->date)->format('Y-m-d') : date('Y-m-d', strtotime(today()));
     $requisition    = Requisition_Model::where('requisition_no', $request->requisition_no)->get()->first();
-    $purchaser      = Employee_Model::where('id', $request->purchased_by)
+    $billed         = Bill_Model::where('bill_no', $request->bill_no)->get()->first();
+
+    /*$purchaser      = Employee_Model::where('id', $request->purchased_by)
       ->where('purchase_power', 1)->where('active', 1)->get()->first();
     $authorizer     = Employee_Model::where('id', $request->authorized_by)
       ->where('authorize_power', 1)->where('active', 1)->get()->first();
     $supplier       = Supplier_Model::find($request->supplier_id);
-    $billed         = Bill_Model::where('bill_no', $request->bill_no)->get()->first();
     $entry_by       = Employee_Model::where('id', $request->entry_by)
-      ->where('active', 1)->get()->first();
+      ->where('active', 1)->get()->first();*/
 
     $total_qty = 0; $total_amount = 0; $paid_amount = 0; $due_amount = 0;
     $input_total_qty    = (int) $request->total_qty;
@@ -178,9 +211,9 @@ class Purchase_Controller extends Controller
     $items_slug       = $request->input('item_slug');
     $items_size       = $request->input('item_size');
     $items_serials    = $request->input('item_serials');
+    $items_quantity   = $request->input('item_qty');
     $items_unit       = $request->input('item_unit');
     $items_unit_price = $request->input('item_unit_price');
-    $items_quantity   = $request->input('item_qty');
     $items_amount     = $request->input('item_amount');
     $items_remarks    = $request->input('item_remarks');
 
@@ -213,7 +246,6 @@ class Purchase_Controller extends Controller
     if( (! $has_item_name || count($has_item_name) < 1) || ($qty_not_present && count($qty_not_present) > 0)
     || ($amount_not_present && count($amount_not_present) > 0) || ($has_qty_without_item && count($has_qty_without_item) > 0)
     || ($has_amount_without_item && count($has_amount_without_item) > 0) || ($remarks_too_long && count($remarks_too_long) > 0) ){
-
       if( ! $has_item_name || count($has_item_name) < 1 ){
         session()->flash('error', 'Minimum 1 item required.');
         return back()->withInput();
@@ -245,9 +277,53 @@ class Purchase_Controller extends Controller
       }
     }
 
-    // Iterate Purchased Items
+    // Purchased-Items Details Data
+    $get_all_parts = Parts_Model::all();
 
+    $purchasedItems_All = [];
+    foreach( $items_name as $index => $name ){
+      if( $name ){
+        $id = $items_id[$index]; $uid = $items_uid[$index]; $slug = $items_slug[$index];
+        $get_parts = $get_all_parts->first(function($item, $itemKey) use ($id, $uid, $name, $slug){
+          // return $item->id == $id && $item->uid == $uid && $item->name == $item_name && $item->slug == $slug;
+          return $item->id == $id && $item->name == $name;
+        });
 
+        if( ! $get_parts ){
+          $lineNumbers = ($index + 1);
+          session()->flash('error', "Item not matched on line number ($lineNumbers).");
+          return back()->withInput();
+        }
+
+        $unit_price = (int) $items_amount[$index] / (int) $items_quantity[$index];
+
+        $item_details = [
+          // 'uid'           => Str::uuid(),
+          // 'purchase_id'   => null,
+          // 'purchase_no'   => null,
+          'type'           => $type,
+          'parts_id'       => $get_parts->id,
+          'vehicle_id'     => $request->vehicle_id ?? null,
+          'size'           => $items_size[$index],
+          'serials'        => $items_serials[$index],
+          'quantity'       => $items_quantity[$index],
+          'unit'           => $items_unit[$index],
+          'unit_price'     => $unit_price,
+          'amount'         => $items_amount[$index],
+          // 'amount'         => strval(number_format($item_price, 2)),
+          // 'amount'         => strval(number_format($item_price, 2, '.', '')),
+          'remarks'        => $items_remarks[$index],
+        ];
+        $total_qty    += (int) $items_quantity[$index];
+        $total_amount += (int) $items_amount[$index];
+        $purchasedItems_All[] = $item_details;
+      }
+    }
+
+    if( $input_total_qty != $total_qty || $input_total_amount != $total_amount ){
+      session()->flash('error', 'Total-Qty or Total-Amount not matched.');
+      return back()->withInput();
+    }
 
     if( $is_full_paid && $input_paidAmount == $total_amount ){
       $paid_amount = $total_amount;
@@ -257,26 +333,26 @@ class Purchase_Controller extends Controller
       $due_amount  = $input_dueAmount;
     }
 
-    $vehicle_parts_new_purchase = [
+    $NewPurchase = [
       'uid'             => Str::uuid(),
       'purchase_no'     => $this->VehiclePartsPurchaseNo(),
       'purchase_type'   => $type,
       'date'            => $purchase_date,
       'memo_no'         => $request->memo_no,
-      'vehicle_id'      => (int) $request->vehicle_id,
+      'vehicle_id'      => $request->vehicle_id ?? null,
       'requisition_id'  => $requisition ? $requisition->id : null,
       'requisition_no'  => $requisition ? $requisition->requisition_no : null,
-      'purchased_by'    => $request->purchased_by ? (int) $request->purchased_by : null,
+      'purchased_by'    => $request->purchased_by ?? null,
       'purchaser_name'  => ! $request->purchased_by ? $request->purchaser_name : null,
       'is_authorized'   => $request->authorized_by ? true : false,
-      'authorized_by'   => $request->authorized_by ? (int) $request->authorized_by : null,
+      'authorized_by'   => $request->authorized_by ?? null,
       'checked_by'      => null,
-      'supplier_id'     => $request->supplier_id ? (int) $request->supplier_id : null,
+      'supplier_id'     => $request->supplier_id ?? null,
       'supplier_name'   => ! $request->supplier_id ? ($request->supplier_name ?? null) : null,
-      'shop_name'       => $request->shop_name,
+      'shop_name'       => ucwords( strtolower($request->shop_name) ),
       'shop_slug'       => Str::slug( $request->shop_name ),
       'shop_contact'    => $request->shop_contact,
-      'shop_location'   => $request->shop_location,
+      'shop_location'   => ucwords( strtolower($request->shop_location) ),
       'total_qty'       => $total_qty,
       'total_amount'    => $total_amount,
       'is_paid'         => $is_full_paid,
@@ -287,15 +363,25 @@ class Purchase_Controller extends Controller
       'bill_id'         => $billed ? $billed->id : null,
       'bill_no'         => $billed ? $billed->bill_no : null,
       'user_id'         => Auth::check() ? Auth::id() : null,
-      'entry_by'        => !Auth::check() && $request->entry_by ? (int) $request->entry_by : null,
+      'entry_by'        => !Auth::check() && $request->entry_by ? $request->entry_by : null,
       'notes'           => (string) $request->notes,
       'device'          => null,
       'ip'              => request()->ip(),
       'ip_address'      => $request->ip(),
       'session_id'      => $session_id,
     ];
+    $newPurchase_Created = Purchase_Model::create( $NewPurchase );
 
-    return $vehicle_parts_new_purchase;
+    // Create Purchase-Items-Details
+    foreach( $purchasedItems_All as $purchasedItemDetails ){
+      $purchasedItemDetails['uid']         = Str::uuid();
+      $purchasedItemDetails['purchase_id'] = $newPurchase_Created->id;
+      $purchasedItemDetails['purchase_no'] = $newPurchase_Created->purchase_no;
+
+      PurchaseDetails_Model::create( $purchasedItemDetails );
+    }
+
+    return back()->with('success', "Purchase No.# ($newPurchase_Created->purchase_no) saved successfully!");
   }
 
 

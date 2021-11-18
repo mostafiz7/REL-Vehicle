@@ -22,11 +22,11 @@ class CreatePurchaseDetailsTable extends Migration
       $table->string('purchase_no');
       $table->unsignedBigInteger('parts_id');
       $table->unsignedBigInteger('vehicle_id')->nullable();
-      $table->string('serials')->nullable();
       $table->string('size')->nullable();
+      $table->string('serials')->nullable();
+      $table->integer('quantity');
       $table->string('unit');
       $table->decimal('unit_price', $precision = 10, $scale = 2)->nullable();
-      $table->integer('quantity');
       $table->decimal('amount', $precision = 12, $scale = 2)->nullable();
       $table->string('remarks')->nullable();
 

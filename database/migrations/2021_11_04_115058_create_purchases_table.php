@@ -35,11 +35,11 @@ class CreatePurchasesTable extends Migration
       $table->string('shop_contact')->index();
       $table->string('shop_location');
       $table->integer('total_qty');
-      $table->integer('total_amount'); // Memo or Bill Total Amount
+      $table->decimal('total_amount', $precision = 12, $scale = 2)->nullable(); // Memo or Bill Total Amount
       $table->boolean('is_paid');
       $table->boolean('is_partial_paid');
-      $table->integer('paid_amount')->nullable();
-      $table->integer('due_amount')->nullable();
+      $table->decimal('paid_amount', $precision = 12, $scale = 2)->nullable();
+      $table->decimal('due_amount', $precision = 12, $scale = 2)->nullable();
       $table->boolean('is_billed')->default(0);
       $table->unsignedBigInteger('bill_id')->nullable(); // Is Bill done for this purchase?
       $table->string('bill_no')->nullable();
