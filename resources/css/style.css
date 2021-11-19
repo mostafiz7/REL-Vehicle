@@ -507,14 +507,9 @@ body.modal-open:not(.swal2-shown) {
 }
 
 
-/* Site-Header */
-#Site-Header {
-  height: 50px;
-  /*background-color: #0A2150 !important;*/
-}
-
 
 /* Site-Wrapper */
+/* Site-Header & Site-Footer's height minus from Site-Wrapper element */
 #Site-Wrapper {
   height: calc(100% - 100px) !important;
 }

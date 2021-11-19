@@ -51,6 +51,10 @@
 		});
 		
 		
+		// Header Navbar
+		// $("#Site-Header .navbar-header .nav-link.dropdown-toggle");
+		
+		
 		// For Date-Picker
 		$(".date-select .input-date").datepicker({
 			dateFormat: 'dd-mm-yy',

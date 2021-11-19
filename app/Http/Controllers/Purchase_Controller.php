@@ -130,7 +130,7 @@ class Purchase_Controller extends Controller
 
 
   // Store Newly Purchased Vehicle-Parts
-  public function VehicleParts_Purchase_Store( Request $request )
+  public function VehicleParts_Purchase_Store( Request $request ): \Illuminate\Http\RedirectResponse
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
     /*if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
