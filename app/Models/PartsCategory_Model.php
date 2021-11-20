@@ -34,4 +34,12 @@ class PartsCategory_Model extends Model
 
 
 
+  // relationship with Parts model
+  public function parts(): \Illuminate\Database\Eloquent\Relations\HasMany
+  {
+    return $this->hasMany(Parts_Model::class, 'category_id');
+  }
+
+
+
 }

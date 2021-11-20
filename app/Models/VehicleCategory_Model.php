@@ -34,4 +34,12 @@ class VehicleCategory_Model extends Model
 
 
 
+  // relationship with Parts model
+  public function vehicles(): \Illuminate\Database\Eloquent\Relations\HasMany
+  {
+    return $this->hasMany(Vehicle_Model::class, 'category_id');
+  }
+
+
+
 }

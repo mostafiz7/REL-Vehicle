@@ -41,4 +41,11 @@ class Parts_Model extends Model
 
 
 
+  public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+  {
+    return $this->belongsTo(PartsCategory_Model::class);
+  }
+
+
+
 }

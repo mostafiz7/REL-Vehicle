@@ -44,4 +44,23 @@ class PurchaseDetails_Model extends Model
 
 
 
+  public function purchase(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+  {
+    return $this->belongsTo(Purchase_Model::class);
+  }
+
+
+  public function parts(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+  {
+    return $this->belongsTo(Parts_Model::class);
+  }
+
+
+  public function vehicle(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+  {
+    return $this->belongsTo(Vehicle_Model::class);
+  }
+
+
+
 }
