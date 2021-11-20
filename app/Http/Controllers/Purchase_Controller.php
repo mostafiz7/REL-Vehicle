@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Bill_Model;
 use App\Models\Parts_Model;
 use App\Models\PurchaseDetails_Model;
+use App\Models\Settings_Model;
 use App\Models\Vehicle_Model;
 use App\Models\Purchase_Model;
 use App\Models\Supplier_Model;
@@ -67,6 +68,34 @@ class Purchase_Controller extends Controller
   // Vehicle-Parts Purchase-Index
   public function VehicleParts_Purchase_Index( Request $request )
   {
+    // if( Gate::allows('isAdmin', Auth::user()) ){}
+    /*if( Gate::denies('isAdmins') || Gate::denies('entryIndex') || Gate::denies('routeHasAccess') ){
+      return back()->with('error', 'You are not authorized to perform this action!');
+    }*/
+
+    /*$validator = Validator::make( $request->all(), [
+      'date_start' => [ 'nullable', 'date_format:d-m-Y' ],
+      'date_end'   => [ 'nullable', 'date_format:d-m-Y' ],
+    ], [
+      'date_start.date_format' => 'The start date does not match the format (' . date('d-m-Y') . ').',
+      'date_end.date_format'   => 'The end date does not match the format (' . date('d-m-Y') . ').',
+    ]);
+    if( $validator->fails() ){
+      return back()->withErrors( $validator )->withInput();
+    }*/
+
+    $date_start       = null;
+    $date_end         = null;
+    $parts_id         = null;
+    $vehicle_id       = null;
+    $purchased_by     = null;
+    $authorized_by    = null;
+    $purchase_type    = 'vehicle-parts';
+    $parts_category   = null;
+    $vehicle_category = null;
+
+    $purchase_all = null;
+
     $vehicleParts_purchase_all = Purchase_Model::where('purchase_type', 'vehicle-parts')
       ->orderBy('date', 'desc')->get()->all();
 
@@ -82,15 +111,31 @@ class Purchase_Controller extends Controller
 
     $supplier_all         = Supplier_Model::orderBy('name', 'asc')->get()->all();
 
+    $settings      = Settings_Model::get()->first();
+    $date_format   = $settings && $settings->date_format ? $settings->date_format : 'd-M-Y';
+    $time_format   = $settings && $settings->time_format ? $settings->time_format : 'h:i A';
+
+    $purchase_type_all = ['vehicle', 'vehicle-parts', 'electrical', 'electronics', 'stationary', 'furniture'];
+
     return view('modules.vehicle.purchase-parts.index')->with([
-      'purchase_all'          => $vehicleParts_purchase_all,
-      'parts_all'             => $parts_all,
-      'vehicle_all'           => $vehicle_all,
-      'supplier_all'          => $supplier_all,
+      'purchases_all'         => $vehicleParts_purchase_all,
+      'date_format'           => $date_format,
+      'time_format'           => $time_format,
+      'purchase_type'         => $purchase_type,
+      'purchase_type_all'     => $purchase_type_all,
+      'purchased_by'          => $purchased_by,
       'purchaser_all'         => $purchaser_all,
+      'authorized_by'         => $authorized_by,
       'authorizer_all'        => $authorizer_all,
+      'parts_id'              => $parts_id,
+      'parts_all'             => $parts_all,
+      'parts_category'        => $parts_category,
       'parts_category_all'    => $parts_category_all,
+      'vehicle_id'            => $vehicle_id,
+      'vehicle_all'           => $vehicle_all,
+      'vehicle_category'      => $vehicle_category,
       'vehicle_category_all'  => $vehicle_category_all,
+      'supplier_all'          => $supplier_all,
     ]);
   }
 
@@ -112,14 +157,14 @@ class Purchase_Controller extends Controller
 
     $supplier_all         = Supplier_Model::orderBy('name', 'asc')->get()->all();
 
-    $purchase_type = ['vehicle', 'vehicle-parts', 'electrical', 'electronics', 'stationary', 'furniture'];
+    $purchase_types = ['vehicle', 'vehicle-parts', 'electrical', 'electronics', 'stationary', 'furniture'];
 
     return view('modules.vehicle.purchase-parts.new')->with([
       'newPurchaseNo'         => $this->VehiclePartsPurchaseNo(),
       'parts_all'             => $parts_all,
       'vehicle_all'           => $vehicle_all,
       'supplier_all'          => $supplier_all,
-      'purchase_type'         => $purchase_type,
+      'purchase_types'         => $purchase_types,
       'employee_all'          => $employee_all,
       'purchaser_all'         => $purchaser_all,
       'authorizer_all'        => $authorizer_all,

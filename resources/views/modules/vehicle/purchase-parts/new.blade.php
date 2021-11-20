@@ -33,7 +33,7 @@
                         <div class="col-6 purchase-type">
                           <label for="" class="required w-100 mr-15"><span>Type</span></label>
                           <select name="purchase_type" id="purchase_type" class="required form-select border-secondary brd-3 @error('purchase_type') is-invalid @enderror">
-                            @foreach ( $purchase_type as $type )
+                            @foreach ( $purchase_types as $type )
                               <option value="{{$type}}" {{ $type == 'vehicle-parts' ? 'selected' : '' }}>
                                 {{ ucwords(str_replace('-', ' ', $type)) }}
                               </option>
@@ -214,9 +214,9 @@
                       </div>
                     </div>
 
-                    {{--Purchase-By--}}
+                    {{--Purchased-By--}}
                     <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 purchased_by">
-                      <label for="" class="required w-100 mr-15"><span>Purchase By</span></label>
+                      <label for="" class="required w-100 mr-15"><span>Purchased By</span></label>
                       <select name="purchased_by" id="purchased_by" class="required form-select border-secondary brd-3 @error('purchased_by') is-invalid @enderror">
                         <option value="">Select Purchaser</option>
                         @if ( $purchaser_all )

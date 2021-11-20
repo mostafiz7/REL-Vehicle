@@ -530,10 +530,19 @@ body.modal-open:not(.swal2-shown) {
   width: calc(100% - 120px);
 }
 
+.Vehicle-Parts-Purchase.Index .search-form .d-flex .form-select,
+.Vehicle-Parts-Purchase.Index .search-form .d-flex .form-control:not(.input-date) {
+  width: calc(100% - 130px);
+}
+/*.Vehicle-Parts-Purchase.Index .purchase-history-table .table-header,
+.Vehicle-Parts-Purchase.Index .purchase-history-table .table-row,
+.Vehicle-Parts-Purchase.Index .purchase-history-table .table-row > div {
+  height: auto;
+}*/
 
 
 
-/* Site-Footer */
+  /* Site-Footer */
 #Site-Footer {
   height: 50px;
   /*background-color: #0A2150 !important;*/

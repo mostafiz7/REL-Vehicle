@@ -8,7 +8,7 @@
 
   <div class="header-navbar fz-14 px-sm-2">
     <nav class="navbar navbar-expand-lg py-0 pl-10 pr-10">
-      <button id="pushMenu" class="sidebar-push">
+      <button id="pushMenu" class="sidebar-push mr-15">
         <i class="fa fa-bars"></i>
       </button>
 
