@@ -34,4 +34,11 @@ class Designation_Model extends Model
 
 
 
+  public function employee(): \Illuminate\Database\Eloquent\Relations\HasMany
+  {
+    return $this->hasMany(Employee_Model::class, 'designation_id');
+  }
+
+
+
 }

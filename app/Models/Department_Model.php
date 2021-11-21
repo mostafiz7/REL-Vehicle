@@ -35,4 +35,17 @@ class Department_Model extends Model
 
 
 
+  public function employee(): \Illuminate\Database\Eloquent\Relations\HasMany
+  {
+    return $this->hasMany(Employee_Model::class, 'department_id');
+  }
+
+
+  public function vehicles(): \Illuminate\Database\Eloquent\Relations\HasMany
+  {
+    return $this->hasMany(Vehicle_Model::class, 'department_id');
+  }
+
+
+
 }

@@ -47,5 +47,11 @@ class Parts_Model extends Model
   }
 
 
+  public function purchaseDetails(): \Illuminate\Database\Eloquent\Relations\HasMany
+  {
+    return $this->hasMany(PurchaseDetails_Model::class, 'parts_id');
+  }
+
+
 
 }

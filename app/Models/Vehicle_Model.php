@@ -45,4 +45,47 @@ class Vehicle_Model extends Model
 
 
 
+  public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+  {
+    return $this->belongsTo(VehicleCategory_Model::class);
+  }
+
+
+  public function brand(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+  {
+    return $this->belongsTo(Brand_Model::class);
+  }
+
+
+  public function department(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+  {
+    return $this->belongsTo(Department_Model::class);
+  }
+
+
+  public function driver(): \Illuminate\Database\Eloquent\Relations\HasOne
+  {
+    return $this->hasOne(Employee_Model::class, 'driver_id');
+  }
+
+
+  public function helper(): \Illuminate\Database\Eloquent\Relations\HasOne
+  {
+    return $this->hasOne(Employee_Model::class, 'helper_id');
+  }
+
+
+  public function purchases(): \Illuminate\Database\Eloquent\Relations\HasMany
+  {
+    return $this->hasMany(Purchase_Model::class, 'vehicle_id');
+  }
+
+
+  public function purchaseDetails(): \Illuminate\Database\Eloquent\Relations\HasMany
+  {
+    return $this->hasMany(PurchaseDetails_Model::class, 'vehicle_id');
+  }
+
+
+
 }

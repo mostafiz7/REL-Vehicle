@@ -33,4 +33,11 @@ class Requisition_Model extends Model
 
 
 
+  public function bill(): \Illuminate\Database\Eloquent\Relations\HasOne
+  {
+    return $this->hasOne(Bill_Model::class);
+  }
+
+
+
 }

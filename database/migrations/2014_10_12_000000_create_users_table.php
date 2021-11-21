@@ -22,12 +22,8 @@ class CreateUsersTable extends Migration
       $table->boolean('active')->default(1);
       $table->timestamp('email_verified_at')->nullable();
       $table->string('password');
-      $table->unsignedBigInteger('employee_id')->unique()->nullable();
       $table->json('permissions');
       $table->json('routes');
-
-      $table->foreign('employee_id')
-        ->references('id')->on('employees')->onUpdate('cascade');
 
       $table->rememberToken();
       $table->timestamps();

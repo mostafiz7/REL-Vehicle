@@ -16724,11 +16724,6 @@ body.modal-open:not(.swal2-shown) {
 .Vehicle-Parts-Purchase.Index .search-form .d-flex .form-control:not(.input-date) {
   width: calc(100% - 130px);
 }
-/*.Vehicle-Parts-Purchase.Index .purchase-history-table .table-header,
-.Vehicle-Parts-Purchase.Index .purchase-history-table .table-row,
-.Vehicle-Parts-Purchase.Index .purchase-history-table .table-row > div {
-  height: auto;
-}*/
 
 
 

@@ -31,7 +31,6 @@ class Purchase_Model extends Model
     'requisition_no',
     'purchased_by',
     'purchaser_name',
-    'is_authorized',
     'authorized_by',
     'checked_by',
     'supplier_id',
@@ -46,7 +45,6 @@ class Purchase_Model extends Model
     'is_partial_paid',
     'paid_amount',
     'due_amount',
-    'is_billed',
     'bill_id',
     'bill_no',
     'user_id',
@@ -66,7 +64,7 @@ class Purchase_Model extends Model
 
 
 
-  public function purchaseDetails(): \Illuminate\Database\Eloquent\Relations\HasMany
+  public function details(): \Illuminate\Database\Eloquent\Relations\HasMany
   {
     return $this->hasMany(PurchaseDetails_Model::class, 'purchase_id');
   }

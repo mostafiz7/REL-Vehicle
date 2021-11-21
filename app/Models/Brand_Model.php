@@ -35,4 +35,11 @@ class Brand_Model extends Model
 
 
 
+  public function vehicles(): \Illuminate\Database\Eloquent\Relations\HasMany
+  {
+    return $this->hasMany(Vehicle_Model::class);
+  }
+
+
+
 }

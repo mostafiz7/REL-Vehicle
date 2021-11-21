@@ -20,8 +20,9 @@ class CreateEmployeesTable extends Migration
       $table->string('name');
       $table->string('nickname')->nullable();
       $table->boolean('active')->default(1);
-      $table->unsignedBigInteger('designation_id')->nullable(); // APPS User ID
-      $table->unsignedBigInteger('department_id')->nullable(); // APPS User ID
+      $table->unsignedBigInteger('designation_id')->nullable();
+      $table->unsignedBigInteger('department_id')->nullable();
+      $table->unsignedBigInteger('user_id')->unique()->nullable(); // APPS User ID
       $table->boolean('authorize_power')->default(0);
       // Employee has authorize-power to give order to purchase
       $table->boolean('purchase_power')->default(0); // Employee has purchase-power
@@ -64,6 +65,8 @@ class CreateEmployeesTable extends Migration
         ->references('id')->on('designations')->onUpdate('cascade');
       $table->foreign('department_id')
         ->references('id')->on('departments')->onUpdate('cascade');
+      $table->foreign('user_id')
+        ->references('id')->on('users')->onUpdate('cascade');
 
       $table->timestamps();
     });

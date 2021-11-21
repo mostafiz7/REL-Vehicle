@@ -25,7 +25,6 @@ class CreatePurchasesTable extends Migration
       $table->string('requisition_no')->nullable();
       $table->unsignedBigInteger('purchased_by')->nullable(); // Purchaser Employee ID
       $table->string('purchaser_name')->nullable(); // If Purchaser is other than Employee
-      $table->boolean('is_authorized')->default(0);
       $table->unsignedBigInteger('authorized_by')->nullable(); // Authorized Employee ID
       $table->unsignedBigInteger('checked_by')->nullable();
       $table->unsignedBigInteger('supplier_id')->nullable(); // Parts Supplier ID
@@ -40,7 +39,6 @@ class CreatePurchasesTable extends Migration
       $table->boolean('is_partial_paid');
       $table->decimal('paid_amount', $precision = 12, $scale = 2)->nullable();
       $table->decimal('due_amount', $precision = 12, $scale = 2)->nullable();
-      $table->boolean('is_billed')->default(0);
       $table->unsignedBigInteger('bill_id')->nullable(); // Is Bill done for this purchase?
       $table->string('bill_no')->nullable();
       $table->unsignedBigInteger('user_id')->nullable(); // Purchase Entry-By APP User

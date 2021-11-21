@@ -232,38 +232,14 @@
 
                     @endforeach
                   @else
-                    <tr class="table-row content no-receive align-middle">
+                    <tr class="table-row content no-purchase align-middle">
                       <td colspan="11" class="error text-danger fz-22 fw-bold text-center py-100">Sorry! Currently there are no record available.</td>
                     </tr>
                   @endif
                 </tbody>
               </table>
 
-              {{--<table class="table table-bordered table-hover border-secondary-3 receive-history-table">
-                <thead class="table-header bg-dark text-white fz-14 text-center">
-                <tr class="table-row header align-middle">
-                  <th scope="col" class="serial w-30px-min">S/L</th>
-                  <th scope="col" class="receive-number">Receive No #</th>
-                  <th scope="col" class="receive-date">Receive Date</th>
-                  <th scope="col" class="receive-time">Time</th>
-                  <th scope="col" class="entry-date">Entry Date</th>
-                  <th scope="col" class="supplier-name">Supplier</th>
-                  <th scope="col" class="po-number">PO No #</th>
-                  <th scope="col" class="challan-no"
-                      data-bs-toggle="tooltip" data-bs-placement="bottom" title="Supplier Challan No#">
-                    CH No #
-                  </th>
-                  <th scope="col" class="challan-date"
-                      data-bs-toggle="tooltip" data-bs-placement="bottom" title="Supplier Challan Date">
-                    CH Date
-                  </th>
-                  <th scope="col" class="total-qty">Total Qty</th>
-                  <th scope="col" class="total-amount">Total Amount</th>
-                  <th scope="col" class="action">---</th>
-                </tr>
-                </thead>
-
-                <tbody id="receive_history" class="table-body fz-12 text-center align-middle">--}}
+              {{--<tbody id="receive_history" class="table-body fz-12 text-center align-middle">--}}
                 {{--@if ( $purchase_all && count($purchase_all) > 0 )
                   @foreach ( $purchase_all as $index => $purchase )--}}
 
@@ -355,9 +331,8 @@
                   <tr class="table-row content no-receive align-middle">
                     <td colspan="11" class="error text-danger fz-22 fw-bold text-center py-100">Sorry! Currently there are no record available.</td>
                   </tr>
-                @endif--}}
-                {{--</tbody>
-              </table>--}}
+                @endif
+                </tbody>--}}
             </div>
 
 

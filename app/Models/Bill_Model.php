@@ -42,4 +42,35 @@ class Bill_Model extends Model
 
 
 
+  public function requisition(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+  {
+    return $this->belongsTo(Requisition_Model::class);
+  }
+
+
+  public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+  {
+    return $this->belongsTo(User::class);
+  }
+
+
+  public function maker(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+  {
+    return $this->belongsTo(Employee_Model::class, 'employee_id');
+  }
+
+
+  public function payer(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+  {
+    return $this->belongsTo(Employee_Model::class, 'billPayer_id');
+  }
+
+
+  public function checker(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+  {
+    return $this->belongsTo(Employee_Model::class, 'checked_by');
+  }
+
+
+
 }

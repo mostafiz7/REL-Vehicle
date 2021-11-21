@@ -64,4 +64,11 @@ class User extends Authenticatable
 
 
 
+  public function employee(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+  {
+    return $this->belongsTo(Employee_Model::class);
+  }
+
+
+
 }
