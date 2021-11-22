@@ -73,43 +73,77 @@ class Purchase_Controller extends Controller
       return back()->with('error', 'You are not authorized to perform this action!');
     }*/
 
-    /*$validator = Validator::make( $request->all(), [
+    $validator = Validator::make( $request->all(), [
       'date_start' => [ 'nullable', 'date_format:d-m-Y' ],
       'date_end'   => [ 'nullable', 'date_format:d-m-Y' ],
     ], [
-      'date_start.date_format' => 'The start date does not match the format (' . date('d-m-Y') . ').',
-      'date_end.date_format'   => 'The end date does not match the format (' . date('d-m-Y') . ').',
+      'date_start.date_format' => 'The from-date does not match the format (' . date('d-m-Y') . ').',
+      'date_end.date_format'   => 'The to-date does not match the format (' . date('d-m-Y') . ').',
     ]);
     if( $validator->fails() ){
       return back()->withErrors( $validator )->withInput();
-    }*/
+    }
 
-    $date_start       = null;
-    $date_end         = null;
-    $parts_id         = null;
-    $vehicle_id       = null;
-    $purchased_by     = null;
-    $authorized_by    = null;
-    $purchase_type    = 'vehicle-parts';
-    $parts_category   = null;
-    $vehicle_category = null;
+    $purchase_type             = 'vehicle-parts';
+    $vehicleParts_purchase_all = null;
 
-    $purchase_all = null;
+    $search_by         = $request->search_by ?? null; // Filter in Controller
+    $date_start        = $request->date_start ?? null; // Filter in Controller
+    $date_end          = $request->date_end ?? null; // Filter in Controller
+    $parts_id          = $request->parts_id ?? null;
+    $parts_category    = $request->parts_category ?? null;
+    $vehicle_id        = $request->vehicle_id ?? null;
+    $vehicle_category  = $request->vehicle_category ?? null;
+    $supplier_by       = $request->supplier_by ?? null;
+    $purchased_by      = $request->purchased_by ?? null; // Filter in Controller
+    $authorized_by     = $request->authorized_by ?? null; // Filter in Controller
 
-    $vehicleParts_purchase_all = Purchase_Model::where('purchase_type', 'vehicle-parts')
-      ->orderBy('date', 'desc')->get()->all();
+    $parts_id          = $parts_id == 'all' || $parts_id == "" || $parts_id == null ? null : $parts_id;
+    $parts_category    = $parts_category == 'all' || $parts_category == "" || $parts_category == null ? null : $parts_category;
+    $vehicle_id        = $vehicle_id == 'all' || $vehicle_id == "" || $vehicle_id == null ? null : $vehicle_id;
+    $vehicle_category  = $vehicle_category == 'all' || $vehicle_category == "" || $vehicle_category == null ? null : $vehicle_category;
+    $supplier_by       = $supplier_by == 'all' || $supplier_by == "" || $supplier_by == null ? null : $supplier_by;
+    $purchased_by      = $purchased_by == 'all' || $purchased_by == "" || $purchased_by == null ? null : $purchased_by;
+    $authorized_by     = $authorized_by == 'all' || $authorized_by == "" || $authorized_by == null ? null : $authorized_by;
+    $start_date        = $date_start ? DateTime::createFromFormat('d-m-Y', $date_start)->format('Y-m-d') : null;
+    $end_date          = $date_end ? DateTime::createFromFormat('d-m-Y', $date_end)->format('Y-m-d') : null;
+
+    $searchColumns     = [ 'purchase_no', 'memo_no', 'requisition_no', 'shop_name', 'shop_contact', 'shop_location', 'bill_no' ];
+
+    if( $start_date && !$end_date && !$search_by && !$purchased_by && !$authorized_by ){
+      $vehicleParts_purchase_all = Purchase_Model::where('purchase_type', $purchase_type)
+        ->whereDate('date', '>=', date($start_date))
+        ->orderBy('date', 'desc')->get()->all();
+    }
+
+    elseif( !$start_date && $end_date && !$search_by && !$purchased_by && !$authorized_by ){
+      $vehicleParts_purchase_all = Purchase_Model::where('purchase_type', $purchase_type)
+        ->whereDate('date', '<=', date($end_date))
+        ->orderBy('date', 'desc')->get()->all();
+    }
+
+    elseif( $start_date && $end_date && !$search_by && !$purchased_by && !$authorized_by ){
+      $vehicleParts_purchase_all = Purchase_Model::where('purchase_type', $purchase_type)
+        ->whereDate('date', '>=', date($start_date))
+        ->whereDate('date', '<=', date($end_date))
+        ->orderBy('date', 'desc')->get()->all();
+    }
+
+    else{
+      $vehicleParts_purchase_all = Purchase_Model::where('purchase_type', 'vehicle-parts')
+        ->orderBy('date', 'desc')->get()->all();
+    }
 
     $parts_all            = Parts_Model::orderBy('name', 'asc')->get()->all();
     $vehicle_all          = Vehicle_Model::orderBy('vehicle_no', 'asc')->get()->all();
     $parts_category_all   = PartsCategory_Model::orderBy('name', 'asc')->get()->all();
     $vehicle_category_all = VehicleCategory_Model::orderBy('name', 'asc')->get()->all();
+    $supplier_all         = Supplier_Model::orderBy('name', 'asc')->get()->all();
 
     $purchaser_all        = Employee_Model::where('purchase_power', 1)
       ->where('active', 1)->orderBy('name', 'asc')->get()->all();
     $authorizer_all       = Employee_Model::where('authorize_power', 1)
       ->where('active', 1)->orderBy('name', 'asc')->get()->all();
-
-    $supplier_all         = Supplier_Model::orderBy('name', 'asc')->get()->all();
 
     $settings      = Settings_Model::get()->first();
     $date_format   = $settings && $settings->date_format ? $settings->date_format : 'd-M-Y';

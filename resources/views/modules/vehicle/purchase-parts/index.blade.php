@@ -183,7 +183,7 @@
                   {{--Search-By--}}
                   <div class="col-md-6 col-sm-6 col-12 mb-10 search_by">
                     {{--<label for="" class="fw-bold mr-15"><span>Search By</span></label>--}}
-                    <input type="text" name="search_by" id="search_by" class="form-control d-inline-block fz-14 lh-1-8 border-secondary-1 brd-3" placeholder="Purchase No./ Memo No./ Bill No./ Shop Name-Contact-Location" value="{{ $search_by ?? '' }}" />
+                    <input type="text" name="search_by" id="search_by" class="form-control d-inline-block fz-14 lh-1-8 border-secondary-1 brd-3" placeholder="Purchase No./ Memo No./ Shop Name-Contact-Location/ Requisition No./ Bill No." value="{{ $search_by ?? '' }}" />
                     {{--<div class="text-secondary fz-12">
                       Search-by "Receive Number/ Challan Number/ Supplier Contact Person/ Contact Number/ Contact Email"
                     </div>--}}

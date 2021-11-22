@@ -5,7 +5,7 @@
   <td class="vehicle-number">{{ $purchase->vehicle->vehicle_no }}</td>
   <td class="parts-list">
     @foreach ( $purchase->details as $details )
-      {{ $details->parts->name }} <br/>
+      <li><span class="p-relative ml--10">{{ $details->parts->name }}</span></li>
     @endforeach
   </td>
   <td class="shop-name">{{ $purchase->shop_name }}</td>
