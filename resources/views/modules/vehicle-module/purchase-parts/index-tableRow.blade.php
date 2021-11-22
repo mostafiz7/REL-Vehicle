@@ -4,8 +4,8 @@
   <td class="purchase-date text-center">{{ date($date_format, strtotime($purchase->date)) }}</td>
   <td class="vehicle-number">{{ $purchase->vehicle->vehicle_no }}</td>
   <td class="parts-list">
-    @foreach ( $purchase->details as $details )
-      <li><span class="p-relative ml--10">{{ $details->parts->name }}</span></li>
+    @foreach ( $purchase->details as $purchaseItem )
+      <li><span class="p-relative ml--10">{{ $purchaseItem->parts->name }}</span></li>
     @endforeach
   </td>
   <td class="shop-name">{{ $purchase->shop_name }}</td>

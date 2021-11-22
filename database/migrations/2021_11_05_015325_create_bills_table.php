@@ -17,7 +17,7 @@ class CreateBillsTable extends Migration
       $table->id();
       $table->uuid('uid')->unique();
       $table->string('bill_no')->unique();
-      $table->set('bill_type', ['conveyance', 'customer-delivery', 'entertainment', 'lunch', 'dinner', 'labor', 'vehicle-parts', 'electrical', 'electronics', 'stationary', 'furniture']);
+      $table->set('bill_type', ['conveyance', 'customer-delivery', 'entertainment', 'lunch', 'dinner', 'labor', 'vehicle-module-parts', 'electrical', 'electronics', 'stationary', 'furniture']);
       $table->unsignedBigInteger('requisition_id')->nullable(); // Requirement ID
       $table->string('requisition_no')->nullable();
       $table->unsignedBigInteger('user_id')->nullable(); // APPS User ID

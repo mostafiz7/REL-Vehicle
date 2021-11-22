@@ -227,9 +227,83 @@
                 <tbody class="table-body fz-12 align-middle">
                   @if ( $purchases_all && count($purchases_all) > 0 )
                     @foreach ( $purchases_all as $index => $purchase )
+                      @if ( $parts_id || $parts_category || $vehicle_id || $vehicle_category )
+                        <?php
+                          /* @var $purchase */
+                          $parts_id_all = []; $parts_category_ids = [];
+                          $vehicle_id_all = []; $vehicle_category_ids = [];
+                          foreach( $purchase->details as $purchaseItem ){
+                            $parts_id_all[]         = $purchaseItem->parts_id;
+                            $parts_category_ids[]   = $purchaseItem->parts->category->id;
+                            $vehicle_id_all[]       = $purchaseItem->vehicle_id;
+                            $vehicle_category_ids[] = $purchaseItem->vehicle->category->id;
+                          }
+                        ?>
 
-                      @include('modules.vehicle.purchase-parts.index-tableRow', $purchase)
-
+                        @if ( $parts_id && !$parts_category && !$vehicle_id && !$vehicle_category )
+                          @if ( in_array($parts_id, $parts_id_all) )
+                            @include('modules.vehicle-module.purchase-parts.index-tableRow', $purchase)
+                          @endif
+                        @elseif ( $parts_id && $parts_category && !$vehicle_id && !$vehicle_category )
+                          @if ( in_array($parts_id, $parts_id_all) && in_array($parts_category, $parts_category_ids) )
+                            @include('modules.vehicle-module.purchase-parts.index-tableRow', $purchase)
+                          @endif
+                        @elseif ( $parts_id && !$parts_category && $vehicle_id && !$vehicle_category )
+                          @if ( in_array($parts_id, $parts_id_all) && in_array($vehicle_id, $vehicle_id_all) )
+                            @include('modules.vehicle-module.purchase-parts.index-tableRow', $purchase)
+                          @endif
+                        @elseif ( $parts_id && !$parts_category && !$vehicle_id && $vehicle_category )
+                          @if ( in_array($parts_id, $parts_id_all) && in_array($vehicle_category, $vehicle_category_ids) )
+                            @include('modules.vehicle-module.purchase-parts.index-tableRow', $purchase)
+                          @endif
+                        @elseif ( $parts_id && $parts_category && $vehicle_id && !$vehicle_category )
+                          @if ( in_array($parts_id, $parts_id_all) && in_array($parts_category, $parts_category_ids) && in_array($vehicle_id, $vehicle_id_all) )
+                            @include('modules.vehicle-module.purchase-parts.index-tableRow', $purchase)
+                          @endif
+                        @elseif ( $parts_id && $parts_category && !$vehicle_id && $vehicle_category )
+                          @if ( in_array($parts_id, $parts_id_all) && in_array($parts_category, $parts_category_ids) && in_array($vehicle_category, $vehicle_category_ids) )
+                            @include('modules.vehicle-module.purchase-parts.index-tableRow', $purchase)
+                          @endif
+                        @elseif ( $parts_id && !$parts_category && $vehicle_id && $vehicle_category )
+                          @if ( in_array($parts_id, $parts_id_all) && in_array($vehicle_id, $vehicle_id_all) && in_array($vehicle_category, $vehicle_category_ids) )
+                            @include('modules.vehicle-module.purchase-parts.index-tableRow', $purchase)
+                          @endif
+                        @elseif ( !$parts_id && $parts_category && !$vehicle_id && !$vehicle_category )
+                          @if ( in_array($parts_category, $parts_category_ids) )
+                            @include('modules.vehicle-module.purchase-parts.index-tableRow', $purchase)
+                          @endif
+                        @elseif ( !$parts_id && $parts_category && $vehicle_id && !$vehicle_category )
+                          @if ( in_array($parts_category, $parts_category_ids) && in_array($vehicle_id, $vehicle_id_all) )
+                            @include('modules.vehicle-module.purchase-parts.index-tableRow', $purchase)
+                          @endif
+                        @elseif ( !$parts_id && $parts_category && !$vehicle_id && $vehicle_category )
+                          @if ( in_array($parts_category, $parts_category_ids) && in_array($vehicle_category, $vehicle_category_ids) )
+                            @include('modules.vehicle-module.purchase-parts.index-tableRow', $purchase)
+                          @endif
+                        @elseif ( !$parts_id && $parts_category && $vehicle_id && $vehicle_category )
+                          @if ( in_array($parts_category, $parts_category_ids) && in_array($vehicle_id, $vehicle_id_all) && in_array($vehicle_category, $vehicle_category_ids) )
+                            @include('modules.vehicle-module.purchase-parts.index-tableRow', $purchase)
+                          @endif
+                        @elseif ( !$parts_id && !$parts_category && $vehicle_id && !$vehicle_category )
+                          @if ( in_array($vehicle_id, $vehicle_id_all) )
+                            @include('modules.vehicle-module.purchase-parts.index-tableRow', $purchase)
+                          @endif
+                        @elseif ( !$parts_id && !$parts_category && $vehicle_id && $vehicle_category )
+                          @if ( in_array($vehicle_id, $vehicle_id_all) && in_array($vehicle_category, $vehicle_category_ids) )
+                            @include('modules.vehicle-module.purchase-parts.index-tableRow', $purchase)
+                          @endif
+                        @elseif ( !$parts_id && !$parts_category && !$vehicle_id && $vehicle_category )
+                          @if ( in_array($vehicle_category, $vehicle_category_ids) )
+                            @include('modules.vehicle-module.purchase-parts.index-tableRow', $purchase)
+                          @endif
+                        @elseif ( $parts_id && $parts_category && $vehicle_id && $vehicle_category )
+                          @if ( in_array($parts_id, $parts_id_all) && in_array($parts_category, $parts_category_ids) && in_array($vehicle_id, $vehicle_id_all) && in_array($vehicle_category, $vehicle_category_ids) )
+                            @include('modules.vehicle-module.purchase-parts.index-tableRow', $purchase)
+                          @endif
+                        @endif
+                      @else
+                        @include('modules.vehicle-module.purchase-parts.index-tableRow', $purchase)
+                      @endif
                     @endforeach
                   @else
                     <tr class="table-row content no-purchase align-middle">
@@ -238,101 +312,6 @@
                   @endif
                 </tbody>
               </table>
-
-              {{--<tbody id="receive_history" class="table-body fz-12 text-center align-middle">--}}
-                {{--@if ( $purchase_all && count($purchase_all) > 0 )
-                  @foreach ( $purchase_all as $index => $purchase )--}}
-
-                    {{--@if ( $search_by || $product_by || $category_by || $supplier_by )
-                      <?php
-                      /* @var $receive */ /* @var $search_by */
-                      if( $search_by ){
-                        $receive_no     = stripos($receive->tr_no, $search_by);
-                        $challan_no     = stripos($receive->challan_no, $search_by);
-                        $contact_no     = stripos($receive->supplier->contact_no, $search_by);
-                        $contact_email  = stripos($receive->supplier->email, $search_by);
-                        $contact_person = stripos($receive->supplier->contact_person, $search_by);
-                      }
-
-                      $products_id = []; $categories_id = [];
-                      foreach( $receive->transactionDetails as $transactionDetails ){
-                        $products_id[]   = $transactionDetails->product_id;
-                        $categories_id[] = $transactionDetails->product->category_id;
-                      }
-                      ?>
-
-                      @if ( $search_by && !$product_by && !$category_by && !$supplier_by )
-                        @if ( $receive_no !== false || $challan_no !== false || $contact_no !== false || $contact_email !== false || $contact_person !== false )
-                          @include('backend.admin.transaction.receive.index-tableRow', $receive)
-                        @endif
-                      @elseif ( $product_by && !$search_by && !$category_by && !$supplier_by )
-                        @if ( in_array($product_by, $products_id) )
-                          @include('backend.admin.transaction.receive.index-tableRow', $receive)
-                        @endif
-                      @elseif ( $category_by && !$search_by && !$product_by && !$supplier_by )
-                        @if ( in_array($category_by, $categories_id) )
-                          @include('backend.admin.transaction.receive.index-tableRow', $receive)
-                        @endif
-                      @elseif ( $supplier_by && !$search_by && !$product_by && !$category_by )
-                        @if ( $supplier_by == $receive->supplier_id )
-                          @include('backend.admin.transaction.receive.index-tableRow', $receive)
-                        @endif
-                      @elseif ( $search_by && $product_by && !$category_by && !$supplier_by )
-                        @if ( in_array($product_by, $products_id) && ($receive_no !== false || $challan_no !== false || $contact_no !== false || $contact_email !== false || $contact_person !== false) )
-                          @include('backend.admin.transaction.receive.index-tableRow', $receive)
-                        @endif
-                      @elseif ( $search_by && $category_by && !$product_by && !$supplier_by )
-                        @if ( in_array($category_by, $categories_id) && ($receive_no !== false || $challan_no !== false || $contact_no !== false || $contact_email !== false || $contact_person !== false) )
-                          @include('backend.admin.transaction.receive.index-tableRow', $receive)
-                        @endif
-                      @elseif ( $search_by && $supplier_by && !$product_by && !$category_by )
-                        @if ( $supplier_by == $receive->supplier_id && ($receive_no !== false || $challan_no !== false || $contact_no !== false || $contact_email !== false || $contact_person !== false) )
-                          @include('backend.admin.transaction.receive.index-tableRow', $receive)
-                        @endif
-                      @elseif ( $search_by && $product_by && $category_by && !$supplier_by )
-                        @if ( in_array($product_by, $products_id) && in_array($category_by, $categories_id) && ($receive_no !== false || $challan_no !== false || $contact_no !== false || $contact_email !== false || $contact_person !== false) )
-                          @include('backend.admin.transaction.receive.index-tableRow', $receive)
-                        @endif
-                      @elseif ( $search_by && $product_by && $supplier_by && !$category_by )
-                        @if ( in_array($product_by, $products_id) && $supplier_by == $receive->supplier_id && ($receive_no !== false || $challan_no !== false || $contact_no !== false || $contact_email !== false || $contact_person !== false) )
-                          @include('backend.admin.transaction.receive.index-tableRow', $receive)
-                        @endif
-                      @elseif ( $search_by && $category_by && $supplier_by && !$product_by )
-                        @if ( in_array($category_by, $categories_id) && $supplier_by == $receive->supplier_id && ($receive_no !== false || $challan_no !== false || $contact_no !== false || $contact_email !== false || $contact_person !== false) )
-                          @include('backend.admin.transaction.receive.index-tableRow', $receive)
-                        @endif
-                      @elseif ( $search_by && $product_by && $category_by && $supplier_by )
-                        @if ( in_array($product_by, $products_id) && in_array($category_by, $categories_id) && $supplier_by == $receive->supplier_id && ($receive_no !== false || $challan_no !== false || $contact_no !== false || $contact_email !== false || $contact_person !== false) )
-                          @include('backend.admin.transaction.receive.index-tableRow', $receive)
-                        @endif
-                      @elseif ( $product_by && $category_by && !$search_by && !$supplier_by )
-                        @if ( in_array($product_by, $products_id) && in_array($category_by, $categories_id) )
-                          @include('backend.admin.transaction.receive.index-tableRow', $receive)
-                        @endif
-                      @elseif ( $product_by && $supplier_by && !$search_by && !$category_by )
-                        @if ( in_array($product_by, $products_id) && $supplier_by == $receive->supplier_id )
-                          @include('backend.admin.transaction.receive.index-tableRow', $receive)
-                        @endif
-                      @elseif ( $product_by && $category_by && $supplier_by && !$search_by )
-                        @if ( in_array($product_by, $products_id) && in_array($category_by, $categories_id) && $supplier_by == $receive->supplier_id )
-                          @include('backend.admin.transaction.receive.index-tableRow', $receive)
-                        @endif
-                      @elseif ( $category_by && $supplier_by && !$product_by && !$search_by )
-                        @if ( in_array($category_by, $categories_id) && $supplier_by == $receive->supplier_id )
-                          @include('backend.admin.transaction.receive.index-tableRow', $receive)
-                        @endif
-                      @endif
-                    @else
-                      @include('backend.admin.transaction.receive.index-tableRow', $receive)
-                    @endif--}}
-
-                  {{--@endforeach
-                @else
-                  <tr class="table-row content no-receive align-middle">
-                    <td colspan="11" class="error text-danger fz-22 fw-bold text-center py-100">Sorry! Currently there are no record available.</td>
-                  </tr>
-                @endif
-                </tbody>--}}
             </div>
 
 

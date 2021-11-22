@@ -31,9 +31,7 @@
 }
 
 .navbar-header .nav-link:hover,
-.navbar-header .nav-link.active,
-.navbar-header .dropdown-menu.show .dropdown-item:hover,
-.navbar-header .dropdown-menu.show .dropdown-item.active {
+.navbar-header .nav-link.active {
   color: #E91E63;
 }
 
@@ -42,14 +40,23 @@
 }
 
 .navbar-header .dropdown-menu {
-  padding: 0;
+  background-color: #000333;
+  /*background-color: #E91E63;*/
+  /*padding: 0;*/
 }
 
-.navbar-header .dropdown-menu,
+.navbar-header .dropdown-item {
+  font-size: 14px;
+  padding: 10px 20px;
+}
+
 .navbar-header .dropdown-item:hover,
 .navbar-header .dropdown-item.active {
-  background-color: #000333;
-  /*background-color: #e91e63;*/
+  /*background-color: #000333;*/
+  background-color: #E91E63;
+  /*color: #000333;*/
+  /*color: #E91E63;*/
+  color: #FFFFFF;
 }
 
 

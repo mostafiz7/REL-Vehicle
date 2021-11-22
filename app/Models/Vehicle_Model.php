@@ -45,15 +45,15 @@ class Vehicle_Model extends Model
 
 
 
-  public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
-  {
-    return $this->belongsTo(VehicleCategory_Model::class);
-  }
-
-
   public function brand(): \Illuminate\Database\Eloquent\Relations\BelongsTo
   {
     return $this->belongsTo(Brand_Model::class);
+  }
+
+
+  public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+  {
+    return $this->belongsTo(VehicleCategory_Model::class);
   }
 
 

@@ -34,7 +34,7 @@
                           <label for="" class="required w-100 mr-15"><span>Type</span></label>
                           <select name="purchase_type" id="purchase_type" class="required form-select border-secondary brd-3 @error('purchase_type') is-invalid @enderror">
                             @foreach ( $purchase_types as $type )
-                              <option value="{{$type}}" {{ $type == 'vehicle-parts' ? 'selected' : '' }}>
+                              <option value="{{$type}}" {{ $type == 'vehicle-module-parts' ? 'selected' : '' }}>
                                 {{ ucwords(str_replace('-', ' ', $type)) }}
                               </option>
                             @endforeach

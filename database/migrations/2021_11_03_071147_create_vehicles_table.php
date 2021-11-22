@@ -18,8 +18,8 @@ class CreateVehiclesTable extends Migration
       $table->uuid('uid')->unique();
       $table->string('vehicle_no')->unique(); // Vehicle Registration Number
       $table->string('slug')->unique();
-      $table->unsignedBigInteger('category_id'); // Vehicle-Category: Pickup, Cover-Van etc.
       $table->unsignedBigInteger('brand_id');
+      $table->unsignedBigInteger('category_id'); // Vehicle-Category: Pickup, Cover-Van etc.
       $table->unsignedBigInteger('department_id')->nullable(); // Allocated Department
       $table->unsignedBigInteger('driver_id')->nullable(); // Allocated Driver
       $table->unsignedBigInteger('helper_id')->nullable(); // Allocated Helper

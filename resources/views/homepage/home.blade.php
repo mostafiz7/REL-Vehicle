@@ -8,9 +8,9 @@
     <div class="home-page">
       <div class="page-content">
         <div class="container">
-          Transaction
-          <h1 class="text-indigo-600 text-center text-4xl my-40">Hello Laravel. This is Tailwind CSS!</h1>
 
+          <h1 class="text-indigo-600 text-center text-4xl my-40">Hello Laravel!</h1>
+          
         </div> {{-- ./container --}}
       </div> {{-- ./page-content --}}
     </div> {{-- ./page-name --}}
