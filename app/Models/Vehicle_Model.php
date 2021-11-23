@@ -33,6 +33,7 @@ class Vehicle_Model extends Model
     'is_running',
     'wheels',
     'engine_cc',
+    'origin',
     'purchase_date',
     'sold_date',
   ];

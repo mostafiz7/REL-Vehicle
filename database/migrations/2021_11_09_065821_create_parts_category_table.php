@@ -18,6 +18,7 @@ class CreatePartsCategoryTable extends Migration
       $table->uuid('uid')->unique();
       $table->string('name')->unique();
       $table->string('slug')->unique();
+      $table->string('description')->nullable();
 
       $table->timestamps();
     });

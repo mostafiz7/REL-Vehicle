@@ -29,7 +29,7 @@ class Purchase_Controller extends Controller
   // Vehicle-Parts Purchase Unique-Number
   protected function VehiclePartsPurchaseNo(): string
   {
-    $type = 'vehicle-module-parts';
+    $type = 'vehicle-parts';
     $current_year = date('Y', strtotime(today()));
     $last_purchase = Purchase_Model::whereYear('created_at', $current_year)
       ->latest()->first();
@@ -84,7 +84,7 @@ class Purchase_Controller extends Controller
       return back()->withErrors( $validator )->withInput();
     }
 
-    $purchase_type             = 'vehicle-module-parts';
+    $purchase_type             = 'vehicle-parts';
     $vehicleParts_purchase_all = null;
 
     $search_by         = $request->search_by ?? null;
@@ -399,7 +399,7 @@ class Purchase_Controller extends Controller
     }
     // no-search criteria - get all
     else{
-      $vehicleParts_purchase_all = Purchase_Model::where('purchase_type', 'vehicle-module-parts')
+      $vehicleParts_purchase_all = Purchase_Model::where('purchase_type', $purchase_type)
         ->orderBy('date', 'desc')->get()->all();
     }*/
 
@@ -422,7 +422,7 @@ class Purchase_Controller extends Controller
     $date_format   = $settings && $settings->date_format ? $settings->date_format : 'd-M-Y';
     $time_format   = $settings && $settings->time_format ? $settings->time_format : 'h:i A';
 
-    $purchase_type_all = ['vehicle-module', 'vehicle-module-parts', 'electrical', 'electronics', 'stationary', 'furniture'];
+    $purchase_type_all = [ 'vehicle', 'vehicle-parts', 'electrical', 'electronics', 'stationary', 'furniture' ];
 
     /* supplier-by filter not applied yet */
 
@@ -469,7 +469,7 @@ class Purchase_Controller extends Controller
 
     $supplier_all         = Supplier_Model::orderBy('name', 'asc')->get()->all();
 
-    $purchase_types = ['vehicle-module', 'vehicle-module-parts', 'electrical', 'electronics', 'stationary', 'furniture'];
+    $purchase_types = [ 'vehicle', 'vehicle-parts', 'electrical', 'electronics', 'stationary', 'furniture' ];
 
     return view('modules.vehicle-module.purchase-parts.new')->with([
       'newPurchaseNo'         => $this->VehiclePartsPurchaseNo(),
@@ -499,7 +499,7 @@ class Purchase_Controller extends Controller
       $session_id = $request->session()->get('session_id');
     }
 
-    $type           = 'vehicle-module-parts';
+    $type           = 'vehicle-parts';
     $purchase_date  = $request->date ? DateTime::createFromFormat('d-m-Y', $request->date)->format('Y-m-d') : date('Y-m-d', strtotime(today()));
     $requisition    = Requisition_Model::where('requisition_no', $request->requisition_no)->get()->first();
     $billed         = Bill_Model::where('bill_no', $request->bill_no)->get()->first();
@@ -524,7 +524,7 @@ class Purchase_Controller extends Controller
       /*Rule::unique('employees')->where(function ($query) use($purchaser_id, $purchase_power) {
         return $query->where('purchase_power', $purchase_power)->where('id', $purchaser_id);
       }),*/
-      'purchase_type'  => [ 'required', 'in:vehicle-module-parts', 'string', 'max:15' ],
+      'purchase_type'  => [ 'required', "in:$type", 'string', 'max:15' ],
       'date'           => [ 'required', 'date_format:d-m-Y' ],
       'memo_no'        => [ 'required', 'string', 'max:6' ],
       'vehicle_id'     => [ 'required', 'integer', 'exists:vehicles,id' ],
@@ -543,10 +543,10 @@ class Purchase_Controller extends Controller
       // 'supplier_id'    => [ 'nullable', 'integer', 'exists:suppliers,id' ],
       // 'supplier_name'  => [ 'required_unless:supplier_id,null', 'string', 'max:50' ],
     ], [
-      'purchase_type.in'      => 'Only vehicle-module-parts is allowed.',
+      'purchase_type.in'      => 'Only vehicle-parts is allowed.',
       'memo_no.required'      => 'The memo-number is required.',
-      'vehicle_id.required'   => 'The vehicle-module-number is required.',
-      'vehicle_id.exists'     => 'The vehicle-module-number does not exists.',
+      'vehicle_id.required'   => 'The vehicle-number is required.',
+      'vehicle_id.exists'     => 'The vehicle-number does not exists.',
       'date.date_format'      => 'The date does not match the correct format (Day-Month-FullYear).',
     ]);
     if( $validator->fails() || $input_paidAmount > $input_total_amount || $input_dueAmount > $input_total_amount

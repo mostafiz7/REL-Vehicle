@@ -24,6 +24,7 @@ class PartsCategory_Model extends Model
     'uid',
     'name',
     'slug',
+    'description',
   ];
 
 

@@ -24,6 +24,7 @@ class VehicleCategory_Model extends Model
     'uid',
     'name',
     'slug',
+    'description',
   ];
 
 

@@ -184,9 +184,6 @@
                   <div class="col-md-6 col-sm-6 col-12 mb-10 search_by">
                     {{--<label for="" class="fw-bold mr-15"><span>Search By</span></label>--}}
                     <input type="text" name="search_by" id="search_by" class="form-control d-inline-block fz-14 lh-1-8 border-secondary-1 brd-3" placeholder="Purchase No./ Memo No./ Shop Name-Contact-Location/ Requisition No./ Bill No." value="{{ $search_by ?? '' }}" />
-                    {{--<div class="text-secondary fz-12">
-                      Search-by "Receive Number/ Challan Number/ Supplier Contact Person/ Contact Number/ Contact Email"
-                    </div>--}}
                   </div>
 
                   {{--Action-Buttons--}}
@@ -195,7 +192,7 @@
                     <div class="w-100">
                       <button class="btn btn-primary btn-sm fz-14 fw-bold lh-1-4 py-5 px-10">Search</button>
 
-                      <input type="reset" value="Clear" id="clearReceiveSearchForm" class="btn btn-secondary btn-sm bg-secondary fz-14 fw-bold lh-1-4 py-5 px-10 ml-5" />
+                      <input type="reset" value="Clear" id="clearPurchaseSearchForm" class="btn btn-secondary btn-sm bg-secondary fz-14 fw-bold lh-1-4 py-5 px-10 ml-5" />
 
                       <a href="{{ route('vehicle.parts.purchase.all') }}" class="btn btn-dark btn-sm fz-14 fw-bold lh-1-4 py-5 px-10 ml-5">Refresh</a>
                     </div>
@@ -315,9 +312,9 @@
             </div>
 
 
-            {{--Single-Receive-Details-Modal-View--}}
-            <div class="modal fade" id="SingleReceiveModalView" {{--data-bs-backdrop="static" data-bs-keyboard="true"--}} tabindex="-1" aria-labelledby="ReceiveDetailsModalViewLabel" aria-hidden="true">
-              <div id="ReceiveDetailsModalView" class="modal-dialog modal-xl modal-fullscreen-lg-down modal-dialog-scrollable">
+            {{--Single-Purchase-Details-Modal-View--}}
+            <div class="modal fade" id="SinglePurchaseModalView" {{--data-bs-backdrop="static" data-bs-keyboard="true"--}} tabindex="-1" aria-labelledby="PurchaseDetailsModalViewLabel" aria-hidden="true">
+              <div id="PurchaseDetailsModalView" class="modal-dialog modal-xl modal-fullscreen-lg-down modal-dialog-scrollable">
 
                 {{--@include('backend.admin.pos-module.order-modalView')--}}
 
@@ -358,12 +355,12 @@
   }
 
 
-  /*LoadSingleReceiveModalView();
-  function LoadSingleReceiveModalView(){
-    $('.singleReceive-modalView.btn').each(function(){
+  /*LoadSinglePurchaseModalView();
+  function LoadSinglePurchaseModalView(){
+    $('.singlePurchase-modalView.btn').each(function(){
       $(this).click(function(){
         let tr_id = Number($(this).attr('data-id'));
-        $('#ReceiveDetailsModalView').load(`/admin/receive/details/${tr_id}/modal-view`);
+        $('#PurchaseDetailsModalView').load(`/admin/purchase/details/${tr_id}/modal-view`);
       });
     });
   }*/

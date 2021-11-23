@@ -56,7 +56,35 @@
               <li class="">
                 <a href="{{ route('vehicle.new.add') }}"
                    class="dropdown-item {{ strpos($viewName, 'vehicles') && strpos($viewName, 'index') ? 'active' : '' }}">
-                  Vehicles Index
+                  Vehicle Index
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          {{--Parts-Dropdown--}}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle {{ strpos($viewName, 'parts') ? 'active' : '' }}"
+               href="#" id="Header-Nav-Parts" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Parts
+            </a>
+            <ul class="dropdown-menu mt--1 brd-0" aria-labelledby="Header-Nav-Parts">
+              <li class="">
+                <a href="{{ route('vehicle.parts.add.new') }}"
+                   class="dropdown-item {{ strpos($viewName, 'parts') && strpos($viewName, 'new') ? 'active' : '' }}">
+                  Add New Parts
+                </a>
+              </li>
+              <li class="">
+                <a href="{{ route('vehicle.parts.add.new') }}"
+                   class="dropdown-item {{ strpos($viewName, 'parts') && strpos($viewName, 'index') ? 'active' : '' }}">
+                  Parts Index
+                </a>
+              </li>
+              <li class="">
+                <a href="{{ route('vehicle.parts.categories') }}"
+                   class="dropdown-item {{ strpos($viewName, 'parts') && strpos($viewName, 'categories') ? 'active' : '' }}">
+                  Categories
                 </a>
               </li>
             </ul>

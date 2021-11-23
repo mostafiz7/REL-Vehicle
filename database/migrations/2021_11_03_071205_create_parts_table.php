@@ -24,7 +24,7 @@ class CreatePartsTable extends Migration
       $table->string('metals')->nullable();
       $table->string('materials')->nullable();
       $table->string('unit');
-      $table->string('origin');
+      $table->string('origin')->nullable();
 
       $table->foreign('category_id')
         ->references('id')->on('parts_category')->onUpdate('cascade');

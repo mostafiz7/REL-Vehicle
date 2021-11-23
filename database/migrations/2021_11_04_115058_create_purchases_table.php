@@ -17,7 +17,7 @@ class CreatePurchasesTable extends Migration
       $table->id();
       $table->uuid('uid')->unique();
       $table->string('purchase_no')->unique();
-      $table->set('purchase_type', ['vehicle-module', 'vehicle-module-parts', 'electrical', 'electronics', 'stationary', 'furniture']);
+      $table->set('purchase_type', ['vehicle', 'vehicle-parts', 'electrical', 'electronics', 'stationary', 'furniture']);
       $table->date('date');
       $table->string('memo_no')->index(); // Shops Memo or Bill Number
       $table->unsignedBigInteger('vehicle_id')->nullable();

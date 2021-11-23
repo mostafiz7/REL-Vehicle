@@ -27,6 +27,7 @@ class CreateVehiclesTable extends Migration
       $table->boolean('is_running')->default(1); // Is Vehicle Currently Running or Not
       $table->tinyInteger('wheels')->nullable(); // Vehicle Wheels Count
       $table->smallInteger('engine_cc')->nullable(); // Vehicle Engine Cubic-Capacity
+      $table->string('origin')->nullable();
       $table->date('purchase_date')->nullable();
       $table->date('sold_date')->nullable();
 
