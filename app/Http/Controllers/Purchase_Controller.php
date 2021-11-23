@@ -115,7 +115,7 @@ class Purchase_Controller extends Controller
     /* supplier-by filter not applied yet */
 
     // search criteria only for start-date
-    /*if( $start_date && !$end_date && !$search_by && !$purchased_by && !$authorized_by ){
+    if( $start_date && !$end_date && !$search_by && !$purchased_by && !$authorized_by ){
       $vehicleParts_purchase_all = Purchase_Model::where('purchase_type', $purchase_type)
         ->whereDate('date', '>=', date($start_date))
         ->orderBy('date', 'desc')->get()->all();
@@ -401,11 +401,8 @@ class Purchase_Controller extends Controller
     else{
       $vehicleParts_purchase_all = Purchase_Model::where('purchase_type', $purchase_type)
         ->orderBy('date', 'desc')->get()->all();
-    }*/
+    }
 
-    $vehicleParts_purchase_all = Purchase_Model::where('purchase_type', $purchase_type)
-      ->whereDate('date', '>=', date($start_date))
-      ->orderBy('date', 'desc')->get()->all();
 
     $parts_all            = Parts_Model::orderBy('name', 'asc')->get()->all();
     $vehicle_all          = Vehicle_Model::orderBy('vehicle_no', 'asc')->get()->all();

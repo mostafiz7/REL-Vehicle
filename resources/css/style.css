@@ -293,6 +293,8 @@ a, a:hover, a:focus { text-decoration: none; }
 .list-style-disc { list-style: disc;padding-left: 20px; }
 .list-style-disc-inside { list-style: disc inside; }
 
+.dropdown-item-divider { border-bottom: 1px solid; }
+
 .color-base-1 { color: #9A1B1B !important; }
 .color-base-2 { color: #4A1515 !important; }
 .color-base-3 { color: #A62020 !important; }

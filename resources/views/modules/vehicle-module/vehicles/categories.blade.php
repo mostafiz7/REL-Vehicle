@@ -1,23 +1,23 @@
 @extends('layouts.app')
 
-{{--@section('title', 'Add New Parts-Categories')--}}
+{{--@section('title', 'Add New Vehicle-Categories')--}}
 
 @section('content')
-<div class="Page Parts-Categories New">
+<div class="Page Vehicle-Categories New">
   <div class="container-lg">
     <div class="page-content pt-10">
       <div class="card">
         <div class="card-header page-header bg-success text-white">
-          <h5 class="title mb-0">Parts Categories</h5>
+          <h5 class="title mb-0">Vehicle Categories</h5>
         </div>
 
 
         <div class="card-body page-body p-0">
-          <div class="partsCategories-new-area overlay-scrollbar">
+          <div class="vehicleCategories-new-area overlay-scrollbar">
             <div class="row">
               <div class="col-md-6">
-                <form method="post" action="{{ route('vehicle.parts.categories') }}"
-                      name="addPartsCategoryForm" id="addPartsCategoryForm" class="partsCategory-form new mx-md-3 p-20 pb-0">
+                <form method="post" action="{{ route('vehicle.categories') }}"
+                      name="addVehicleCategoryForm" id="addVehicleCategoryForm" class="vehicleCategory-form new mx-md-3 p-20 pb-0">
                   @csrf
 
                   <div class="fz-20 fw-bold mb-30 pb-5 bb-1">
@@ -27,7 +27,7 @@
                   {{--Category-Name--}}
                   <div class="mb-30 name">
                     <label for="" class="required w-100 mr-15"><span>Category Name</span></label>
-                    <input type="text" name="name" id="name" class="required form-control border-secondary brd-3 @error('name') is-invalid @enderror" placeholder="Front Side" value="{{ old('name') }}" />
+                    <input type="text" name="name" id="name" class="required form-control border-secondary brd-3 @error('name') is-invalid @enderror" placeholder="Cover Van" value="{{ old('name') }}" />
 
                     @if ( $errors->has('name') )
                       <div class="text-danger fz-14 fw-bold" role="alert">
@@ -60,14 +60,14 @@
                 </form>
               </div>
 
-              {{--Show All Parts-Category--}}
+              {{--Show All Vehicle-Category--}}
               <div class="col-md-6">
                 <div class="mx-md-3 p-20 pb-0">
                   <div class="h-auto fz-20 fw-bold mb-30 pb-5 bb-1">
                     Category Lists:
                   </div>
 
-                  <table class="table table-bordered border-secondary-1 table-hover parts-category-table">
+                  <table class="table table-bordered border-secondary-1 table-hover vehicle-category-table">
                     <thead class="category-header text-center">
                       <tr class="category-row bb-0">
                         <th scope="col" class="serial bb-0">SL#</th>
