@@ -14,7 +14,7 @@
 
         <div class="card-body page-body p-0">
           <div class="vehicle-new-area overlay-scrollbar">
-            <form method="post" action="{{ route('vehicle.new.add') }}"
+            <form method="post" action="{{ route('vehicle.add.new') }}"
                   name="addVehicleForm" id="addVehicleForm" class="vehicle-form new p-20 pb-0">
               @csrf
 

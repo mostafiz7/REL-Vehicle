@@ -7,20 +7,20 @@
   @endif--}}
 
   <div class="header-navbar fz-14 px-sm-2">
-    <nav class="navbar navbar-expand-lg py-0 pl-10 pr-10">
-      <button id="pushMenu" class="sidebar-push mr-15">
+    <nav class="navbar navbar-expand-lg justify-content-center py-0 px-10">
+      <button id="pushMenu" class="d-none sidebar-push mr-15">
         <i class="fa fa-bars"></i>
       </button>
 
       <div class="navbar-header">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a href="/" class="nav-link {{ str_contains($viewName, 'home') ? 'active' : '' }}">Home</a>
+            <a href="/" class="nav-link {{ str_contains($viewName, 'home') || str_contains($viewName, 'searchForm') ? 'active' : '' }}">Home</a>
           </li>
 
           {{--Purchase-Dropdown--}}
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle {{ strpos($viewName, 'purchase-parts') ? 'active' : '' }}"
+            <a class="nav-link dropdown-toggle {{ ( strpos($viewName, 'purchase-parts') || strpos($viewName, 'searchResult') ) && ! strpos($viewName, 'searchForm') ? 'active' : '' }}"
                href="#" id="Header-Nav-Purchases" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Purchases
             </a>
@@ -37,6 +37,12 @@
                   Parts Purchase Index
                 </a>
               </li>
+              <li class="">
+                <a href="{{ route('vehicle.parts.purchase.search-result') }}"
+                   class="dropdown-item {{ strpos($viewName, 'purchase-parts') && strpos($viewName, 'searchResult') ? 'active' : '' }}">
+                  Purchase Search
+                </a>
+              </li>
             </ul>
           </li>
 
@@ -48,13 +54,13 @@
             </a>
             <ul class="dropdown-menu mt--1 brd-0" aria-labelledby="Header-Nav-Vehicles">
               <li class="">
-                <a href="{{ route('vehicle.new.add') }}"
+                <a href="{{ route('vehicle.add.new') }}"
                    class="dropdown-item {{ strpos($viewName, 'vehicles') && strpos($viewName, 'new') ? 'active' : '' }}">
                   Add New Vehicle
                 </a>
               </li>
               <li class="">
-                <a href="{{ route('vehicle.new.add') }}"
+                <a href="{{ route('vehicle.add.new') }}"
                    class="dropdown-item {{ strpos($viewName, 'vehicles') && strpos($viewName, 'index') ? 'active' : '' }}">
                   Vehicle Index
                 </a>
@@ -94,10 +100,46 @@
                   Parts Index
                 </a>
               </li>
+              <li class="dropdown-item-divider border-secondary-4 my-3"></li>
               <li class="">
                 <a href="{{ route('vehicle.parts.categories') }}"
                    class="dropdown-item {{ strpos($viewName, 'parts') && ! strpos($viewName, 'purchase') && strpos($viewName, 'categories') ? 'active' : '' }}">
                   Categories
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          {{--Employees-Dropdown--}}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle {{ strpos($viewName, 'employees') ? 'active' : '' }}"
+               href="#" id="Header-Nav-Employees" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Employees
+            </a>
+            <ul class="dropdown-menu mt--1 brd-0" aria-labelledby="Header-Nav-Employees">
+              <li class="">
+                <a href="{{ route('employee.add.new') }}"
+                   class="dropdown-item {{ strpos($viewName, 'employees') && strpos($viewName, 'new') ? 'active' : '' }}">
+                  Add New Employee
+                </a>
+              </li>
+              <li class="">
+                <a href="{{ route('employee.add.new') }}"
+                   class="dropdown-item {{ strpos($viewName, 'employees') && strpos($viewName, 'index') ? 'active' : '' }}">
+                  Employee Index
+                </a>
+              </li>
+              <li class="dropdown-item-divider border-secondary-4 my-3"></li>
+              <li class="">
+                <a href="{{ route('department.add.new') }}"
+                   class="dropdown-item {{ strpos($viewName, 'employees') && strpos($viewName, 'departments') ? 'active' : '' }}">
+                  Departments
+                </a>
+              </li>
+              <li class="">
+                <a href="{{ route('designation.add.new') }}"
+                   class="dropdown-item {{ strpos($viewName, 'employees') && strpos($viewName, 'designations') ? 'active' : '' }}">
+                  Designations
                 </a>
               </li>
             </ul>

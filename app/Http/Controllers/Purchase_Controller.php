@@ -4,15 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Bill_Model;
 use App\Models\Parts_Model;
-use App\Models\PurchaseDetails_Model;
-use App\Models\Settings_Model;
 use App\Models\Vehicle_Model;
+use App\Models\Settings_Model;
 use App\Models\Purchase_Model;
 use App\Models\Supplier_Model;
 use App\Models\Employee_Model;
 use App\Models\Requisition_Model;
 use App\Models\PartsCategory_Model;
 use App\Models\VehicleCategory_Model;
+use App\Models\PurchaseDetails_Model;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -452,6 +452,11 @@ class Purchase_Controller extends Controller
   // Show Vehicle-Parts Purchase-Form
   public function VehicleParts_Purchase_Form( Request $request )
   {
+    // if( Gate::allows('isAdmin', Auth::user()) ){}
+    /*if( Gate::denies('isAdmins') || Gate::denies('entryIndex') || Gate::denies('routeHasAccess') ){
+      return back()->with('error', 'You are not authorized to perform this action!');
+    }*/
+
     $parts_all            = Parts_Model::orderBy('name', 'asc')->get()->all();
     $vehicle_all          = Vehicle_Model::orderBy('vehicle_no', 'asc')->get()->all();
     $parts_category_all   = PartsCategory_Model::orderBy('name', 'asc')->get()->all();
@@ -734,6 +739,102 @@ class Purchase_Controller extends Controller
     }
 
     return back()->with('success', "Purchase No.# ($newPurchase_Created->purchase_no) saved successfully!");
+  }
+
+
+  // Search-Form Vehicle-Parts-Purchase
+  public function SearchForm_VehiclePartsPurchase( Request $request )
+  {
+    // if( Gate::allows('isAdmin', Auth::user()) ){}
+    /*if( Gate::denies('isAdmins') || Gate::denies('entryIndex') || Gate::denies('routeHasAccess') ){
+      return back()->with('error', 'You are not authorized to perform this action!');
+    }*/
+
+    $parts_all   = Parts_Model::orderBy( 'name', 'asc' )->get()->all();
+    $vehicle_all = Vehicle_Model::orderBy( 'vehicle_no', 'asc' )->get()->all();
+
+    return view('modules.vehicle-module.purchase-parts.searchForm')->with([
+      'parts_all'     => $parts_all,
+      'vehicle_all'   => $vehicle_all,
+    ]);
+  }
+
+
+  // Search-Result Vehicle-Parts-Purchase
+  public function SearchResult_VehiclePartsPurchase( Request $request )
+  {
+    // if( Gate::allows('isAdmin', Auth::user()) ){}
+    /*if( Gate::denies('isAdmins') || Gate::denies('entryIndex') || Gate::denies('routeHasAccess') ){
+      return back()->with('error', 'You are not authorized to perform this action!');
+    }*/
+
+    $validator = Validator ::make( $request -> all(), [
+      'date_start' => [ 'nullable', 'date_format:d-m-Y' ],
+      'date_end'   => [ 'nullable', 'date_format:d-m-Y' ],
+    ], [
+      'date_start.date_format' => 'The from-date does not match the format (' . date( 'd-m-Y' ) . ').',
+      'date_end.date_format'   => 'The to-date does not match the format (' . date( 'd-m-Y' ) . ').',
+    ]);
+    if( $validator -> fails() ){
+      return back() -> withErrors( $validator ) -> withInput();
+    }
+
+    $purchase_type = 'vehicle-parts';
+    $vehicleParts_purchase_all = null;
+    $purchase_all_without_date = null;
+
+    $date_start = $request -> date_start ?? null;
+    $date_end   = $request -> date_end ?? null;
+    $parts_id   = $request -> parts_id ?? null; // Filter in View
+    $vehicle_id = $request -> vehicle_id ?? null; // Filter in View
+
+    $parts_id   = $parts_id == 'all' || $parts_id == '' || $parts_id == null ? null : $parts_id;
+    $vehicle_id = $vehicle_id == 'all' || $vehicle_id == '' || $vehicle_id == null ? null : $vehicle_id;
+    $start_date = $date_start ? DateTime ::createFromFormat( 'd-m-Y', $date_start ) -> format( 'Y-m-d' ) : null;
+    $end_date   = $date_end ? DateTime ::createFromFormat( 'd-m-Y', $date_end ) -> format( 'Y-m-d' ) : null;
+
+    // search criteria only for start-date
+    if( $start_date && ! $end_date ){
+      $vehicleParts_purchase_all = Purchase_Model::where( 'purchase_type', $purchase_type )
+        ->whereDate( 'date', '>=', date( $start_date ) )
+        ->orderBy( 'date', 'desc' )->get()->all();
+    }
+    // search criteria only for end-date
+    elseif( ! $start_date && $end_date ){
+      $vehicleParts_purchase_all = Purchase_Model::where( 'purchase_type', $purchase_type )
+        ->whereDate( 'date', '<=', date( $end_date ) )
+        ->orderBy( 'date', 'desc' )->get()->all();
+    }
+    // search criteria for start-date & end-date
+    elseif( $start_date && $end_date ){
+      $vehicleParts_purchase_all = Purchase_Model::where( 'purchase_type', $purchase_type )
+        ->whereDate( 'date', '>=', date( $start_date ) )
+        ->whereDate( 'date', '<=', date( $end_date ) )
+        ->orderBy( 'date', 'desc' )->get()->all();
+    }
+    // search criteria for start-date & end-date
+    elseif( ! $start_date && ! $end_date ){
+      $vehicleParts_purchase_all = Purchase_Model::where( 'purchase_type', $purchase_type )
+        ->orderBy( 'date', 'desc' )->get()->all();
+    }
+
+    $parts_all   = Parts_Model::orderBy( 'name', 'asc' )->get()->all();
+    $vehicle_all = Vehicle_Model::orderBy( 'vehicle_no', 'asc' )->get()->all();
+
+    $settings    = Settings_Model::get()->first();
+    $date_format = $settings && $settings->date_format ? $settings->date_format : 'd-M-Y';
+
+    return view('modules.vehicle-module.purchase-parts.searchResult')->with([
+      'date_start'    => $date_start,
+      'date_end'      => $date_end,
+      'date_format'   => $date_format,
+      'parts_id'      => $parts_id,
+      'parts_all'     => $parts_all,
+      'vehicle_id'    => $vehicle_id,
+      'vehicle_all'   => $vehicle_all,
+      'purchases_all' => $vehicleParts_purchase_all,
+      'purchase_all_without_date' => $purchase_all_without_date,
+    ]);
   }
 
 

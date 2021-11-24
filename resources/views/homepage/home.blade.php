@@ -9,8 +9,10 @@
       <div class="page-content">
         <div class="container">
 
-          <h1 class="text-indigo-600 text-center text-4xl my-40">Hello Laravel!</h1>
-          
+          <div class="pt-100">
+            <h1 class="text-indigo-600 text-center text-4xl">Hello Laravel!</h1>
+          </div>
+
         </div> {{-- ./container --}}
       </div> {{-- ./page-content --}}
     </div> {{-- ./page-name --}}

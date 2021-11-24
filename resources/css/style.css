@@ -391,6 +391,10 @@ a, a:hover, a:focus { text-decoration: none; }
 .btn-warning-2 { background-color: #FC5D00 !important; color: #FFFFFF; border-color: #FC5D00 !important; }
 .btn-warning-2:hover { background-color: #D45105 !important; color: #FFFFFF; border-color: #D45105 !important; }
 .btn-warning-3 { background-color: #D55500 !important; color: #FFFFFF; border-color: #D55500 !important; }
+.btn-dark-blue { background-color: #022A6C !important;color: #FFFFFF !important;border-color: #022A6C !important; }
+.btn-dark-blue-alt { background-color: #FFFFFF !important;color: #022A6C !important;border-color: #FFFFFF !important; }
+.btn-navy-blue { background-color: #000333 !important;color: #FFFFFF !important;border-color: #000333 !important; }
+.btn-navy-blue-alt { background-color: #FFFFFF !important;color: #000333 !important;border-color: #FFFFFF !important; }
 
 .text-white-2 { color: #E4E6EB !important; }
 .text-primary-2 { color: #2E89FF !important; }
@@ -535,6 +539,10 @@ body.modal-open:not(.swal2-shown) {
 .Vehicle-Parts-Purchase.Index .search-form .d-flex .form-select,
 .Vehicle-Parts-Purchase.Index .search-form .d-flex .form-control:not(.input-date) {
   width: calc(100% - 130px);
+}
+.Vehicle-Parts-Purchase.Search-Result .search-form .d-flex .form-select,
+.Vehicle-Parts-Purchase.Search-Result .search-form .d-flex .form-control:not(.input-date) {
+  width: calc(100% - 100px);
 }
 
 

@@ -45,6 +45,10 @@
   /*padding: 0;*/
 }
 
+body.purchase-parts.searchForm .navbar-header .dropdown-menu {
+  border: 1px solid #FFFFFF;
+}
+
 .navbar-header .dropdown-item {
   font-size: 14px;
   padding: 10px 20px;
