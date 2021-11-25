@@ -12,7 +12,7 @@
           <div class="row justify-content-center parts-purchase-search-form-area h-auto">
             <div class="col-lg-8 col-md-10">
               <div class="page-header text-center mb-30">
-                <h5 class="title fz-26 mb-0"><span class="pb-5 bb-3">Purchase Search</span></h5>
+                <h5 class="title fz-26 text-capitalize mb-0"><span class="pb-5 bb-3">find parts purchase</span></h5>
               </div>
 
               <form method="GET" action="{{ route('vehicle.parts.purchase.search-result') }}"

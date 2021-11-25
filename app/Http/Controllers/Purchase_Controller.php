@@ -114,6 +114,22 @@ class Purchase_Controller extends Controller
 
     /* supplier-by filter not applied yet */
 
+
+    // Filter or Search using relation
+    /*$purchase_all = Purchase_Model::where('purchase_type', $purchase_type)
+      ->whereDate('date', '>=', date($start_date))
+      //->whereDate('date', '<=', date($end_date))
+      ->orderBy('date', 'desc')
+      //->with('details')->has('details')
+      //->whereRelation('details', 'parts_id', '=', $parts_id)
+      ->whereHas('details', function($query) use($parts_id){
+        $query->where('parts_id', '=', $parts_id);
+      })
+      ->get()->all();
+
+    return $purchase_all;*/
+
+
     // search criteria only for start-date
     if( $start_date && !$end_date && !$search_by && !$purchased_by && !$authorized_by ){
       $vehicleParts_purchase_all = Purchase_Model::where('purchase_type', $purchase_type)
@@ -792,6 +808,22 @@ class Purchase_Controller extends Controller
     $vehicle_id = $vehicle_id == 'all' || $vehicle_id == '' || $vehicle_id == null ? null : $vehicle_id;
     $start_date = $date_start ? DateTime ::createFromFormat( 'd-m-Y', $date_start ) -> format( 'Y-m-d' ) : null;
     $end_date   = $date_end ? DateTime ::createFromFormat( 'd-m-Y', $date_end ) -> format( 'Y-m-d' ) : null;
+
+
+    // Filter or Search using relation
+    /*$purchase_all = Purchase_Model::where('purchase_type', $purchase_type)
+      ->whereDate('date', '>=', date($start_date))
+      //->whereDate('date', '<=', date($end_date))
+      ->orderBy('date', 'desc')
+      //->with('details')->has('details')
+      //->whereRelation('details', 'parts_id', '=', $parts_id)
+      ->whereHas('details', function($query) use($parts_id){
+        $query->where('parts_id', '=', $parts_id);
+      })
+      ->get()->all();
+
+    return $purchase_all;*/
+
 
     // search criteria only for start-date
     if( $start_date && ! $end_date ){
