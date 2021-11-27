@@ -50,6 +50,8 @@ Route::post('/module/vehicles/parts-categories', [PartsCategory_Controller::clas
 Route::get('/module/vehicles/parts/purchase-index', [Purchase_Controller::class, 'VehicleParts_Purchase_Index'])->name('vehicle.parts.purchase.all');
 Route::get('/module/vehicles/parts/new-purchase', [Purchase_Controller::class, 'VehicleParts_Purchase_Form'])->name('vehicle.parts.purchase.new');
 Route::post('/module/vehicles/parts/new-purchase', [Purchase_Controller::class, 'VehicleParts_Purchase_Store'])->name('vehicle.parts.purchase.new');
+Route::get('/module/vehicles/parts/purchase/{purchase}/edit', [Purchase_Controller::class, 'VehiclePartsPurchase_EditForm'])->name('vehicle.parts.purchase.edit');
+Route::post('/module/vehicles/parts/purchase/{purchase}/edit', [Purchase_Controller::class, 'VehiclePartsPurchase_Update'])->name('vehicle.parts.purchase.edit');
 
 Route::get('/module/vehicles/parts/purchase-search', [Purchase_Controller::class, 'SearchForm_VehiclePartsPurchase'])->name('vehicle.parts.purchase.search');
 Route::get('/module/vehicles/parts/purchase-search-result', [Purchase_Controller::class, 'SearchResult_VehiclePartsPurchase'])->name('vehicle.parts.purchase.search-result');

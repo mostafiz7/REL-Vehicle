@@ -16722,7 +16722,10 @@ body.modal-open:not(.swal2-shown) {
 /* Vehicle Parts New Purchase Form */
 .Vehicle-Parts-Purchase.New #item_total_qty,
 .Vehicle-Parts-Purchase.New #item_total_amount,
-.Vehicle-Parts-Purchase.New .form-bottom .paid-due-amount > div > .amount {
+.Vehicle-Parts-Purchase.New .form-bottom .paid-due-amount > div > .amount,
+.Vehicle-Parts-Purchase.Edit #item_total_qty,
+.Vehicle-Parts-Purchase.Edit #item_total_amount,
+.Vehicle-Parts-Purchase.Edit .form-bottom .paid-due-amount > div > .amount {
   width: calc(100% - 120px);
 }
 

@@ -1,6 +1,10 @@
 <tr class="table-row content align-middle">
   <td class="serial w-30px-min text-center">{{ $index+1 }}</td>
-  <td class="purchase-number text-primary text-center">{{ $purchase->purchase_no }}</td>
+  <td class="purchase-number text-primary text-center">
+    <a href="{{ route('vehicle.parts.purchase.edit', $purchase) }}" class="edit-link text-primary">
+      {{ $purchase->purchase_no }}
+    </a>
+  </td>
   <td class="purchase-date text-center">{{ date($date_format, strtotime($purchase->date)) }}</td>
   <td class="vehicle-number">{{ $purchase->vehicle->vehicle_no }}</td>
   <td class="parts-list">

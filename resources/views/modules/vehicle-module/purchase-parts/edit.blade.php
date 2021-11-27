@@ -1,22 +1,26 @@
 @extends('layouts.app')
 
-{{--@section('title', 'Create Vehicle-Parts New Purchase')--}}
+{{--@section('title', 'Edit Vehicle-Parts Purchase')--}}
 
 @section('content')
-<div class="Page Vehicle-Parts-Purchase New">
+<div class="Page Vehicle-Parts-Purchase Edit">
   <div class="container-fluid">
     <div class="page-content pt-10">
       <div class="card">
-        <div class="card-header page-header bg-success text-white">
-          <h5 class="title mb-0">Parts New Purchase</h5>
+        <div class="card-header page-header bg-dark text-white">
+          <h5 class="title mb-0">
+            <span class="mr-20">Parts-Purchase</span>
+            <span class="form-mode text-warning">Edit Mode</span>
+          </h5>
         </div>
-
+        
 
         <div class="card-body page-body p-0">
-          <div class="parts-new-purchase-area overlay-scrollbar">
-            <form method="post" action="{{ route('vehicle.parts.purchase.new') }}"
-                  name="partsPurchaseForm" id="partsPurchaseForm" class="parts-purchase new p-20 pb-0">
+          <div class="edit-parts-purchase-area overlay-scrollbar">
+            <form method="post" action="{{ route('vehicle.parts.purchase.edit', $purchase) }}"
+                  name="partsPurchaseForm" id="partsPurchaseForm" class="parts-purchase edit p-20 pb-0">
               @csrf
+              {{-- @method('PUT') --}}
 
               <div class="form-top-and-center">
                 <div class="form-top">
@@ -26,7 +30,7 @@
                         {{--Purchase-Number--}}
                         <div class="col-6 purchase_no">
                           <label for="" class="required w-100 mr-15"><span>Purchase No.#</span></label>
-                          <input readonly type="text" name="purchase_no" id="purchase_no" class="required form-control bg-dark text-warning fw-bold border-secondary brd-3" value="{{$newPurchaseNo}}" />
+                          <input readonly type="text" name="purchase_no" id="purchase_no" class="required form-control bg-dark text-warning fw-bold border-secondary brd-3" value="{{$purchase->purchase_no}}" />
                         </div>
 
                         {{--Purchase-Type--}}
@@ -34,7 +38,7 @@
                           <label for="" class="required w-100 mr-15"><span>Type</span></label>
                           <select name="purchase_type" id="purchase_type" class="required form-select border-secondary brd-3 @error('purchase_type') is-invalid @enderror">
                             @foreach ( $purchase_types as $type )
-                              <option value="{{$type}}" {{ $type == $purchaseType ? 'selected' : '' }}>
+                              <option value="{{$type}}" {{ $type == $purchase->purchase_type ? 'selected' : '' }}>
                                 {{ ucwords(str_replace('-', ' ', $type)) }}
                               </option>
                             @endforeach
@@ -55,7 +59,7 @@
                         <div class="col-6 purchase_date">
                           <label for="" class="required w-100 mr-15"><span>Memo Date</span></label>
                           <div class="p-relative date-select">
-                            <input type="text" name="date" id="purchase_date" class="input-date required form-control d-inline-block text-start border-secondary brd-3 z-index-9 @error('date') is-invalid @enderror" autocomplete="off" placeholder="dd-mm-yyyy" value="{{ old('date') }}" />
+                            <input type="text" name="date" id="purchase_date" class="input-date required form-control d-inline-block text-start border-secondary brd-3 z-index-9 @error('date') is-invalid @enderror" autocomplete="off" placeholder="dd-mm-yyyy" value="{{ date('d-m-Y', strtotime($purchase->date)) }}" />
                             <label for="purchase_date" class="input-label-icon p-absolute pos-top-right text-danger-deep fz-19 lh-1-3 mr-1 p-5 cur-pointer z-index-11"><i class="fa fa-calendar"></i></label>
                           </div>
 
@@ -69,7 +73,7 @@
                         {{--Memo-Number--}}
                         <div class="col-6 memo_no">
                           <label for="" class="required w-100 mr-15"><span>Memo No.#</span></label>
-                          <input type="text" name="memo_no" id="memo_no" class="required form-control border-secondary brd-3 @error('memo_no') is-invalid @enderror" placeholder="0253" value="{{ old('memo_no') }}" />
+                          <input type="text" name="memo_no" id="memo_no" class="required form-control border-secondary brd-3 @error('memo_no') is-invalid @enderror" placeholder="0253" value="{{$purchase->memo_no}}" />
 
                           @if ( $errors->has('memo_no') )
                             <div class="text-danger fz-14 fw-bold" role="alert">
@@ -87,7 +91,7 @@
                         <option value="">Select Vehicle</option>
                         @if ( $vehicle_all )
                           @foreach ( $vehicle_all as $vehicle )
-                            <option value="{{$vehicle->id}}" {{$vehicle->id == old('vehicle_id') ? 'selected' : ''}}>
+                            <option value="{{$vehicle->id}}" {{$vehicle->id == $purchase->vehicle_id ? 'selected' : ''}}>
                               {{ $vehicle->vehicle_no }}
                             </option>
                           @endforeach
@@ -107,7 +111,7 @@
                         <span>Bill No.#</span>
                         <span class="text-secondary fz-14">(If already bill done)</span>
                       </label>
-                      <input type="text" name="bill_no" id="bill_no" class="form-control border-secondary brd-3 @error('bill_no') is-invalid @enderror" placeholder="BL-{{date('Y')}}/00246" value="{{ old('bill_no') }}" />
+                      <input type="text" name="bill_no" id="bill_no" class="form-control border-secondary brd-3 @error('bill_no') is-invalid @enderror" placeholder="BL-{{date('Y')}}/00246" value="{{ $purchase->bill_no }}" />
 
                       @if ( $errors->has('bill_no') )
                         <div class="text-danger fz-14 fw-bold" role="alert">
@@ -119,7 +123,7 @@
                     {{--Purchaser-Name--}}
                     {{--<div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 purchaser_name">
                       <label for="" class="w-100 mr-15"><span>Purchaser Name</span></label>
-                      <input type="text" name="purchaser_name" id="purchaser_name" class="form-control border-secondary brd-3 @error('purchaser_name') is-invalid @enderror" placeholder="John Doe" value="{{ old('purchaser_name') }}" />
+                      <input type="text" name="purchaser_name" id="purchaser_name" class="form-control border-secondary brd-3 @error('purchaser_name') is-invalid @enderror" placeholder="John Doe" value="{{ $purchase->purchaser_name }}" />
 
                       @if ( $errors->has('purchaser_name') )
                         <div class="text-danger fz-14 fw-bold" role="alert">
@@ -131,7 +135,7 @@
                     {{--Requisition-Number--}}
                     {{--<div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 requisition_no">
                       <label for="" class="w-100 mr-15"><span>Requisition No.#</span></label>
-                      <input type="text" name="requisition_no" id="requisition_no" class="form-control border-secondary brd-3 @error('requisition_no') is-invalid @enderror" placeholder="{{ 'RQ-' . date('Y') . '/0526' }}" value="{{ old('requisition_no') }}" />
+                      <input type="text" name="requisition_no" id="requisition_no" class="form-control border-secondary brd-3 @error('requisition_no') is-invalid @enderror" placeholder="{{ 'RQ-' . date('Y') . '/0526' }}" value="{{ $purchase->requisition_no }}" />
 
                       @if ( $errors->has('requisition_no') )
                         <div class="text-danger fz-14 fw-bold" role="alert">
@@ -147,7 +151,7 @@
                         <option value="">Select Supplier</option>
                         @if ( $supplier_all )
                           @foreach ( $supplier_all as $supplier )
-                            <option value="{{$supplier->id}}">
+                            <option value="{{$supplier->id}}" {{$supplier->id == $purchase->supplier_id ? 'selected' : ''}}>
                               {{ $supplier->name }}
                             </option>
                           @endforeach
@@ -164,7 +168,7 @@
                     {{--Unregistered-Supplier-Name--}}
                     {{--<div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 supplier_name">
                       <label for="" class="w-100 mr-15"><span>Supplier Name</span></label>
-                      <input type="text" name="supplier_name" id="supplier_name" class="form-control border-secondary brd-3 @error('supplier_name') is-invalid @enderror" placeholder="ABC Enterprise Ltd." value="{{ old('supplier_name') }}" />
+                      <input type="text" name="supplier_name" id="supplier_name" class="form-control border-secondary brd-3 @error('supplier_name') is-invalid @enderror" placeholder="ABC Enterprise Ltd." value="{{ $purchase->supplier_name }}" />
 
                       @if ( $errors->has('supplier_name') )
                         <div class="text-danger fz-14 fw-bold" role="alert">
@@ -176,7 +180,7 @@
                     {{--Shop-Name--}}
                     <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 shop_name">
                       <label for="" class="w-100 mr-15"><span>Shop Name</span></label>
-                      <input type="text" name="shop_name" id="shop_name" class="form-control border-secondary brd-3 @error('shop_name') is-invalid @enderror" placeholder="Dhaka Traders" value="{{ old('shop_name') }}" />
+                      <input type="text" name="shop_name" id="shop_name" class="form-control border-secondary brd-3 @error('shop_name') is-invalid @enderror" placeholder="Dhaka Traders" value="{{ $purchase->shop_name }}" />
 
                       @if ( $errors->has('shop_name') )
                         <div class="text-danger fz-14 fw-bold" role="alert">
@@ -191,7 +195,7 @@
                         {{--Shop-Contact--}}
                         <div class="col-6 shop_contact">
                           <label for="" class="w-100 mr-15"><span>Shop Contact</span></label>
-                          <input type="text" name="shop_contact" id="shop_contact" class="form-control border-secondary brd-3 @error('shop_contact') is-invalid @enderror" placeholder="01712-445566" value="{{ old('shop_contact') }}" />
+                          <input type="text" name="shop_contact" id="shop_contact" class="form-control border-secondary brd-3 @error('shop_contact') is-invalid @enderror" placeholder="01712-445566" value="{{ $purchase->shop_contact }}" />
 
                           @if ( $errors->has('shop_contact') )
                             <div class="text-danger fz-14 fw-bold" role="alert">
@@ -203,7 +207,7 @@
                         {{--Shop-Location--}}
                         <div class="col-6 shop_location">
                           <label for="" class="w-100 mr-15"><span>Shop Location</span></label>
-                          <input type="text" name="shop_location" id="shop_location" class="form-control border-secondary brd-3 @error('shop_location') is-invalid @enderror" placeholder="Mohakhali" value="{{ old('shop_location') }}" />
+                          <input type="text" name="shop_location" id="shop_location" class="form-control border-secondary brd-3 @error('shop_location') is-invalid @enderror" placeholder="Mohakhali" value="{{ $purchase->shop_location }}" />
 
                           @if ( $errors->has('shop_location') )
                             <div class="text-danger fz-14 fw-bold" role="alert">
@@ -221,7 +225,7 @@
                         <option value="">Select Purchaser</option>
                         @if ( $purchaser_all )
                           @foreach ( $purchaser_all as $purchaser )
-                            <option value="{{$purchaser->id}}" {{$purchaser->id == old('purchased_by') ? 'selected' : ''}}>
+                            <option value="{{$purchaser->id}}" {{$purchaser->id == $purchase->purchased_by ? 'selected' : ''}}>
                               {{ $purchaser->name }}
                             </option>
                           @endforeach
@@ -242,7 +246,7 @@
                         <option value="">Select Authorizer</option>
                         @if ( $authorizer_all )
                           @foreach ( $authorizer_all as $authorizer )
-                            <option value="{{$authorizer->id}}" {{$authorizer->id == old('authorized_by') ? 'selected' : ''}}>
+                            <option value="{{$authorizer->id}}" {{$authorizer->id == $purchase->authorized_by ? 'selected' : ''}}>
                               {{ $authorizer->name }}
                             </option>
                           @endforeach
@@ -359,14 +363,14 @@
                     {{--Total-Quantity--}}
                     <div class="total-qty d-flex justify-content-between mb-5">
                       <label for="" class="fw-bold"><span>Total Qty.</span></label>
-                      <div id="item_total_qty" class="d-inline-block h-30px bg-dark text-warning text-center lh-1-8 border-secondary brd-3">0</div>
+                      <div id="item_total_qty" class="d-inline-block h-30px bg-dark text-warning text-center lh-1-8 border-secondary brd-3">{{ $purchase->total_qty }}</div>
                       <input type="hidden" name="total_qty" id="total_qty" class="total_qty form-control border-secondary brd-3" value="" />
                     </div>
 
                     {{--Total-Amount--}}
                     <div class="total-amount d-flex justify-content-between mb-5">
                       <label for="" class="fw-bold"><span>Total Amount</span></label>
-                      <div id="item_total_amount" class="d-inline-block h-30px bg-dark text-warning text-center lh-1-8 border-secondary brd-3">0.00</div>
+                      <div id="item_total_amount" class="d-inline-block h-30px bg-dark text-warning text-center lh-1-8 border-secondary brd-3">{{ $purchase->total_amount }}</div>
                       <input type="hidden" name="total_amount" id="total_amount" class="total_amount form-control border-secondary brd-3" value="" />
                     </div>
                   </div>
@@ -376,12 +380,12 @@
                     <label for="" class="fw-bold mr-15 mb-5"><span>Payment Status</span></label>
                     <div class="d-flex flex-row flex-sm-column">
                       <div class="form-check me-4 me-sm-0 mb-5 full-paid">
-                        <input type="checkbox" name="is_paid" id="is_paid" class="form-check-input border-secondary cur-pointer" value="full-paid" />
+                        <input type="checkbox" name="is_paid" id="is_paid" class="form-check-input border-secondary cur-pointer" value="full-paid" {{ $purchase->is_paid ? 'checked' : '' }} />
                         <label class="form-check-label cur-pointer" for="is_paid">Full Paid</label>
                       </div>
 
                       <div class="form-check partial-paid">
-                        <input type="checkbox" name="is_partial_paid" id="is_partial_paid" class="form-check-input border-secondary cur-pointer" value="partial-paid" />
+                        <input type="checkbox" name="is_partial_paid" id="is_partial_paid" class="form-check-input border-secondary cur-pointer" value="partial-paid" {{ $purchase->is_partial_paid ? 'checked' : '' }} />
                         <label class="form-check-label cur-pointer" for="is_partial_paid">Partial Paid</label>
                       </div>
                     </div>
@@ -393,7 +397,7 @@
                     <div class="paid-amount d-flex justify-content-between mb-5">
                       <label for="" class="fw-bold"><span>Paid Amount</span></label>
                       <div class="amount">
-                        <input type="number" min="0" step="1" name="paid_amount" id="paid_amount" class="form-control border-secondary brd-3 @error('paid_amount') is-invalid @enderror" value="{{ old('paid_amount') }}" />
+                        <input type="number" min="0" step="1" name="paid_amount" id="paid_amount" class="form-control border-secondary brd-3 @error('paid_amount') is-invalid @enderror" value="{{ (int) $purchase->paid_amount }}" />
 
                         @if ( $errors->has('paid_amount') )
                           <div class="text-danger fz-14 fw-bold" role="alert">
@@ -407,7 +411,7 @@
                     <div class="due-amount d-flex justify-content-between">
                       <label for="" class="fw-bold"><span>Due Amount</span></label>
                       <div class="amount">
-                        <input type="number" min="0" step="1" name="due_amount" id="due_amount" class="form-control border-secondary brd-3 @error('due_amount') is-invalid @enderror" value="{{ old('due_amount') }}" />
+                        <input type="number" min="0" step="1" name="due_amount" id="due_amount" class="form-control border-secondary brd-3 @error('due_amount') is-invalid @enderror" value="{{ (int) $purchase->due_amount }}" />
 
                         @if ( $errors->has('due_amount') )
                           <div class="text-danger fz-14 fw-bold" role="alert">
@@ -421,17 +425,20 @@
                   {{--Notes--}}
                   <div class="order-lg-1 order-sm-3 col-lg-3 col-md-4 col-sm-6 col-12 mb-10 lh-1 notes">
                     {{--<label for="" class="fw-bold mr-15"><span>Notes</span></label>--}}
-                    <textarea name="notes" id="notes" class="h-100 form-control d-inline-block border-secondary brd-3" rows="3" placeholder="Notes"></textarea>
+                    <textarea name="notes" id="notes" class="h-100 form-control d-inline-block border-secondary brd-3" rows="3" placeholder="Notes">{{ $purchase->notes }}</textarea>
                   </div>
 
                   {{--Entry-By--}}
                   <div class="order-lg-5 order-sm-5 align-self-end col-lg-3 col-md-4 col-sm-6 col-12 mb-10 entry_by">
                     {{--<label for="" class="w-100 mr-15"><span>Entry By</span></label>--}}
-                    <select {{auth()->user() ? 'disabled' : ''}} name="entry_by" id="entry_by" class="form-select border-secondary brd-3 @error('entry_by') is-invalid @enderror">
+                    <?php 
+                      $entry_by = $purchase->user_id ?? $purchase->entry_by;
+                    ?>
+                    <select {{auth()->user() ? 'readonly' : ''}} name="entry_by" id="entry_by" class="form-select border-secondary brd-3 @error('entry_by') is-invalid @enderror">
                       <option value="">Entry By</option>
                       @if ( $employee_all )
                         @foreach ( $employee_all as $employee )
-                          <option value="{{$employee->id}}" {{$employee->id == old('entry_by') ? 'selected' : ''}}>
+                          <option value="{{$employee->id}}" {{$employee->id == $entry_by ? 'selected' : ''}}>
                             {{ $employee->name }}
                           </option>
                         @endforeach
@@ -809,7 +816,7 @@
 
 				// Get Parent Accordion Wrapper
 				accordionParent = $("#Accordion-Parent");
-				// New Accordion unique number by counting previous items length
+				// Edit Accordion unique number by counting previous items length
 				x = accordionParent[0].childElementCount + 1;
 
 				// Previous-Item re-serialized
@@ -832,7 +839,7 @@
 					});
         }
 
-        // Set New Item unique class & other numbers
+        // Set Edit Item unique class & other numbers
 				$("#Clone-Accordion .accordion-item").attr("id", `item_${x}`);
 				$("#Clone-Accordion .accordion-header").attr("id", `accordionHeading_${x}`);
 				accordionTitleAttrs = {
@@ -858,7 +865,7 @@
 				$("#Clone-Accordion .accordion-body input.item_amount").attr("id", `item_amount-${x}`);
 				$("#Clone-Accordion .accordion-body input.item_remarks").attr("id", `item_remarks-${x}`);
 
-				// Append New Item to Parent-Accordion
+				// Append Edit Item to Parent-Accordion
 				addAccordion = $("#Clone-Accordion").html();
 				$(addAccordion).clone().appendTo(accordionParent);
 
@@ -923,7 +930,7 @@
 
 
   // Payment Status Change to Full-Paid / Partial-Paid
-	PaymentStatusChange();
+	/* PaymentStatusChange();
 	function PaymentStatusChange(){
 		$(".payment-status #is_paid").click(function(){
 			if( IsFullPaid() ){
@@ -945,11 +952,11 @@
 				$(".paid-due-amount #paid_amount").val("").focus();
 			}
 		});
-  }
+  } */
 
 
   // Change Paid-And-Due-Amount
-	PaidAndDueAmount();
+	/* PaidAndDueAmount();
 	function PaidAndDueAmount(){
     $(".paid-due-amount #paid_amount").keyup(function(){
 			if( Number($(this).val()) === 0 ) {
@@ -992,7 +999,7 @@
 				if( ! IsPartialPaid() ) UncheckFullPaid(); CheckPartialPaid();
 			}
 		});
-  }
+  } */
 
 
 </script>
