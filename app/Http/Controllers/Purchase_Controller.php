@@ -795,7 +795,6 @@ class Purchase_Controller extends Controller
       'parts_all'             => $parts_all,
       'vehicle_all'           => $vehicle_all,
       'supplier_all'          => $supplier_all,
-      'purchaseType'          => $purchaseType,
       'purchase_types'        => $purchase_types,
       'employee_all'          => $employee_all,
       'purchaser_all'         => $purchaser_all,

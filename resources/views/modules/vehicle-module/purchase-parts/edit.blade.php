@@ -269,61 +269,69 @@
 
                   <div id="Purchase-Items" class="p-relative mb-30">
                     <div class="accordion" id="Accordion-Parent">
-                      <div class="accordion-item border-secondary-2" id="item_1">
-                        <h2 class="accordion-header p-relative" id="accordionHeading_1">
-                          <button class="accordion-button fw-bold p-15" type="button" data-bs-toggle="collapse" data-bs-target="#accordionCollapse_1" aria-expanded="true" aria-controls="accordionCollapse_1">
-                            Item #<span class="item-count">1</span>
-                          </button>
-                          <span onclick="RemoveAccordionItem(this);"
-                                class="remove-accordion-item d-none before-shadow p-absolute pos-top-right w-30px h-30px bg-danger text-white fz-20 text-center lh-1-5 mt-10 mr-50 brd-50 cur-pointer z-index-11">
-                          <i class="fa fa-close"></i>
-                        </span>
-                        </h2>
-                        <div id="accordionCollapse_1" class="accordion-collapse collapse show" aria-labelledby="accordionHeading_1" data-bs-parent="#Accordion-Parent">
-                          <div class="accordion-body px-15 pb-5">
-                            <div class="row gx-0 gx-sm-2 p-relative">
-                              <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-name">
-                                <input type="text" name="item_name[]" id="item_name-1" class="item_name form-control border-secondary brd-3" autocomplete="off" placeholder="Item Name" value="" />
-                                <input type="hidden" name="item_id[]" id="item_id-1" class="item_id" value="" />
-                                <input type="hidden" name="item_uid[]" id="item_uid-1" class="item_uid" value="" />
-                                <input type="hidden" name="item_slug[]" id="item_slug-1" class="item_slug" value="" />
-                              </div>
 
-                              <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-size">
-                                <input type="text" name="item_size[]" id="item_size-1" class="item_size form-control border-secondary brd-3" placeholder="Size" value="" />
-                              </div>
+                      @if ( $purchase->details )
+                        @foreach ( $purchase->details as $index => $purchase_item )
+                          @include( 'modules.vehicle-module.purchase-parts.accordion-item', $purchase_item )
+                        @endforeach
+                      @else
+                        <div class="accordion-item border-secondary-2" id="item_1">
+                          <h2 class="accordion-header p-relative" id="accordionHeading_1">
+                            <button class="accordion-button fw-bold p-15" type="button" data-bs-toggle="collapse" data-bs-target="#accordionCollapse_1" aria-expanded="true" aria-controls="accordionCollapse_1">
+                              Item #<span class="item-count">1</span>
+                            </button>
+                            <span onclick="RemoveAccordionItem(this);"
+                                  class="remove-accordion-item d-none before-shadow p-absolute pos-top-right w-30px h-30px bg-danger text-white fz-20 text-center lh-1-5 mt-10 mr-50 brd-50 cur-pointer z-index-11">
+                            <i class="fa fa-close"></i>
+                          </span>
+                          </h2>
+                          <div id="accordionCollapse_1" class="accordion-collapse collapse show" aria-labelledby="accordionHeading_1" data-bs-parent="#Accordion-Parent">
+                            <div class="accordion-body px-15 pb-5">
+                              <div class="row gx-0 gx-sm-2 p-relative">
+                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-name">
+                                  <input type="text" name="item_name[]" id="item_name-1" class="item_name form-control border-secondary brd-3" autocomplete="off" placeholder="Item Name" value="" />
+                                  <input type="hidden" name="item_id[]" id="item_id-1" class="item_id" value="" />
+                                  <input type="hidden" name="item_uid[]" id="item_uid-1" class="item_uid" value="" />
+                                  <input type="hidden" name="item_slug[]" id="item_slug-1" class="item_slug" value="" />
+                                </div>
 
-                              <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-serials">
-                                <input type="text" name="item_serials[]" id="item_serials-1" class="item_serials form-control border-secondary brd-3" placeholder="Serials" value="" />
-                              </div>
+                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-size">
+                                  <input type="text" name="item_size[]" id="item_size-1" class="item_size form-control border-secondary brd-3" placeholder="Size" value="" />
+                                </div>
 
-                              <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-qty">
-                                <input type="number" min="0" name="item_qty[]" id="item_qty-1" class="item_qty form-control border-secondary brd-3" placeholder="Quantity" value="" />
-                              </div>
+                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-serials">
+                                  <input type="text" name="item_serials[]" id="item_serials-1" class="item_serials form-control border-secondary brd-3" placeholder="Serials" value="" />
+                                </div>
 
-                              <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-unit">
-                                <select name="item_unit[]" id="item_unit-1" class="item_unit form-select border-secondary brd-3">
-                                  <option value="pcs">Pcs</option>
-                                  <option value="metre">Metre</option>
-                                  <option value="litre">Litre</option>
-                                </select>
-                              </div>
+                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-qty">
+                                  <input type="number" min="0" name="item_qty[]" id="item_qty-1" class="item_qty form-control border-secondary brd-3" placeholder="Quantity" value="" />
+                                </div>
 
-                              <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-unit-price">
-                                <input type="number" min="0" step="0.10" name="item_unit_price[]" id="item_unit_price-1" class="item_unit_price form-control border-secondary brd-3" placeholder="Unit Price" value="" />
-                              </div>
+                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-unit">
+                                  <select name="item_unit[]" id="item_unit-1" class="item_unit form-select border-secondary brd-3">
+                                    <option value="pcs">Pcs</option>
+                                    <option value="metre">Metre</option>
+                                    <option value="litre">Litre</option>
+                                  </select>
+                                </div>
 
-                              <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-amount">
-                                <input type="number" min="0" name="item_amount[]" id="item_amount-1" class="item_amount form-control border-secondary brd-3" placeholder="Item Amount" value="" />
-                              </div>
+                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-unit-price">
+                                  <input type="number" min="0" step="0.10" name="item_unit_price[]" id="item_unit_price-1" class="item_unit_price form-control border-secondary brd-3" placeholder="Unit Price" value="" />
+                                </div>
 
-                              <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-remarks">
-                                <input type="text" name="item_remarks[]" id="item_remarks-1" class="item_remarks form-control border-secondary brd-3" placeholder="Remarks" value="" />
+                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-amount">
+                                  <input type="number" min="0" name="item_amount[]" id="item_amount-1" class="item_amount form-control border-secondary brd-3" placeholder="Item Amount" value="" />
+                                </div>
+
+                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-remarks">
+                                  <input type="text" name="item_remarks[]" id="item_remarks-1" class="item_remarks form-control border-secondary brd-3" placeholder="Remarks" value="" />
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                      </div> {{--/.accordion-item-1--}}
+                        </div> {{--/.accordion-item--}}
+                      @endif
+
                     </div> {{--/#Accordion-Parent .accordion--}}
 
                     {{--Vehicle-Parts-List Hidden--}}
@@ -930,7 +938,7 @@
 
 
   // Payment Status Change to Full-Paid / Partial-Paid
-	/* PaymentStatusChange();
+	PaymentStatusChange();
 	function PaymentStatusChange(){
 		$(".payment-status #is_paid").click(function(){
 			if( IsFullPaid() ){
@@ -952,11 +960,11 @@
 				$(".paid-due-amount #paid_amount").val("").focus();
 			}
 		});
-  } */
+  }
 
 
   // Change Paid-And-Due-Amount
-	/* PaidAndDueAmount();
+	PaidAndDueAmount();
 	function PaidAndDueAmount(){
     $(".paid-due-amount #paid_amount").keyup(function(){
 			if( Number($(this).val()) === 0 ) {
@@ -999,7 +1007,7 @@
 				if( ! IsPartialPaid() ) UncheckFullPaid(); CheckPartialPaid();
 			}
 		});
-  } */
+  }
 
 
 </script>
