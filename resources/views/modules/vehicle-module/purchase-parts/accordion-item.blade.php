@@ -10,6 +10,10 @@
     <i class="fa fa-close"></i>
   </span>
   </h2>
+
+  <input type="hidden" name="purchaseItem_id[]" value="{{$purchase_item->id}}" />
+  <input type="hidden" name="purchaseItem_uid[]" value="{{$purchase_item->uid}}" />
+
   <div id="accordionCollapse_{{$index+1}}" class="accordion-collapse collapse {{$loop->last ? 'show' : ''}}" aria-labelledby="accordionHeading_{{$index+1}}" data-bs-parent="#Accordion-Parent">
     <div class="accordion-body px-15 pb-5">
       <div class="row gx-0 gx-sm-2 p-relative">

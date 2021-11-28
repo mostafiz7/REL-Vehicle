@@ -30,7 +30,13 @@
                         {{--Purchase-Number--}}
                         <div class="col-6 purchase_no">
                           <label for="" class="required w-100 mr-15"><span>Purchase No.#</span></label>
-                          <input readonly type="text" name="purchase_no" id="purchase_no" class="required form-control bg-dark text-warning fw-bold border-secondary brd-3" value="{{$purchase->purchase_no}}" />
+                          <input readonly type="text" name="purchase_no" id="purchase_no" class="required form-control bg-dark text-warning fw-bold border-secondary brd-3 @error('purchase_no') is-invalid @enderror" value="{{$purchase->purchase_no}}" />
+
+                          @if ( $errors->has('purchase_no') )
+                            <div class="text-danger fz-14 fw-bold" role="alert">
+                              {{ $errors->first('purchase_no') }}
+                            </div>
+                          @endif
                         </div>
 
                         {{--Purchase-Type--}}
@@ -285,6 +291,10 @@
                             <i class="fa fa-close"></i>
                           </span>
                           </h2>
+
+                          <input type="hidden" name="purchaseItem_id[]" value="" />
+                          <input type="hidden" name="purchaseItem_uid[]" value="" />
+
                           <div id="accordionCollapse_1" class="accordion-collapse collapse show" aria-labelledby="accordionHeading_1" data-bs-parent="#Accordion-Parent">
                             <div class="accordion-body px-15 pb-5">
                               <div class="row gx-0 gx-sm-2 p-relative">
@@ -339,10 +349,12 @@
                       <ul class="parts-list list-style-none bg-off-white border-1 z-index-1100" data-id="">
                         @if ( $parts_all )
                           @foreach ( $parts_all as $index => $parts )
-                            <li data-name="{{$parts->name}}" data-id="{{$parts->id}}" data-uid="{{$parts->uid}}"
-                                data-slug="{{$parts->slug}}" data-category="{{$parts->category_id}}"
-                                data-description="{{$parts->description}}" data-unit="{{$parts->unit}}" data-origin="{{$parts->origin}}"
-                                class="parts-item py-10 px-15 bb-1 cur-pointer">{{$parts->name}}</li>
+                            <li data-name="{{$parts->name}}" data-id="{{$parts->id}}" 
+                                data-uid="{{$parts->uid}}" data-slug="{{$parts->slug}}" 
+                                data-category="{{$parts->category_id}}"
+                                data-description="{{$parts->description}}" 
+                                data-unit="{{$parts->unit}}" data-origin="{{$parts->origin}}"
+                            class="parts-item py-10 px-15 bb-1 cur-pointer">{{$parts->name}}</li>
                           @endforeach
                         @endif
                       </ul> {{--/.parts-list--}}
@@ -371,15 +383,19 @@
                     {{--Total-Quantity--}}
                     <div class="total-qty d-flex justify-content-between mb-5">
                       <label for="" class="fw-bold"><span>Total Qty.</span></label>
-                      <div id="item_total_qty" class="d-inline-block h-30px bg-dark text-warning text-center lh-1-8 border-secondary brd-3">{{ $purchase->total_qty }}</div>
-                      <input type="hidden" name="total_qty" id="total_qty" class="total_qty form-control border-secondary brd-3" value="" />
+
+                      <div id="item_total_qty" class="d-inline-block h-30px bg-dark text-warning text-center lh-1-8 border-secondary brd-3">{{$purchase->total_qty}}</div>
+
+                      <input type="hidden" name="total_qty" id="total_qty" class="total_qty form-control border-secondary brd-3" value="{{$purchase->total_qty}}" />
                     </div>
 
                     {{--Total-Amount--}}
                     <div class="total-amount d-flex justify-content-between mb-5">
                       <label for="" class="fw-bold"><span>Total Amount</span></label>
-                      <div id="item_total_amount" class="d-inline-block h-30px bg-dark text-warning text-center lh-1-8 border-secondary brd-3">{{ $purchase->total_amount }}</div>
-                      <input type="hidden" name="total_amount" id="total_amount" class="total_amount form-control border-secondary brd-3" value="" />
+
+                      <div id="item_total_amount" class="d-inline-block h-30px bg-dark text-warning text-center lh-1-8 border-secondary brd-3">{{$purchase->total_amount}}</div>
+
+                      <input type="hidden" name="total_amount" id="total_amount" class="total_amount form-control border-secondary brd-3" value="{{$purchase->total_amount}}" />
                     </div>
                   </div>
 
@@ -480,6 +496,10 @@
                     <i class="fa fa-close"></i>
                   </span>
                 </h2>
+
+                <input type="hidden" name="purchaseItem_id[]" value="" />
+                <input type="hidden" name="purchaseItem_uid[]" value="" />
+
                 <div id="accordionCollapse" class="accordion-collapse collapse show" aria-labelledby="accordionHeading" data-bs-parent="#Accordion-Parent">
                   <div class="accordion-body px-15 pb-5">
                     <div class="row gx-0 gx-sm-2 p-relative">

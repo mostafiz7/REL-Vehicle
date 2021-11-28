@@ -820,8 +820,8 @@ class Purchase_Controller extends Controller
 
     $type           = 'vehicle-parts';
     $purchase_date  = $request->date ? DateTime::createFromFormat('d-m-Y', $request->date)->format('Y-m-d') : date('Y-m-d', strtotime(today()));
-    $requisition    = Requisition_Model::where('requisition_no', $request->requisition_no)->get()->first();
-    $billed         = Bill_Model::where('bill_no', $request->bill_no)->get()->first();
+    $requisition    = Requisition_Model::where('requisition_no', $request->requisition_no)->first();
+    $billed         = Bill_Model::where('bill_no', $request->bill_no)->first();
 
     /*$purchaser      = Employee_Model::where('id', $request->purchased_by)
       ->where('purchase_power', 1)->where('active', 1)->get()->first();
@@ -843,7 +843,8 @@ class Purchase_Controller extends Controller
       /*Rule::unique('employees')->where(function ($query) use($purchaser_id, $purchase_power) {
         return $query->where('purchase_power', $purchase_power)->where('id', $purchaser_id);
       }),*/
-      'purchase_type'  => [ 'required', "in:$type", 'string', 'max:15' ],
+      'purchase_no'    => [ 'required', "in:$purchase->purchase_no", 'string' ],
+      'purchase_type'  => [ 'required', "in:$type", 'string' ],
       'date'           => [ 'required', 'date_format:d-m-Y' ],
       'memo_no'        => [ 'required', 'string', 'max:6' ],
       'vehicle_id'     => [ 'required', 'integer', 'exists:vehicles,id' ],
@@ -862,6 +863,7 @@ class Purchase_Controller extends Controller
       // 'supplier_id'    => [ 'nullable', 'integer', 'exists:suppliers,id' ],
       // 'supplier_name'  => [ 'required_unless:supplier_id,null', 'string', 'max:50' ],
     ], [
+      'purchase_no.in'        => "The purchase-no can't be changed.",
       'purchase_type.in'      => 'Only vehicle-parts is allowed.',
       'memo_no.required'      => 'The memo-number is required.',
       'vehicle_id.required'   => 'The vehicle-number is required.',
@@ -881,17 +883,20 @@ class Purchase_Controller extends Controller
 
 
     // Get All Purchased Items
-    $items_name       = $request->input('item_name');
-    $items_id         = $request->input('item_id');
-    $items_uid        = $request->input('item_uid');
-    $items_slug       = $request->input('item_slug');
-    $items_size       = $request->input('item_size');
-    $items_serials    = $request->input('item_serials');
-    $items_quantity   = $request->input('item_qty');
-    $items_unit       = $request->input('item_unit');
-    $items_unit_price = $request->input('item_unit_price');
-    $items_amount     = $request->input('item_amount');
-    $items_remarks    = $request->input('item_remarks');
+    $purchaseItems_id  = $request->input('purchaseItem_id');
+    $purchaseItems_uid = $request->input('purchaseItem_uid');
+    
+    $items_name        = $request->input('item_name');
+    $items_id          = $request->input('item_id');
+    $items_uid         = $request->input('item_uid');
+    $items_slug        = $request->input('item_slug');
+    $items_size        = $request->input('item_size');
+    $items_serials     = $request->input('item_serials');
+    $items_quantity    = $request->input('item_qty');
+    $items_unit        = $request->input('item_unit');
+    $items_unit_price  = $request->input('item_unit_price');
+    $items_amount      = $request->input('item_amount');
+    $items_remarks     = $request->input('item_remarks');
 
     // Check item name, quantity & amount has value
     $has_item_name = null; $qty_not_present = null; $amount_not_present = null;
@@ -919,9 +924,7 @@ class Purchase_Controller extends Controller
     }
 
     // Send error message if item name, quantity & amount has not value
-    if( (! $has_item_name || count($has_item_name) < 1) || ($qty_not_present && count($qty_not_present) > 0)
-    || ($amount_not_present && count($amount_not_present) > 0) || ($has_qty_without_item && count($has_qty_without_item) > 0)
-    || ($has_amount_without_item && count($has_amount_without_item) > 0) || ($remarks_too_long && count($remarks_too_long) > 0) ){
+    if( (! $has_item_name || count($has_item_name) < 1) || ($qty_not_present && count($qty_not_present) > 0) || ($amount_not_present && count($amount_not_present) > 0) || ($has_qty_without_item && count($has_qty_without_item) > 0) || ($has_amount_without_item && count($has_amount_without_item) > 0) || ($remarks_too_long && count($remarks_too_long) > 0) ){
       if( ! $has_item_name || count($has_item_name) < 1 ){
         session()->flash('error', 'Minimum 1 item required.');
         return back()->withInput();
@@ -1169,8 +1172,9 @@ class Purchase_Controller extends Controller
       'purchase_all_without_date' => $purchase_all_without_date,
     ]);
   }
-
-
+  
+  
+  // Delete Single-Item of Vehicle-Parts-Purchase
   public function VehiclePartsPurchaseItem_Delete( $purchase_uid, $item_uid, Request $request ): \Illuminate\Http\JsonResponse
   {
     $purchase     = Purchase_Model::where('uid', $purchase_uid)->first();

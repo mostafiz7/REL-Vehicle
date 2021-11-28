@@ -58,3 +58,4 @@ Route::get('/module/vehicles/parts/purchase/{purchase_uid}/item/{item_uid}/delet
 Route::get('/module/vehicles/parts/purchase-search', [Purchase_Controller::class, 'SearchForm_VehiclePartsPurchase'])->name('vehicle.parts.purchase.search');
 Route::get('/module/vehicles/parts/purchase-search-result', [Purchase_Controller::class, 'SearchResult_VehiclePartsPurchase'])->name('vehicle.parts.purchase.search-result');
 
+
