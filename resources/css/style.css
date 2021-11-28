@@ -317,6 +317,10 @@ a, a:hover, a:focus { text-decoration: none; }
 .color-dark-blue { color: #022A6C !important; }
 .color-navy-blue { color: #000333 !important; }
 .color-yellow-light { color: rgba(255, 237, 74, 0.4) !important; }
+.color-purple { color: #4608AD !important; }
+.color-purple-deep { color: #400082 !important; }
+.color-purple-light { color: #7E0CF5 !important; }
+.color-purple-light-2 { color: #6610f2 !important; }
 
 .bg-transparent { background-color: transparent !important; }
 .bg-base-1 { background-color: #9A1B1B !important; }

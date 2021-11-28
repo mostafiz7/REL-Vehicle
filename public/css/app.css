@@ -15760,8 +15760,18 @@ THEMES:
 
 /* Sweet-Alert2 CSS */
 
-.swal2-shown .swal2-container .swal2-modal.swal2-show {
+.swal2-toast-shown .swal2-container,
+.swal2-shown .swal2-container .swal2-modal.swal2-show,
+.swal2-modal.swal2-show .swal2-actions {
   height: auto;
+}
+
+.swal2-shown .swal2-container {
+  z-index: 106000;
+}
+
+.swal2-toast-shown .swal2-timer-progress-bar-container {
+  height: .25em !important;
 }
 
 .swal2-icon-error .swal2-html-container {
@@ -15769,8 +15779,27 @@ THEMES:
 }
 
 .swal2-modal.swal2-show .swal2-actions {
-  height: auto;
   margin: 40px 0 20px;
+}
+
+.swal2-popup.swal2-toast.swal2-icon-success {
+  /* border: 3px solid #79C150; */
+  box-shadow: 0px 0px 5px 1px #79C150;
+}
+.swal2-icon-success .swal2-timer-progress-bar {
+  background-color: #69D224;
+}
+.swal2-toast.swal2-icon-success .swal2-html-container {
+  color: #157347;
+  font-weight: bold;
+}
+
+.swal2-popup.swal2-toast.swal2-icon-error {
+  /* border: 3px solid #79C150; */
+  box-shadow: 0px 0px 5px 1px #F27474;
+}
+.swal2-icon-error .swal2-timer-progress-bar {
+  background-color: #FF4B5C;
 }
 
 
@@ -15788,36 +15817,6 @@ body.swal2-toast-shown .swal2-container {
 body.pos-module.swal2-shown.swal2-height-auto {
   height: 100% !important;
   padding-right: 0 !important;
-}
-
-body.swal2-toast-shown .swal2-container {
-  height: auto;
-}
-
-.swal2-shown .swal2-container {
-  z-index: 106000;
-}
-
-.swal2-popup.swal2-toast.swal2-icon-success {
-  !* border: 3px solid #79C150; *!
-  box-shadow: 0px 0px 5px 1px #79C150;
-}
-.swal2-popup.swal2-toast.swal2-icon-error {
-  !* border: 3px solid #79C150; *!
-  box-shadow: 0px 0px 5px 1px #F27474;
-}
-
-.swal2-icon-success .swal2-timer-progress-bar {
-  background-color: #69D224;
-}
-.swal2-icon-error .swal2-timer-progress-bar {
-  background-color: #FF4B5C;
-}
-*/
-
-/*
-.swal2-toast-shown .swal2-timer-progress-bar-container {
-  height: .25em !important;
 }
 
 .swal2-popup.swal2-modal {
@@ -16507,6 +16506,10 @@ a, a:hover, a:focus { text-decoration: none; }
 .color-dark-blue { color: #022A6C !important; }
 .color-navy-blue { color: #000333 !important; }
 .color-yellow-light { color: rgba(255, 237, 74, 0.4) !important; }
+.color-purple { color: #4608AD !important; }
+.color-purple-deep { color: #400082 !important; }
+.color-purple-light { color: #7E0CF5 !important; }
+.color-purple-light-2 { color: #6610f2 !important; }
 
 .bg-transparent { background-color: transparent !important; }
 .bg-base-1 { background-color: #9A1B1B !important; }

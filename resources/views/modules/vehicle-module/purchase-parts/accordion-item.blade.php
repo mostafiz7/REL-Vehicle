@@ -1,4 +1,6 @@
-<div class="accordion-item border-secondary-2" id="item_{{$index+1}}">
+<div class="accordion-item border-secondary-2" id="item_{{$index+1}}"
+  data-id="{{$purchase_item->id}}" data-uid="{{$purchase_item->uid}}" 
+  data-purchase_no="{{$purchase_item->purchase_no}}">
   <h2 class="accordion-header p-relative" id="accordionHeading_{{$index+1}}">
     <button class="accordion-button fw-bold p-15 {{$loop->last ? '' : 'collapsed'}}" type="button" data-bs-toggle="collapse" data-bs-target="#accordionCollapse_{{$index+1}}" aria-expanded="{{$loop->last ? 'true' : 'false'}}" aria-controls="accordionCollapse_{{$index+1}}">
       Item #<span class="item-count">{{$index+1}}</span>

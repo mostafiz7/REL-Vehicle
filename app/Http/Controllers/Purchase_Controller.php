@@ -1171,5 +1171,39 @@ class Purchase_Controller extends Controller
   }
 
 
+  public function VehiclePartsPurchaseItem_Delete( $purchase_uid, $item_uid, Request $request ): \Illuminate\Http\JsonResponse
+  {
+    $purchase     = Purchase_Model::where('uid', $purchase_uid)->first();
+    $purchaseItem = PurchaseDetails_Model::where('uid', $item_uid)->first();
+
+    if( ! $purchase || ! $purchaseItem ){
+      return response()->json( ['errors' => [
+        'message' => 'Purchase item not found!'
+      ] ], 404);
+    }
+    elseif( $purchase->id != $purchaseItem->purchase_id || $purchase->purchase_no != $purchaseItem->purchase_no ){
+      return response()->json( ['errors' => [
+        'message' => 'Purchase item not matched with records!'
+      ] ], 404);
+    }
+
+    $itemName     = $purchaseItem->parts->name;
+    $total_qty    = $purchase->total_qty - $purchaseItem->quantity;
+    $total_amount = $purchase->total_amount - $purchaseItem->amount;
+    $paid_amount  = $purchase->is_paid ? ($purchase->paid_amount - $purchaseItem->amount) : $purchase->paid_amount;
+    $due_amount   = ! $purchase->is_paid ? 0 : $purchase->due_amount;
+
+    $purchaseItem->delete();
+    
+    $purchase->update([
+      'total_qty'    => $total_qty,
+      'total_amount' => $total_amount,
+      'paid_amount'  => $paid_amount,
+      'due_amount'   => $due_amount,
+    ]);
+
+    return response()->json(['itemName' => $itemName], 200);
+  }
+
 
 }

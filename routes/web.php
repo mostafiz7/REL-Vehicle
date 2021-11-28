@@ -53,6 +53,8 @@ Route::post('/module/vehicles/parts/new-purchase', [Purchase_Controller::class, 
 Route::get('/module/vehicles/parts/purchase/{purchase}/edit', [Purchase_Controller::class, 'VehiclePartsPurchase_EditForm'])->name('vehicle.parts.purchase.edit');
 Route::post('/module/vehicles/parts/purchase/{purchase}/edit', [Purchase_Controller::class, 'VehiclePartsPurchase_Update'])->name('vehicle.parts.purchase.edit');
 
+Route::get('/module/vehicles/parts/purchase/{purchase_uid}/item/{item_uid}/delete', [Purchase_Controller::class, 'VehiclePartsPurchaseItem_Delete'])->name('vehicle.parts.purchase.item.delete');
+
 Route::get('/module/vehicles/parts/purchase-search', [Purchase_Controller::class, 'SearchForm_VehiclePartsPurchase'])->name('vehicle.parts.purchase.search');
 Route::get('/module/vehicles/parts/purchase-search-result', [Purchase_Controller::class, 'SearchResult_VehiclePartsPurchase'])->name('vehicle.parts.purchase.search-result');
 

@@ -7,10 +7,10 @@
   <div class="container-fluid">
     <div class="page-content pt-10">
       <div class="card">
-        <div class="card-header page-header bg-dark text-white">
+        <div class="card-header page-header bg-purple text-white">
           <h5 class="title mb-0">
             <span class="mr-20">Parts-Purchase</span>
-            <span class="form-mode text-warning">Edit Mode</span>
+            <span class="form-mode color-red">Edit Mode</span>
           </h5>
         </div>
         
@@ -802,6 +802,83 @@
   }
 
 
+  // New-Accordion-Item-Add
+  function NewAccordionItemAdd(){
+    let accordionParent = null, addAccordion = "", x = 0;
+    let accordionTitleAttrs = {}, accordionCollapseAttrs = {};
+
+    // Get Parent Accordion Wrapper
+    accordionParent = $("#Accordion-Parent");
+    // Edit Accordion unique number by counting previous items length
+    x = accordionParent[0].childElementCount + 1;
+
+    // Previous-Item re-serialized
+    $("#Accordion-Parent .accordion-button span.item-count").each(function(key, val){
+      $(this).text(key+1);
+    });
+
+    // Collapsed previous items
+    if( $("#Accordion-Parent .accordion-button:not(.collapsed)") ){
+      $("#Accordion-Parent .accordion-button").each(function(){
+        if( ! $(this).hasClass("collapsed") ){
+          $(this).addClass("collapsed");
+          $(this).attr("aria-expanded", "false");
+        }
+      });
+    }
+    if( $("#Accordion-Parent .accordion-collapse.collapse.show") ){
+      $("#Accordion-Parent .accordion-collapse.collapse.show").each(function(){
+        $(this).removeClass("show");
+      });
+    }
+
+    // Set Edit Item unique class & other numbers
+    $("#Clone-Accordion .accordion-item").attr("id", `item_${x}`);
+    $("#Clone-Accordion .accordion-header").attr("id", `accordionHeading_${x}`);
+    accordionTitleAttrs = {
+      "data-bs-target": "#accordionCollapse_" + x,
+      "aria-controls": "accordionCollapse_" + x,
+    };
+    accordionCollapseAttrs = {
+      "id": "accordionCollapse_" + x,
+      "aria-labelledby": "accordionHeading_" + x,
+    };
+    $("#Clone-Accordion .accordion-button").attr(accordionTitleAttrs);
+    $("#Clone-Accordion span.item-count").text(x);
+    $("#Clone-Accordion .accordion-collapse").attr(accordionCollapseAttrs);
+    $("#Clone-Accordion .accordion-body input.item_name").attr("id", `item_name-${x}`);
+    $("#Clone-Accordion .accordion-body input.item_id").attr("id", `item_id-${x}`);
+    $("#Clone-Accordion .accordion-body input.item_uid").attr("id", `item_uid-${x}`);
+    $("#Clone-Accordion .accordion-body input.item_slug").attr("id", `item_slug-${x}`);
+    $("#Clone-Accordion .accordion-body input.item_size").attr("id", `item_size-${x}`);
+    $("#Clone-Accordion .accordion-body input.item_serials").attr("id", `item_serials-${x}`);
+    $("#Clone-Accordion .accordion-body select.item_unit").attr("id", `item_unit-${x}`);
+    $("#Clone-Accordion .accordion-body input.item_unit_price").attr("id", `item_unit_price-${x}`);
+    $("#Clone-Accordion .accordion-body input.item_qty").attr("id", `item_qty-${x}`);
+    $("#Clone-Accordion .accordion-body input.item_amount").attr("id", `item_amount-${x}`);
+    $("#Clone-Accordion .accordion-body input.item_remarks").attr("id", `item_remarks-${x}`);
+
+    // Append New Item to Parent-Accordion
+    addAccordion = $("#Clone-Accordion").html();
+    $(addAccordion).clone().appendTo(accordionParent);
+
+    // Remove cloned accordion unique id
+    $("#Clone-Accordion .accordion-item").attr("id", "");
+
+    // Activate Last accordion-item if it is collapsed
+    let lastItem = $(`#Accordion-Parent #item_${x}`);
+    if( $(lastItem).find(".accordion-button").hasClass("collapsed") ){
+      $(lastItem).find(".accordion-button").removeClass("collapsed");
+    }
+    if( $(lastItem).find(".accordion-button").attr("aria-expanded") === "false" ){
+      $(lastItem).find(".accordion-button").attr("aria-expanded", "true");
+    }
+    if( ! $(lastItem).find(".accordion-collapse.collapse").hasClass("show") ){
+      $(lastItem).find(".accordion-collapse.collapse").addClass("show");
+    }
+  }
+
+
   // Add-More-Accordion-Item
 	AddMoreAccordionItem();
   function AddMoreAccordionItem(){
@@ -813,90 +890,37 @@
 			$("#Accordion-Parent input.item_name, #Accordion-Parent input.item_qty, #Accordion-Parent input.item_amount").each(function(){
         if( ! $(this).val() ){
 					AlertErrorMessage(message, "");
-					notFilledItems.push($(this));
+					notFilledItems.push( $(this) );
         }
       });
 
       // If accordion all items input has filled
 			if( notFilledItems.length === 0 ){
-				let accordionParent = null, addAccordion = "", x = 0;
-				let accordionTitleAttrs = {}, accordionCollapseAttrs = {};
-
-				// Get Parent Accordion Wrapper
-				accordionParent = $("#Accordion-Parent");
-				// Edit Accordion unique number by counting previous items length
-				x = accordionParent[0].childElementCount + 1;
-
-				// Previous-Item re-serialized
-				$("#Accordion-Parent .accordion-button span.item-count").each(function(key, val){
-          $(this).text(key+1);
-        });
-
-				// Collapsed previous items
-        if( $("#Accordion-Parent .accordion-button:not(.collapsed)") ){
-					$("#Accordion-Parent .accordion-button").each(function(){
-						if( ! $(this).hasClass("collapsed") ){
-							$(this).addClass("collapsed");
-							$(this).attr("aria-expanded", "false");
-						}
-					});
-        }
-        if( $("#Accordion-Parent .accordion-collapse.collapse.show") ){
-					$("#Accordion-Parent .accordion-collapse.collapse.show").each(function(){
-						$(this).removeClass("show");
-					});
-        }
-
-        // Set Edit Item unique class & other numbers
-				$("#Clone-Accordion .accordion-item").attr("id", `item_${x}`);
-				$("#Clone-Accordion .accordion-header").attr("id", `accordionHeading_${x}`);
-				accordionTitleAttrs = {
-					"data-bs-target": "#accordionCollapse_" + x,
-					"aria-controls": "accordionCollapse_" + x,
-				};
-				accordionCollapseAttrs = {
-					"id": "accordionCollapse_" + x,
-					"aria-labelledby": "accordionHeading_" + x,
-				};
-				$("#Clone-Accordion .accordion-button").attr(accordionTitleAttrs);
-				$("#Clone-Accordion span.item-count").text(x);
-				$("#Clone-Accordion .accordion-collapse").attr(accordionCollapseAttrs);
-				$("#Clone-Accordion .accordion-body input.item_name").attr("id", `item_name-${x}`);
-				$("#Clone-Accordion .accordion-body input.item_id").attr("id", `item_id-${x}`);
-				$("#Clone-Accordion .accordion-body input.item_uid").attr("id", `item_uid-${x}`);
-				$("#Clone-Accordion .accordion-body input.item_slug").attr("id", `item_slug-${x}`);
-				$("#Clone-Accordion .accordion-body input.item_size").attr("id", `item_size-${x}`);
-				$("#Clone-Accordion .accordion-body input.item_serials").attr("id", `item_serials-${x}`);
-				$("#Clone-Accordion .accordion-body select.item_unit").attr("id", `item_unit-${x}`);
-				$("#Clone-Accordion .accordion-body input.item_unit_price").attr("id", `item_unit_price-${x}`);
-				$("#Clone-Accordion .accordion-body input.item_qty").attr("id", `item_qty-${x}`);
-				$("#Clone-Accordion .accordion-body input.item_amount").attr("id", `item_amount-${x}`);
-				$("#Clone-Accordion .accordion-body input.item_remarks").attr("id", `item_remarks-${x}`);
-
-				// Append Edit Item to Parent-Accordion
-				addAccordion = $("#Clone-Accordion").html();
-				$(addAccordion).clone().appendTo(accordionParent);
-
-				// Remove cloned accordion unique id
-				$("#Clone-Accordion .accordion-item").attr("id", "");
-
-				// Activate Last accordion-item if it is collapsed
-        let lastItem = $(`#Accordion-Parent #item_${x}`);
-        if( $(lastItem).find(".accordion-button").hasClass("collapsed") ){
-					$(lastItem).find(".accordion-button").removeClass("collapsed");
-        }
-        if( $(lastItem).find(".accordion-button").attr("aria-expanded") === "false" ){
-					$(lastItem).find(".accordion-button").attr("aria-expanded", "true");
-        }
-        if( ! $(lastItem).find(".accordion-collapse.collapse").hasClass("show") ){
-					$(lastItem).find(".accordion-collapse.collapse").addClass("show");
-        }
+        NewAccordionItemAdd();
       }
 			ShowPartsLists();
 			SelectPartsFromList();
 			FilterPartsList();
 			Calculate_UnitPrice_Quantity_Amount();
     });
+  }
+
+
+  // Check-Accordion-Item-Has-Value-Data
+  function CheckAccordionItemHasData(parentDiv){
+    let input_name = input_id = input_uid = input_slug = input_qty = input_amount = null;
+    input_name   = $(parentDiv).find("input.item_name").val();
+    input_id     = $(parentDiv).find("input.item_id").val();
+    input_uid    = $(parentDiv).find("input.item_uid").val();
+    input_slug   = $(parentDiv).find("input.item_slug").val();
+    input_qty    = $(parentDiv).find("input.item_qty").val();
+    input_amount = $(parentDiv).find("input.item_amount").val();
+
+    if( !input_name && !input_id && !input_uid && !input_slug && !input_qty && !input_amount ){
+      return false;
+    } else{
+      return true;
+    }
   }
 
 
@@ -907,34 +931,74 @@
 			if( $("#Accordion-Parent")[0].childElementCount > 1 ){
 				$("#Accordion-Parent .accordion-item .remove-accordion-item").each(function(){
 					$.fn.BlockVisible($(this));
-					/*if( $(this).hasClass("d-none") ){
-						$(this).removeClass("d-none");
-					}*/
 				});
-      } else{
-				AlertErrorMessage("At least one item should be kept.", "");
-			}
+      } else if( $("#Accordion-Parent")[0].childElementCount === 1 ){
+        let accordionItem = $("#Accordion-Parent .accordion-item");
+        if( CheckAccordionItemHasData(accordionItem) ){
+          $("#Accordion-Parent .accordion-item .remove-accordion-item").each(function(){
+					  $.fn.BlockVisible($(this));
+				  });
+        } else{
+          AlertErrorMessage("At least one item should be kept.", "");
+        }
+			} else{
+        AlertErrorMessage("Please, first add one item.", "");
+      }
 		});
 	}
 
-	// Remove-Accordion-Item
-	function RemoveAccordionItem(e){
-		if( $("#Accordion-Parent")[0].childElementCount > 1 ){
-			$(e).closest(".accordion-item").remove();
 
-			// All-Item re-serialized
-			$("#Accordion-Parent .accordion-button span.item-count").each(function(key, val){
-				$(this).text(key+1);
-			});
+  // Remove-Accordion-Item
+  function RemoveAccordionItem(e){
+    let parentDiv = purchaseUid = itemUid = url = null;
+    parentDiv    = $(e).closest(".accordion-item");
+    purchaseUid  = @json($purchase->uid);
+    itemUid      = $(parentDiv).attr('data-uid');
+    url          = `/module/vehicles/parts/purchase/${purchaseUid}/item/${itemUid}/delete`;
+    
+    if( ! CheckAccordionItemHasData(parentDiv) ){
+      if( $("#Accordion-Parent")[0].childElementCount === 1 ){
+        AlertErrorMessage("At least one item should be kept.", "");
+      } else{
+        $(e).closest(".accordion-item").remove();
+      }
+    } else{
+      axios.get(url)
+      .then( response => {
+        Toast.fire({
+          icon: 'success',
+          text: 'Item "' + response.data.itemName + '" removed successfully!',
+        });
+        
+        $(e).closest(".accordion-item").remove();
 
-			ShowPartsLists();
-			SelectPartsFromList();
-			FilterPartsList();
-			Calculate_UnitPrice_Quantity_Amount();
-		} else{
-      AlertErrorMessage("At least one item should be kept.", "");
-		}
-	}
+        // All-accordion-item re-serialized
+        $("#Accordion-Parent .accordion-button span.item-count").each(function(key, val){
+          $(this).text(key+1);
+        });
+
+        if( $("#Accordion-Parent")[0].childElementCount === 0 ){
+          NewAccordionItemAdd();
+        }
+
+        ShowPartsLists();
+        SelectPartsFromList();
+        FilterPartsList();
+        Calculate_UnitPrice_Quantity_Amount();
+        PrintTotalAmount();
+        PrintTotalQuantity();
+        if( IsFullPaid() ) PrintPaidAmount( GetTotalAmount() ); PrintPaidAmount(0);
+        if( IsPartialPaid() ) PrintPaidAmount(0); PrintPaidAmount( GetTotalAmount() );
+      })
+      .catch( err => {
+        if( err.response.data.errors ){
+          AlertErrorMessage( err.response.data.errors.message, "" );
+        } else{
+          console.log( err.response );
+        }
+      });
+    }
+  }
 
 
   // Payment Status Change to Full-Paid / Partial-Paid
