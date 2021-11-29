@@ -2,27 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
+use Carbon\Carbon;
 use App\Models\Bill_Model;
 use App\Models\Parts_Model;
-use App\Models\Vehicle_Model;
-use App\Models\Settings_Model;
-use App\Models\Purchase_Model;
-use App\Models\Supplier_Model;
-use App\Models\Employee_Model;
-use App\Models\Requisition_Model;
-use App\Models\PartsCategory_Model;
-use App\Models\VehicleCategory_Model;
-use App\Models\PurchaseDetails_Model;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\Vehicle_Model;
+use App\Models\Employee_Model;
+use App\Models\Purchase_Model;
+use App\Models\Settings_Model;
+use App\Models\Supplier_Model;
+use App\Models\PurchaseDetails_Model;
+use App\Models\VehicleCategory_Model;
 use Illuminate\Validation\Rule;
+use App\Models\Requisition_Model;
+use App\Models\PartsCategory_Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Validator;
-use Carbon\Carbon;
-use DateTime;
-
+use PhpParser\Node\Stmt\Foreach_;
 
 class Purchase_Controller extends Controller
 {
@@ -769,6 +769,10 @@ class Purchase_Controller extends Controller
       return back()->with('error', 'You are not authorized to perform this action!');
     }*/
 
+    if( ! $purchase ){
+      return back()->with('error', 'Selected purchase not found in system.');
+    }
+
     $purchaseType = 'vehicle-parts';
 
     $parts_all            = Parts_Model::orderBy('name', 'asc')->get()->all();
@@ -812,6 +816,11 @@ class Purchase_Controller extends Controller
     /*if( Gate::denies('isAdmins') || Gate::denies('entryEdit') || Gate::denies('routeHasAccess') ){
       return back()->with('error', 'You are not authorized to perform this action!');
     }*/
+    
+    $extraSecurityToken = $purchase->uid . '-68u1d';
+    if( ! $purchase || $request->tokken != $extraSecurityToken ){
+      return back()->with('error', 'Selected purchase not found in system.');
+    }
     
     $session_id = null;
     if( $request->session()->has('session_id') ){
@@ -880,11 +889,11 @@ class Purchase_Controller extends Controller
       }
       return back()->withErrors( $validator )->withInput();
     }
-
-
+    
+    
     // Get All Purchased Items
-    $purchaseItems_id  = $request->input('purchaseItem_id');
-    $purchaseItems_uid = $request->input('purchaseItem_uid');
+    $previousItems_id  = $request->input('previousItem_id');
+    $previousItems_uid = $request->input('previousItem_uid');
     
     $items_name        = $request->input('item_name');
     $items_id          = $request->input('item_id');
@@ -898,6 +907,7 @@ class Purchase_Controller extends Controller
     $items_amount      = $request->input('item_amount');
     $items_remarks     = $request->input('item_remarks');
 
+    
     // Check item name, quantity & amount has value
     $has_item_name = null; $qty_not_present = null; $amount_not_present = null;
     $has_qty_without_item = null; $has_amount_without_item = null; $remarks_too_long = null;
@@ -927,45 +937,92 @@ class Purchase_Controller extends Controller
     if( (! $has_item_name || count($has_item_name) < 1) || ($qty_not_present && count($qty_not_present) > 0) || ($amount_not_present && count($amount_not_present) > 0) || ($has_qty_without_item && count($has_qty_without_item) > 0) || ($has_amount_without_item && count($has_amount_without_item) > 0) || ($remarks_too_long && count($remarks_too_long) > 0) ){
       if( ! $has_item_name || count($has_item_name) < 1 ){
         session()->flash('error', 'Minimum 1 item required.');
-        return back()->withInput();
+        // return back()->withInput();
 
       } elseif( $qty_not_present && count($qty_not_present) > 0 ){
         $lineNumbers = implode(', ', $qty_not_present);
         session()->flash('error', "Item quantity not present on line number ($lineNumbers).");
-        return back()->withInput();
+        // return back()->withInput();
 
       } elseif( $amount_not_present && count($amount_not_present) > 0 ){
         $lineNumbers = implode(', ', $amount_not_present);
         session()->flash('error', "Item amount not present on line number ($lineNumbers).");
-        return back()->withInput();
+        // return back()->withInput();
 
       } elseif( $has_qty_without_item && count($has_qty_without_item) > 0 ){
         $lineNumbers = implode(', ', $has_qty_without_item);
         session()->flash('error', "Item name not present on line number ($lineNumbers).");
-        return back()->withInput();
+        // return back()->withInput();
 
       } elseif( $has_amount_without_item && count($has_amount_without_item) > 0 ){
         $lineNumbers = implode(', ', $has_amount_without_item);
         session()->flash('error', "Item name not present on line number ($lineNumbers).");
-        return back()->withInput();
+        // return back()->withInput();
 
       } elseif( $remarks_too_long && count($remarks_too_long) > 0 ){
         $lineNumbers = implode(', ', $remarks_too_long);
         session()->flash('error', "Item remarks too long on line number ($lineNumbers).");
-        return back()->withInput();
+        // return back()->withInput();
       }
+      return back()->withInput();
     }
 
     // Purchased-Items Details Data
     $get_all_parts = Parts_Model::all();
+    $previousItems_All = []; $previousItemsToUpdate = []; $newPurchasedItems_All = [];
 
-    $purchasedItems_All = [];
-    foreach( $items_name as $index => $name ){
-      if( $name ){
-        $id = $items_id[$index]; $uid = $items_uid[$index]; $slug = $items_slug[$index];
-        $get_parts = $get_all_parts->first(function($item, $itemKey) use ($id, $uid, $name, $slug){
-          // return $item->id == $id && $item->uid == $uid && $item->name == $item_name && $item->slug == $slug;
-          return $item->id == $id && $item->name == $name;
+    foreach( $previousItems_uid as $index => $previousUid ){
+      $item_id = null; $item_uid = null; $name = null; $item_slug = null;
+      $get_parts = null; $unit_price = null; $item_details = null;
+      if( ! empty($previousUid) ){
+        // Proceed to Old Purchase Items
+        $previousItem = PurchaseDetails_Model::where('uid', $previousUid)->where('purchase_no', $purchase->purchase_no)->first();
+        if( $previousItem ){
+          $item_id = $items_id[$index]; $item_uid = $items_uid[$index];
+          $name = $items_name[$index]; $item_slug = $items_slug[$index];
+          $get_parts = $get_all_parts->first(function($item, $itemKey) use ($item_uid, $name){
+            // return $item->id == $item_id && $item->uid == $item_uid && $item->name == $name && $item->slug == $item_slug;
+            return $item->uid == $item_uid && $item->name == $name;
+          });
+
+          if( ! $get_parts ){
+            $lineNumbers = ($index + 1);
+            session()->flash('error', "Item not matched on line number ($lineNumbers).");
+            return back()->withInput();
+          }
+
+          $unit_price = (int) $items_amount[$index] / (int) $items_quantity[$index];
+
+          $item_details = [
+            'parts_id'   => $get_parts->id,
+            'vehicle_id' => $request->vehicle_id ?? null,
+            'size'       => $items_size[$index],
+            'serials'    => $items_serials[$index],
+            'quantity'   => $items_quantity[$index],
+            'unit'       => $items_unit[$index],
+            'unit_price' => $unit_price,
+            'amount'     => $items_amount[$index],
+            // 'amount'    => strval(number_format($item_price, 2)),
+            // 'amount'    => strval(number_format($item_price, 2, '.', '')),
+            'remarks'    => $items_remarks[$index],
+          ];
+          $total_qty     += (int) $items_quantity[$index];
+          $total_amount  += (int) $items_amount[$index];
+          
+          $previousItems_All[]     = $previousItem;
+          $previousItemsToUpdate[] = $item_details;
+        } else{
+          session()->flash('error', 'Previous item not matched with records.');
+          return back()->withInput();
+        }
+
+      } else{
+        // Proceed to New Purchase Items
+        $item_id = $items_id[$index]; $item_uid = $items_uid[$index];
+        $name = $items_name[$index]; $item_slug = $items_slug[$index];
+        $get_parts = $get_all_parts->first(function($item, $itemKey) use ($item_uid, $name){
+          // return $item->id == $item_id && $item->uid == $item_uid && $item->name == $name && $item->slug == $item_slug;
+          return $item->uid == $item_uid && $item->name == $name;
         });
 
         if( ! $get_parts ){
@@ -977,31 +1034,35 @@ class Purchase_Controller extends Controller
         $unit_price = (int) $items_amount[$index] / (int) $items_quantity[$index];
 
         $item_details = [
-          // 'uid'           => Str::uuid(),
-          // 'purchase_id'   => null,
-          // 'purchase_no'   => null,
-          'type'           => $type,
-          'parts_id'       => $get_parts->id,
-          'vehicle_id'     => $request->vehicle_id ?? null,
-          'size'           => $items_size[$index],
-          'serials'        => $items_serials[$index],
-          'quantity'       => $items_quantity[$index],
-          'unit'           => $items_unit[$index],
-          'unit_price'     => $unit_price,
-          'amount'         => $items_amount[$index],
-          // 'amount'         => strval(number_format($item_price, 2)),
-          // 'amount'         => strval(number_format($item_price, 2, '.', '')),
-          'remarks'        => $items_remarks[$index],
+          // 'uid'         => Str::uuid(),
+          // 'purchase_id' => null,
+          // 'purchase_no' => null,
+          'type'       => $type,
+          'parts_id'   => $get_parts->id,
+          'vehicle_id' => $request->vehicle_id ?? null,
+          'size'       => $items_size[$index],
+          'serials'    => $items_serials[$index],
+          'quantity'   => $items_quantity[$index],
+          'unit'       => $items_unit[$index],
+          'unit_price' => $unit_price,
+          'amount'     => $items_amount[$index],
+          // 'amount'     => strval(number_format($item_price, 2)),
+          // 'amount'     => strval(number_format($item_price, 2, '.', '')),
+          'remarks'    => $items_remarks[$index],
         ];
-        $total_qty    += (int) $items_quantity[$index];
-        $total_amount += (int) $items_amount[$index];
-        $purchasedItems_All[] = $item_details;
+        $total_qty     += (int) $items_quantity[$index];
+        $total_amount  += (int) $items_amount[$index];
+        $newPurchasedItems_All[] = $item_details;
       }
     }
+    
+    if( count($previousItems_All) != count($previousItemsToUpdate) ){
+      return back()->with('error', 'Something went happend.');
+    }
+
 
     if( $input_total_qty != $total_qty || $input_total_amount != $total_amount ){
-      session()->flash('error', 'Total-Qty or Total-Amount not matched.');
-      return back()->withInput();
+      return back()->with('error', 'Total-Qty or Total-Amount not matched.');
     }
 
     if( $is_full_paid && $input_paidAmount == $total_amount ){
@@ -1012,10 +1073,7 @@ class Purchase_Controller extends Controller
       $due_amount  = $input_dueAmount;
     }
 
-    $NewPurchase = [
-      'uid'             => Str::uuid(),
-      'purchase_no'     => $this->VehiclePartsPurchaseNo(),
-      'purchase_type'   => $type,
+    $purchaseUpdateData = [
       'date'            => $purchase_date,
       'memo_no'         => $request->memo_no,
       'vehicle_id'      => $request->vehicle_id ?? null,
@@ -1047,18 +1105,29 @@ class Purchase_Controller extends Controller
       'ip_address'      => $request->ip(),
       'session_id'      => $session_id,
     ];
-    $newPurchase_Created = Purchase_Model::create( $NewPurchase );
+    $purchase_updated = tap($purchase)->update( $purchaseUpdateData );
 
-    // Create Purchase-Items-Details
-    foreach( $purchasedItems_All as $purchasedItemDetails ){
-      $purchasedItemDetails['uid']         = Str::uuid();
-      $purchasedItemDetails['purchase_id'] = $newPurchase_Created->id;
-      $purchasedItemDetails['purchase_no'] = $newPurchase_Created->purchase_no;
 
-      PurchaseDetails_Model::create( $purchasedItemDetails );
+    // Update Old-Purchased-Item-Details
+    if( $previousItems_All && count($previousItems_All) > 0 ){
+      foreach( $previousItems_All as $item_key => $previous_item ){
+        $previous_item->update( $previousItemsToUpdate[$item_key] );
+      }
     }
 
-    return back()->with('success', "Purchase No.# ($newPurchase_Created->purchase_no) saved successfully!");
+    // Create New-Purchased-Item-Details
+    if( $newPurchasedItems_All && count($newPurchasedItems_All) > 0 ){
+      foreach( $newPurchasedItems_All as $purchasedItemDetails ){
+        $purchasedItemDetails['uid']         = Str::uuid();
+        $purchasedItemDetails['purchase_id'] = $purchase->id;
+        $purchasedItemDetails['purchase_no'] = $purchase->purchase_no;
+  
+        PurchaseDetails_Model::create( $purchasedItemDetails );
+      }
+    }
+    
+    return redirect()->route('vehicle.parts.purchase.all')
+    ->with('success', "Purchase No.# ($purchase_updated->purchase_no) updated successfully!");
   }
 
 

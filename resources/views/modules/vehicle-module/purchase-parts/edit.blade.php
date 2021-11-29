@@ -20,11 +20,13 @@
             <form method="post" action="{{ route('vehicle.parts.purchase.edit', $purchase) }}"
                   name="partsPurchaseForm" id="partsPurchaseForm" class="parts-purchase edit p-20 pb-0">
               @csrf
-              {{-- @method('PUT') --}}
+              {{--@method('PUT')--}}
 
               <div class="form-top-and-center">
                 <div class="form-top">
                   <div class="row mb-sm-3">
+
+                    {{--Purchase-Number-&-Type--}}
                     <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 purchase-no-date">
                       <div class="row gx-2">
                         {{--Purchase-Number--}}
@@ -59,6 +61,7 @@
                       </div>
                     </div>
 
+                    {{--Memo-Date-&-Number--}}
                     <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 memo-date-no">
                       <div class="row gx-2">
                         {{--Purchase/Memo-Date--}}
@@ -292,8 +295,8 @@
                           </span>
                           </h2>
 
-                          <input type="hidden" name="purchaseItem_id[]" value="" />
-                          <input type="hidden" name="purchaseItem_uid[]" value="" />
+                          <input type="hidden" name="previousItem_id[]" value="" />
+                          <input type="hidden" name="previousItem_uid[]" value="" />
 
                           <div id="accordionCollapse_1" class="accordion-collapse collapse show" aria-labelledby="accordionHeading_1" data-bs-parent="#Accordion-Parent">
                             <div class="accordion-body px-15 pb-5">
@@ -482,6 +485,9 @@
                   </div>
                 </div> {{--/.row--}}
               </div> {{--/.form-bottom--}}
+
+              {{--Custom token using Purchase-uuid to make extra security layer--}}
+              <input type="hidden" name="tokken" value="{{$purchase->uid}}-68u1d" />
             </form>
 
 
@@ -497,8 +503,8 @@
                   </span>
                 </h2>
 
-                <input type="hidden" name="purchaseItem_id[]" value="" />
-                <input type="hidden" name="purchaseItem_uid[]" value="" />
+                <input type="hidden" name="previousItem_id[]" value="" />
+                <input type="hidden" name="previousItem_uid[]" value="" />
 
                 <div id="accordionCollapse" class="accordion-collapse collapse show" aria-labelledby="accordionHeading" data-bs-parent="#Accordion-Parent">
                   <div class="accordion-body px-15 pb-5">

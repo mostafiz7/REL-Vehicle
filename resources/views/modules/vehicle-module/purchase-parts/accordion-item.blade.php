@@ -11,8 +11,8 @@
   </span>
   </h2>
 
-  <input type="hidden" name="purchaseItem_id[]" value="{{$purchase_item->id}}" />
-  <input type="hidden" name="purchaseItem_uid[]" value="{{$purchase_item->uid}}" />
+  <input type="hidden" name="previousItem_id[]" value="{{$purchase_item->id}}" />
+  <input type="hidden" name="previousItem_uid[]" value="{{$purchase_item->uid}}" />
 
   <div id="accordionCollapse_{{$index+1}}" class="accordion-collapse collapse {{$loop->last ? 'show' : ''}}" aria-labelledby="accordionHeading_{{$index+1}}" data-bs-parent="#Accordion-Parent">
     <div class="accordion-body px-15 pb-5">
@@ -49,7 +49,7 @@
         </div>
 
         <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-amount">
-          <input type="number" min="0" name="item_amount[]" id="item_amount-{{$index+1}}" class="item_amount form-control border-secondary brd-3" placeholder="Item Amount" value="{{$purchase_item->amount}}" />
+          <input type="number" min="0" name="item_amount[]" id="item_amount-{{$index+1}}" class="item_amount form-control border-secondary brd-3" placeholder="Item Amount" value="{{(int)$purchase_item->amount}}" />
         </div>
 
         <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-remarks">
