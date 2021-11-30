@@ -16,11 +16,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function (){
   return redirect()->route('vehicle.parts.purchase.search');
-});
+})->name('homepage');
 
 
 // Create-Symbolic-Link
 Route::get('/symlink', [Home_Controller::class, 'CreateSymbolicLink']);
+
+// Database/Migration Table programmatically by using Artisan::call()
+Route::get('/migration-update', [Home_Controller::class, 'DatabaseTableUpdate'])->name('database-migration-update');
+Route::get('/migration-fresh', [Home_Controller::class, 'DatabaseTableFresh'])->name('database-migration-fresh');
+Route::get('/migration-rollback', [Home_Controller::class, 'DatabaseTableRollback'])->name('database-migration-rollback');
 
 
 Route::get('/module/employees/employee-new', [Employee_Controller::class, 'EmployeeNew_Form'])->name('employee.add.new');

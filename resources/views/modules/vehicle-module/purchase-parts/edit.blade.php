@@ -487,7 +487,8 @@
               </div> {{--/.form-bottom--}}
 
               {{--Custom token using Purchase-uuid to make extra security layer--}}
-              <input type="hidden" name="tokken" value="{{$purchase->uid}}-68u1d" />
+              {{--<input type="hidden" name="token" value="{{$purchase->uid}}-68u1d" />--}}
+              <input type="hidden" name="token" value="{{$securityToken}}" />
             </form>
 
 

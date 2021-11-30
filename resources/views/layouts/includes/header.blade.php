@@ -56,7 +56,7 @@
               <li class="">
                 <a href="{{ route('vehicle.add.new') }}"
                    class="dropdown-item {{ strpos($viewName, 'vehicles') && strpos($viewName, 'new') ? 'active' : '' }}">
-                  Add New Vehicle
+                  Add Vehicle
                 </a>
               </li>
               <li class="">
@@ -91,7 +91,7 @@
               <li class="">
                 <a href="{{ route('vehicle.parts.add.new') }}"
                    class="dropdown-item {{ strpos($viewName, 'parts') && ! strpos($viewName, 'purchase') && strpos($viewName, 'new') ? 'active' : '' }}">
-                  Add New Parts
+                  Add Parts
                 </a>
               </li>
               <li class="">
@@ -120,7 +120,7 @@
               <li class="">
                 <a href="{{ route('employee.add.new') }}"
                    class="dropdown-item {{ strpos($viewName, 'employees') && strpos($viewName, 'new') ? 'active' : '' }}">
-                  Add New Employee
+                  Add Employee
                 </a>
               </li>
               <li class="">
@@ -142,6 +142,34 @@
                   Designations
                 </a>
               </li>
+            </ul>
+          </li>
+
+          {{--Settings-Dropdown--}}
+          {{-- <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle {{ strpos($viewName, 'settings') ? 'active' : '' }}"
+               href="#" id="Header-Nav-Settings" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+               Settings
+            </a>
+            <ul class="dropdown-menu mt--1 brd-0" aria-labelledby="Header-Nav-Settings">
+              <li class="">
+                <a href="{{ route('database-migration-update') }}"
+                   class="dropdown-item {{ strpos($viewName, 'settings') ? 'active' : '' }}">
+                  Migrate
+                </a>
+              </li>
+              <li class="">
+                <a href="{{ route('database-migration-fresh') }}"
+                   class="dropdown-item {{ strpos($viewName, 'settings') ? 'active' : '' }}">
+                  Migrate Fresh
+                </a>
+              </li>
+              <li class="">
+                <a href="{{ route('database-migration-rollback') }}"
+                   class="dropdown-item {{ strpos($viewName, 'settings') ? 'active' : '' }}">
+                  Migrate Rollback
+                </a>
+              </li> --}}
             </ul>
           </li>
 

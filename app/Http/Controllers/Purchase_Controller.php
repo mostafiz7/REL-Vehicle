@@ -13,16 +13,16 @@ use App\Models\Employee_Model;
 use App\Models\Purchase_Model;
 use App\Models\Settings_Model;
 use App\Models\Supplier_Model;
+use App\Models\Requisition_Model;
+use App\Models\PartsCategory_Model;
 use App\Models\PurchaseDetails_Model;
 use App\Models\VehicleCategory_Model;
 use Illuminate\Validation\Rule;
-use App\Models\Requisition_Model;
-use App\Models\PartsCategory_Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Validator;
-use PhpParser\Node\Stmt\Foreach_;
+
 
 class Purchase_Controller extends Controller
 {
@@ -773,7 +773,8 @@ class Purchase_Controller extends Controller
       return back()->with('error', 'Selected purchase not found in system.');
     }
 
-    $purchaseType = 'vehicle-parts';
+    $purchaseType  = 'vehicle-parts';
+    $securityToken = $purchase->uid . '-68u1d';
 
     $parts_all            = Parts_Model::orderBy('name', 'asc')->get()->all();
     $vehicle_all          = Vehicle_Model::orderBy('vehicle_no', 'asc')->get()->all();
@@ -796,6 +797,7 @@ class Purchase_Controller extends Controller
 
     return view('modules.vehicle-module.purchase-parts.edit')->with([
       'purchase'              => $purchase,
+      'securityToken'         => $securityToken,
       'parts_all'             => $parts_all,
       'vehicle_all'           => $vehicle_all,
       'supplier_all'          => $supplier_all,
@@ -817,8 +819,8 @@ class Purchase_Controller extends Controller
       return back()->with('error', 'You are not authorized to perform this action!');
     }*/
     
-    $extraSecurityToken = $purchase->uid . '-68u1d';
-    if( ! $purchase || $request->tokken != $extraSecurityToken ){
+    $securityToken = $purchase->uid . '-68u1d';
+    if( ! $purchase || $request->input('token') != $securityToken ){
       return back()->with('error', 'Selected purchase not found in system.');
     }
     
@@ -1057,7 +1059,7 @@ class Purchase_Controller extends Controller
     }
     
     if( count($previousItems_All) != count($previousItemsToUpdate) ){
-      return back()->with('error', 'Something went happend.');
+      return back()->with('error', 'Something went wrong.');
     }
 
 
