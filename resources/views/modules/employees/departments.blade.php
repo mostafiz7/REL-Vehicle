@@ -13,7 +13,7 @@
 
 
         <div class="card-body page-body p-0">
-          <div class="departments-new-area overlay-scrollbar">
+          <div class="departments-new-area">
             <div class="row">
               <div class="col-md-6">
                 <form method="post" action="{{ route('department.add.new') }}"
@@ -61,33 +61,34 @@
 
               {{--Show All Departments--}}
               <div class="col-md-6">
-                <div class="mx-md-3 p-20 pb-0">
+                <div class="full-height-parent mx-md-3 p-20">
                   <div class="h-auto fz-20 fw-bold mb-30 pb-5 bb-1">
                     Department Lists:
                   </div>
 
-                  <table class="table table-bordered border-secondary-1 table-hover department-table">
-                    <thead class="department-header text-center">
-                      <tr class="department-row bb-0">
-                        <th scope="col" class="serial bb-0">SL#</th>
-                        <th scope="col" class="department-name bb-0">Name</th>
-                        <th scope="col" class="department-origin bb-0">Short-Name</th>
-                      </tr>
-                    </thead>
+                  <div class="departments-list full-height-minus minus-110 overlay-scrollbar">
+                    <table class="table table-bordered border-secondary-1 table-hover department-table">
+                      <thead class="department-header text-center">
+                        <tr class="department-row bb-0">
+                          <th scope="col" class="serial bb-0">SL#</th>
+                          <th scope="col" class="department-name bb-0">Name</th>
+                          <th scope="col" class="department-origin bb-0">Short-Name</th>
+                        </tr>
+                      </thead>
 
-                    <tbody class="department-body">
-                      @if ( $department_all )
-                        @foreach ( $department_all as $index => $department )
-                          <tr class="department-row">
-                            <td class="serial text-center">{{ $index+1 }}</td>
-                            <td class="department-name">{{ $department->name }}</td>
-                            <td class="department-short_name">{{ $department->short_name }}</td>
-                          </tr>
-                        @endforeach
-                      @endif
-                    </tbody>
-                  </table>
-
+                      <tbody class="department-body">
+                        @if ( $department_all )
+                          @foreach ( $department_all as $index => $department )
+                            <tr class="department-row">
+                              <td class="serial text-center">{{ $index+1 }}</td>
+                              <td class="department-name">{{ $department->name }}</td>
+                              <td class="department-short_name">{{ $department->short_name }}</td>
+                            </tr>
+                          @endforeach
+                        @endif
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>

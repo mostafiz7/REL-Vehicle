@@ -5,22 +5,24 @@ namespace App\Http\Controllers;
 use DateTime;
 use Carbon\Carbon;
 use App\Models\Bill_Model;
+use App\Rules\ValidAmount;
 use App\Models\Parts_Model;
 use Illuminate\Support\Str;
+use App\Rules\ValidQuantity;
 use Illuminate\Http\Request;
 use App\Models\Vehicle_Model;
 use App\Models\Employee_Model;
 use App\Models\Purchase_Model;
 use App\Models\Settings_Model;
 use App\Models\Supplier_Model;
+use Illuminate\Validation\Rule;
 use App\Models\Requisition_Model;
 use App\Models\PartsCategory_Model;
-use App\Models\PurchaseDetails_Model;
-use App\Models\VehicleCategory_Model;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\View;
+use App\Models\PurchaseDetails_Model;
+use App\Models\VehicleCategory_Model;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -66,7 +68,7 @@ class Purchase_Controller extends Controller
 
 
   // Vehicle-Parts Purchase-Index
-  public function VehicleParts_Purchase_Index( Request $request )
+  public function VehiclePartsPurchase_Index( Request $request )
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
     /*if( Gate::denies('isAdmins') || Gate::denies('entryIndex') || Gate::denies('routeHasAccess') ){
@@ -466,7 +468,7 @@ class Purchase_Controller extends Controller
 
 
   // Show Vehicle-Parts Purchase-Form
-  public function VehicleParts_Purchase_Form( Request $request )
+  public function VehiclePartsPurchase_Form( Request $request )
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
     /*if( Gate::denies('isAdmins') || Gate::denies('entryIndex') || Gate::denies('routeHasAccess') ){
@@ -508,7 +510,7 @@ class Purchase_Controller extends Controller
 
 
   // Store Newly Purchased Vehicle-Parts
-  public function VehicleParts_Purchase_Store( Request $request ): \Illuminate\Http\RedirectResponse
+  public function VehiclePartsPurchase_Store( Request $request ): \Illuminate\Http\RedirectResponse
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
     /*if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
@@ -558,17 +560,27 @@ class Purchase_Controller extends Controller
       'notes'          => [ 'nullable', 'string', 'max:1000' ],
       'entry_by'       => [ Rule::requiredIf(!auth()->user()), 'integer', 'exists:employees,id,active,1' ],
 
+      'total_qty'      => [ 'required', 'numeric', 'min:1', 'max:10000000' ],
+      'total_amount'   => [ 'required', 'numeric', 'min:0', 'max:9000000000' ],
+
+      /* 'total_qty'      => [ 'required', 'numeric', 'digits_between:1,8' ],
+      'total_amount'   => [ 'required', 'numeric', 'digits_between:1,10' ],
+      'total_qty'      => [ 'required', 'numeric', new ValidQuantity ],
+      'total_amount'   => [ 'required', 'numeric', new ValidAmount ], */
+      
       // 'purchaser_name' => [ 'required_unless:purchased_by,null', 'string', 'max:50' ],
       // 'checked_by'     => [ 'nullable', 'integer', 'exists:employees,id,active,1' ],
       // 'requisition_no' => [ 'nullable', 'string', 'max:15', 'exists:requisitions,requisition_no' ],
       // 'supplier_id'    => [ 'nullable', 'integer', 'exists:suppliers,id' ],
       // 'supplier_name'  => [ 'required_unless:supplier_id,null', 'string', 'max:50' ],
     ], [
-      'purchase_type.in'      => 'Only vehicle-parts is allowed.',
-      'memo_no.required'      => 'The memo-number is required.',
-      'vehicle_id.required'   => 'The vehicle-number is required.',
-      'vehicle_id.exists'     => 'The vehicle-number does not exists.',
-      'date.date_format'      => 'The date does not match the correct format (Day-Month-FullYear).',
+      'purchase_type.in'    => 'Only vehicle-parts is allowed.',
+      'memo_no.required'    => 'The memo-number is required.',
+      'vehicle_id.required' => 'The vehicle-number is required.',
+      'vehicle_id.exists'   => 'The vehicle-number does not exists.',
+      'date.date_format'    => 'The date does not match the correct format (Day-Month-FullYear).',
+      'total_qty.max'       => 'The total-qty must not be greater than 1,00,00,000',
+      'total_amount.max'    => 'The total-amount must not be greater than 900,00,00,000',
     ]);
     if( $validator->fails() || $input_paidAmount > $input_total_amount || $input_dueAmount > $input_total_amount
       || (($input_paidAmount + $input_dueAmount) > $input_total_amount) ){
@@ -597,20 +609,27 @@ class Purchase_Controller extends Controller
 
     // Check item name, quantity & amount has value
     $has_item_name = null; $qty_not_present = null; $amount_not_present = null;
+    $qty_too_much = null; $amount_too_much = null;
     $has_qty_without_item = null; $has_amount_without_item = null; $remarks_too_long = null;
     foreach( $items_name as $key => $item_name ){
       if( $item_name ){
         $has_item_name[] = $item_name;
-        if( ! $items_quantity[$key] ){
+        if( ! $items_quantity[$key] || (int)$items_quantity[$key] == 0 ){
           $qty_not_present[] = ($key + 1);
+        } elseif( $items_quantity[$key] > 10000000 ){
+          // check item-qty length = Maximum 1 crore (1,00,00,000) allowed
+          $qty_too_much[] = ($key + 1);
         }
         if( ! $items_amount[$key] ){
           $amount_not_present[] = ($key + 1);
+        } elseif( $items_amount[$key] > 9000000000 ){
+          // check item-amount length = Maximum 900 crore (900,00,00,000) allowed
+          $amount_too_much[] = ($key + 1);
         }
         if( strlen($items_remarks[$key]) > 191 ){
           $remarks_too_long[] = ($key + 1);
         }
-      } elseif( $item_name == null ){
+      } elseif( empty($item_name) ){
         if( $items_quantity[$key] ){
           $has_qty_without_item[] = ($key + 1);
         }
@@ -621,39 +640,42 @@ class Purchase_Controller extends Controller
     }
 
     // Send error message if item name, quantity & amount has not value
-    if( (! $has_item_name || count($has_item_name) < 1) || ($qty_not_present && count($qty_not_present) > 0)
-    || ($amount_not_present && count($amount_not_present) > 0) || ($has_qty_without_item && count($has_qty_without_item) > 0)
-    || ($has_amount_without_item && count($has_amount_without_item) > 0) || ($remarks_too_long && count($remarks_too_long) > 0) ){
+    if( (! $has_item_name || count($has_item_name) < 1) || ($qty_too_much && count($qty_too_much) > 0) || ($qty_not_present && count($qty_not_present) > 0)
+    || ($amount_too_much && count($amount_too_much) > 0) || ($amount_not_present && count($amount_not_present) > 0) || ($has_qty_without_item && count($has_qty_without_item) > 0) || ($has_amount_without_item && count($has_amount_without_item) > 0) || ($remarks_too_long && count($remarks_too_long) > 0) ){
       if( ! $has_item_name || count($has_item_name) < 1 ){
         session()->flash('error', 'Minimum 1 item required.');
-        return back()->withInput();
+
+      } elseif( $qty_too_much && count($qty_too_much) > 0 ){
+        $lineNumbers = implode(', ', $qty_too_much);
+        session()->flash('error', "Item-qty exceeds maximum limit of 1,00,00,000 on line number ($lineNumbers).");
 
       } elseif( $qty_not_present && count($qty_not_present) > 0 ){
         $lineNumbers = implode(', ', $qty_not_present);
         session()->flash('error', "Item quantity not present on line number ($lineNumbers).");
-        return back()->withInput();
+
+      } elseif( $amount_too_much && count($amount_too_much) > 0 ){
+        $lineNumbers = implode(', ', $amount_too_much);
+        session()->flash('error', "Item-amount exceeds maximum limit of 900,00,00,000 on line number ($lineNumbers).");
 
       } elseif( $amount_not_present && count($amount_not_present) > 0 ){
         $lineNumbers = implode(', ', $amount_not_present);
         session()->flash('error', "Item amount not present on line number ($lineNumbers).");
-        return back()->withInput();
 
       } elseif( $has_qty_without_item && count($has_qty_without_item) > 0 ){
         $lineNumbers = implode(', ', $has_qty_without_item);
         session()->flash('error', "Item name not present on line number ($lineNumbers).");
-        return back()->withInput();
 
       } elseif( $has_amount_without_item && count($has_amount_without_item) > 0 ){
         $lineNumbers = implode(', ', $has_amount_without_item);
         session()->flash('error', "Item name not present on line number ($lineNumbers).");
-        return back()->withInput();
 
       } elseif( $remarks_too_long && count($remarks_too_long) > 0 ){
         $lineNumbers = implode(', ', $remarks_too_long);
         session()->flash('error', "Item remarks too long on line number ($lineNumbers).");
-        return back()->withInput();
       }
+      return back()->withInput();
     }
+
 
     // Purchased-Items Details Data
     $get_all_parts = Parts_Model::all();
@@ -692,13 +714,23 @@ class Purchase_Controller extends Controller
           // 'amount'         => strval(number_format($item_price, 2, '.', '')),
           'remarks'        => $items_remarks[$index],
         ];
-        $total_qty    += (int) $items_quantity[$index];
-        $total_amount += (int) $items_amount[$index];
+        $total_qty    += (int)$items_quantity[$index];
+        $total_amount += (int)$items_amount[$index];
         $purchasedItems_All[] = $item_details;
       }
     }
 
-    if( $input_total_qty != $total_qty || $input_total_amount != $total_amount ){
+    if( $total_qty > 10000000 ){
+      // check total-qty length = Maximum 1 crore (1,00,00,000) allowed
+      session()->flash('error', 'The total-qty exceeds maximum limit of 1,00,00,000.');
+      return back()->withInput();
+
+    } elseif( $total_amount > 9000000000 ){
+      // check total-amount length = Maximum 900 crore (900,00,00,000) allowed
+      session()->flash('error', 'The total-amount exceeds maximum limit of 900,00,00,000.');
+      return back()->withInput();
+
+    } elseif( $input_total_qty != $total_qty || $input_total_amount != $total_amount ){
       session()->flash('error', 'Total-Qty or Total-Amount not matched.');
       return back()->withInput();
     }
@@ -868,18 +900,28 @@ class Purchase_Controller extends Controller
       'notes'          => [ 'nullable', 'string', 'max:1000' ],
       'entry_by'       => [ Rule::requiredIf(!auth()->user()), 'integer', 'exists:employees,id,active,1' ],
 
+      'total_qty'      => [ 'required', 'numeric', 'min:1', 'max:10000000' ],
+      'total_amount'   => [ 'required', 'numeric', 'min:0', 'max:9000000000' ],
+
+      /* 'total_qty'      => [ 'required', 'numeric', 'digits_between:1,8' ],
+      'total_amount'   => [ 'required', 'numeric', 'digits_between:1,10' ],
+      'total_qty'      => [ 'required', 'numeric', new ValidQuantity ],
+      'total_amount'   => [ 'required', 'numeric', new ValidAmount ], */
+
       // 'purchaser_name' => [ 'required_unless:purchased_by,null', 'string', 'max:50' ],
       // 'checked_by'     => [ 'nullable', 'integer', 'exists:employees,id,active,1' ],
       // 'requisition_no' => [ 'nullable', 'string', 'max:15', 'exists:requisitions,requisition_no' ],
       // 'supplier_id'    => [ 'nullable', 'integer', 'exists:suppliers,id' ],
       // 'supplier_name'  => [ 'required_unless:supplier_id,null', 'string', 'max:50' ],
     ], [
-      'purchase_no.in'        => "The purchase-no can't be changed.",
-      'purchase_type.in'      => 'Only vehicle-parts is allowed.',
-      'memo_no.required'      => 'The memo-number is required.',
-      'vehicle_id.required'   => 'The vehicle-number is required.',
-      'vehicle_id.exists'     => 'The vehicle-number does not exists.',
-      'date.date_format'      => 'The date does not match the correct format (Day-Month-FullYear).',
+      'purchase_no.in'      => "The purchase-no can't be changed.",
+      'purchase_type.in'    => 'Only vehicle-parts is allowed.',
+      'memo_no.required'    => 'The memo-number is required.',
+      'vehicle_id.required' => 'The vehicle-number is required.',
+      'vehicle_id.exists'   => 'The vehicle-number does not exists.',
+      'date.date_format'    => 'The date does not match the correct format (Day-Month-FullYear).',
+      'total_qty.max'       => 'The total-qty must not be greater than 1,00,00,000',
+      'total_amount.max'    => 'The total-amount must not be greater than 900,00,00,000',
     ]);
     if( $validator->fails() || $input_paidAmount > $input_total_amount || $input_dueAmount > $input_total_amount
       || (($input_paidAmount + $input_dueAmount) > $input_total_amount) ){
@@ -912,20 +954,27 @@ class Purchase_Controller extends Controller
     
     // Check item name, quantity & amount has value
     $has_item_name = null; $qty_not_present = null; $amount_not_present = null;
+    $qty_too_much = null; $amount_too_much = null;
     $has_qty_without_item = null; $has_amount_without_item = null; $remarks_too_long = null;
     foreach( $items_name as $key => $item_name ){
       if( $item_name ){
         $has_item_name[] = $item_name;
-        if( ! $items_quantity[$key] ){
+        if( ! $items_quantity[$key] || (int)$items_quantity[$key] == 0 ){
           $qty_not_present[] = ($key + 1);
+        } elseif( $items_quantity[$key] > 10000000 ){
+          // check item-qty length = Maximum 1 crore (1,00,00,000) allowed
+          $qty_too_much[] = ($key + 1);
         }
         if( ! $items_amount[$key] ){
           $amount_not_present[] = ($key + 1);
+        } elseif( $items_amount[$key] > 9000000000 ){
+          // check item-amount length = Maximum 900 crore (900,00,00,000) allowed
+          $amount_too_much[] = ($key + 1);
         }
         if( strlen($items_remarks[$key]) > 191 ){
           $remarks_too_long[] = ($key + 1);
         }
-      } elseif( $item_name == null ){
+      } elseif( empty($item_name) ){
         if( $items_quantity[$key] ){
           $has_qty_without_item[] = ($key + 1);
         }
@@ -936,35 +985,37 @@ class Purchase_Controller extends Controller
     }
 
     // Send error message if item name, quantity & amount has not value
-    if( (! $has_item_name || count($has_item_name) < 1) || ($qty_not_present && count($qty_not_present) > 0) || ($amount_not_present && count($amount_not_present) > 0) || ($has_qty_without_item && count($has_qty_without_item) > 0) || ($has_amount_without_item && count($has_amount_without_item) > 0) || ($remarks_too_long && count($remarks_too_long) > 0) ){
+    if( (! $has_item_name || count($has_item_name) < 1) || ($qty_too_much && count($qty_too_much) > 0) || ($qty_not_present && count($qty_not_present) > 0) || ($amount_too_much && count($amount_too_much) > 0) || ($amount_not_present && count($amount_not_present) > 0) || ($has_qty_without_item && count($has_qty_without_item) > 0) || ($has_amount_without_item && count($has_amount_without_item) > 0) || ($remarks_too_long && count($remarks_too_long) > 0) ){
       if( ! $has_item_name || count($has_item_name) < 1 ){
         session()->flash('error', 'Minimum 1 item required.');
-        // return back()->withInput();
+
+      } elseif( $qty_too_much && count($qty_too_much) > 0 ){
+        $lineNumbers = implode(', ', $qty_too_much);
+        session()->flash('error', "Item-qty exceeds maximum limit of 1,00,00,000 on line number ($lineNumbers).");
 
       } elseif( $qty_not_present && count($qty_not_present) > 0 ){
         $lineNumbers = implode(', ', $qty_not_present);
-        session()->flash('error', "Item quantity not present on line number ($lineNumbers).");
-        // return back()->withInput();
+        session()->flash('error', "Item-qty not present on line number ($lineNumbers).");
+
+      } elseif( $amount_too_much && count($amount_too_much) > 0 ){
+        $lineNumbers = implode(', ', $amount_too_much);
+        session()->flash('error', "Item-amount exceeds maximum limit of 900,00,00,000 on line number ($lineNumbers).");
 
       } elseif( $amount_not_present && count($amount_not_present) > 0 ){
         $lineNumbers = implode(', ', $amount_not_present);
-        session()->flash('error', "Item amount not present on line number ($lineNumbers).");
-        // return back()->withInput();
+        session()->flash('error', "Item-amount not present on line number ($lineNumbers).");
 
       } elseif( $has_qty_without_item && count($has_qty_without_item) > 0 ){
         $lineNumbers = implode(', ', $has_qty_without_item);
-        session()->flash('error', "Item name not present on line number ($lineNumbers).");
-        // return back()->withInput();
+        session()->flash('error', "Item-name not present on line number ($lineNumbers).");
 
       } elseif( $has_amount_without_item && count($has_amount_without_item) > 0 ){
         $lineNumbers = implode(', ', $has_amount_without_item);
-        session()->flash('error', "Item name not present on line number ($lineNumbers).");
-        // return back()->withInput();
+        session()->flash('error', "Item-name not present on line number ($lineNumbers).");
 
       } elseif( $remarks_too_long && count($remarks_too_long) > 0 ){
         $lineNumbers = implode(', ', $remarks_too_long);
-        session()->flash('error', "Item remarks too long on line number ($lineNumbers).");
-        // return back()->withInput();
+        session()->flash('error', "Item-remarks too long on line number ($lineNumbers).");
       }
       return back()->withInput();
     }
@@ -1063,8 +1114,19 @@ class Purchase_Controller extends Controller
     }
 
 
-    if( $input_total_qty != $total_qty || $input_total_amount != $total_amount ){
-      return back()->with('error', 'Total-Qty or Total-Amount not matched.');
+    if( $total_qty > 10000000 ){
+      // check total-qty length = Maximum 1 crore (1,00,00,000) allowed
+      session()->flash('error', 'The total-qty exceeds maximum limit of 1,00,00,000.');
+      return back()->withInput();
+
+    } elseif( $total_amount > 9000000000 ){
+      // check total-amount length = Maximum 900 crore (900,00,00,000) allowed
+      session()->flash('error', 'The total-amount exceeds maximum limit of 900,00,00,000.');
+      return back()->withInput();
+
+    } elseif( $input_total_qty != $total_qty || $input_total_amount != $total_amount ){
+      session()->flash('error', 'Total-Qty or Total-Amount not matched.');
+      return back()->withInput();
     }
 
     if( $is_full_paid && $input_paidAmount == $total_amount ){
@@ -1152,7 +1214,7 @@ class Purchase_Controller extends Controller
 
 
   // Search-Result Vehicle-Parts-Purchase
-  public function SearchResult_VehiclePartsPurchase( Request $request )
+  public function Search_VehiclePartsPurchase( Request $request )
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
     /*if( Gate::denies('isAdmins') || Gate::denies('entryIndex') || Gate::denies('routeHasAccess') ){

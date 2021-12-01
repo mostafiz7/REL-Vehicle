@@ -175,8 +175,8 @@
 
                     {{--Shop-Name--}}
                     <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 shop_name">
-                      <label for="" class="w-100 mr-15"><span>Shop Name</span></label>
-                      <input type="text" name="shop_name" id="shop_name" class="form-control border-secondary brd-3 @error('shop_name') is-invalid @enderror" placeholder="Dhaka Traders" value="{{ old('shop_name') }}" />
+                      <label for="" class="required w-100 mr-15"><span>Shop Name</span></label>
+                      <input type="text" name="shop_name" id="shop_name" class="required form-control border-secondary brd-3 @error('shop_name') is-invalid @enderror" placeholder="Dhaka Traders" value="{{ old('shop_name') }}" />
 
                       @if ( $errors->has('shop_name') )
                         <div class="text-danger fz-14 fw-bold" role="alert">
@@ -190,8 +190,8 @@
                       <div class="row gx-2">
                         {{--Shop-Contact--}}
                         <div class="col-6 shop_contact">
-                          <label for="" class="w-100 mr-15"><span>Shop Contact</span></label>
-                          <input type="text" name="shop_contact" id="shop_contact" class="form-control border-secondary brd-3 @error('shop_contact') is-invalid @enderror" placeholder="01712-445566" value="{{ old('shop_contact') }}" />
+                          <label for="" class="required w-100 mr-15"><span>Shop Contact</span></label>
+                          <input type="text" name="shop_contact" id="shop_contact" class="required form-control border-secondary brd-3 @error('shop_contact') is-invalid @enderror" placeholder="01712-445566" value="{{ old('shop_contact') }}" />
 
                           @if ( $errors->has('shop_contact') )
                             <div class="text-danger fz-14 fw-bold" role="alert">
@@ -357,17 +357,34 @@
                   {{--Total-Quantity-&-Amount--}}
                   <div class="order-lg-3 order-sm-2 col-lg-3 col-md-4 col-sm-6 col-12 mb-10 total-qty-amount">
                     {{--Total-Quantity--}}
-                    <div class="total-qty d-flex justify-content-between mb-5">
-                      <label for="" class="fw-bold"><span>Total Qty.</span></label>
-                      <div id="item_total_qty" class="d-inline-block h-30px bg-dark text-warning text-center lh-1-8 border-secondary brd-3">0</div>
-                      <input type="hidden" name="total_qty" id="total_qty" class="total_qty form-control border-secondary brd-3" value="" />
+                    <div class="total-qty mb-5">
+                      <div class="d-flex justify-content-between">
+                        <label for="" class="fw-bold"><span>Total Qty.</span></label>
+                        <div id="item_total_qty" class="d-inline-block h-30px bg-dark text-warning text-center lh-1-8 border-secondary brd-3 @error('total_qty') is-invalid @enderror">0</div>
+                        <input type="hidden" name="total_qty" id="total_qty" class="total_qty form-control border-secondary brd-3" value="" />
+                      </div>
+  
+                      @if ( $errors->has('total_qty') )
+                        <div class="text-danger fz-14 fw-bold" role="alert">
+                          {{ $errors->first('total_qty') }}
+                        </div>
+                      @endif
                     </div>
+                    
 
                     {{--Total-Amount--}}
-                    <div class="total-amount d-flex justify-content-between mb-5">
-                      <label for="" class="fw-bold"><span>Total Amount</span></label>
-                      <div id="item_total_amount" class="d-inline-block h-30px bg-dark text-warning text-center lh-1-8 border-secondary brd-3">0.00</div>
-                      <input type="hidden" name="total_amount" id="total_amount" class="total_amount form-control border-secondary brd-3" value="" />
+                    <div class="total-amount mb-5">
+                      <div class="d-flex justify-content-between">
+                        <label for="" class="fw-bold"><span>Total Amount</span></label>
+                        <div id="item_total_amount" class="d-inline-block h-30px bg-dark text-warning text-center lh-1-8 border-secondary brd-3 @error('total_amount') is-invalid @enderror">0.00</div>
+                        <input type="hidden" name="total_amount" id="total_amount" class="total_amount form-control border-secondary brd-3" value="" />
+                      </div>
+
+                      @if ( $errors->has('total_amount') )
+                        <div class="text-danger fz-14 fw-bold" role="alert">
+                          {{ $errors->first('total_amount') }}
+                        </div>
+                      @endif
                     </div>
                   </div>
 

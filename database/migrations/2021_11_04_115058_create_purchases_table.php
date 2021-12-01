@@ -33,8 +33,9 @@ class CreatePurchasesTable extends Migration
       $table->string('shop_slug')->index();
       $table->string('shop_contact')->index();
       $table->string('shop_location');
-      $table->integer('total_qty');
-      $table->decimal('total_amount', $precision = 12, $scale = 2)->nullable(); // Memo or Bill Total Amount
+      $table->integer('total_qty'); // Maximum 1 crore (1,00,00,000) allowed
+      $table->decimal('total_amount', $precision = 12, $scale = 2)->nullable();
+      // Maximum 900 crore (900,00,00,000) allowed
       $table->boolean('is_paid');
       $table->boolean('is_partial_paid');
       $table->decimal('paid_amount', $precision = 12, $scale = 2)->nullable();

@@ -24,12 +24,14 @@ class CreatePurchaseDetailsTable extends Migration
       $table->unsignedBigInteger('vehicle_id')->nullable();
       $table->string('size')->nullable();
       $table->string('serials')->nullable();
-      $table->integer('quantity');
+      $table->integer('quantity'); // Maximum 1 crore (1,00,00,000) allowed
       $table->string('unit');
-      $table->decimal('unit_price', $precision = 10, $scale = 2)->nullable();
+      $table->decimal('unit_price', $precision = 12, $scale = 2)->nullable();
+       // Maximum 900 crore (900,00,00,000) allowed
       $table->decimal('amount', $precision = 12, $scale = 2)->nullable();
+      // Maximum 900 crore (900,00,00,000) allowed
       $table->string('remarks')->nullable();
-
+      
       $table->foreign('purchase_id')
         ->references('id')->on('purchases')
         ->onUpdate('cascade')->onDelete('cascade');

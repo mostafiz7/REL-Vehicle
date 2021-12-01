@@ -13,7 +13,7 @@
 
 
         <div class="card-body page-body p-0">
-          <div class="vehicleCategories-new-area overlay-scrollbar">
+          <div class="vehicleCategories-new-area">
             <div class="row">
               <div class="col-md-6">
                 <form method="post" action="{{ route('vehicle.categories') }}"
@@ -62,33 +62,34 @@
 
               {{--Show All Vehicle-Category--}}
               <div class="col-md-6">
-                <div class="mx-md-3 p-20 pb-0">
+                <div class="full-height-parent mx-md-3 p-20">
                   <div class="h-auto fz-20 fw-bold mb-30 pb-5 bb-1">
                     Category Lists:
                   </div>
 
-                  <table class="table table-bordered border-secondary-1 table-hover vehicle-category-table">
-                    <thead class="category-header text-center">
-                      <tr class="category-row bb-0">
-                        <th scope="col" class="serial bb-0">SL#</th>
-                        <th scope="col" class="category-name bb-0">Name</th>
-                        <th scope="col" class="category-description bb-0">Description</th>
-                      </tr>
-                    </thead>
+                  <div class="vehicle-categories-list full-height-minus minus-110 overlay-scrollbar">
+                    <table class="table table-bordered border-secondary-1 table-hover vehicle-category-table">
+                      <thead class="category-header text-center">
+                        <tr class="category-row bb-0">
+                          <th scope="col" class="serial bb-0">SL#</th>
+                          <th scope="col" class="category-name bb-0">Name</th>
+                          <th scope="col" class="category-description bb-0">Description</th>
+                        </tr>
+                      </thead>
 
-                    <tbody class="category-body">
-                      @if ( $category_all )
-                        @foreach ( $category_all as $index => $category )
-                          <tr class="category-row">
-                            <td class="serial text-center">{{ $index+1 }}</td>
-                            <td class="category-name">{{ $category->name }}</td>
-                            <td class="category-description">{{ $category->description }}</td>
-                          </tr>
-                        @endforeach
-                      @endif
-                    </tbody>
-                  </table>
-
+                      <tbody class="category-body">
+                        @if ( $category_all )
+                          @foreach ( $category_all as $index => $category )
+                            <tr class="category-row">
+                              <td class="serial text-center">{{ $index+1 }}</td>
+                              <td class="category-name">{{ $category->name }}</td>
+                              <td class="category-description">{{ $category->description }}</td>
+                            </tr>
+                          @endforeach
+                        @endif
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>

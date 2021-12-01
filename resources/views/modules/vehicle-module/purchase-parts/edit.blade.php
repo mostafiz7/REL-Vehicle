@@ -384,21 +384,33 @@
                   {{--Total-Quantity-&-Amount--}}
                   <div class="order-lg-3 order-sm-2 col-lg-3 col-md-4 col-sm-6 col-12 mb-10 total-qty-amount">
                     {{--Total-Quantity--}}
-                    <div class="total-qty d-flex justify-content-between mb-5">
-                      <label for="" class="fw-bold"><span>Total Qty.</span></label>
-
-                      <div id="item_total_qty" class="d-inline-block h-30px bg-dark text-warning text-center lh-1-8 border-secondary brd-3">{{$purchase->total_qty}}</div>
-
-                      <input type="hidden" name="total_qty" id="total_qty" class="total_qty form-control border-secondary brd-3" value="{{$purchase->total_qty}}" />
+                    <div class="total-qty mb-5">
+                      <div class="d-flex justify-content-between">
+                        <label for="" class="fw-bold"><span>Total Qty.</span></label>
+                        <div id="item_total_qty" class="d-inline-block h-30px bg-dark text-warning text-center lh-1-8 border-secondary brd-3 @error('total_qty') is-invalid @enderror">{{$purchase->total_qty}}</div>
+                        <input type="hidden" name="total_qty" id="total_qty" class="total_qty form-control border-secondary brd-3" value="{{$purchase->total_qty}}" />
+                      </div>
+                      
+                      @if ( $errors->has('total_qty') )
+                        <div class="text-danger fz-14 fw-bold" role="alert">
+                          {{ $errors->first('total_qty') }}
+                        </div>
+                      @endif
                     </div>
 
                     {{--Total-Amount--}}
-                    <div class="total-amount d-flex justify-content-between mb-5">
-                      <label for="" class="fw-bold"><span>Total Amount</span></label>
+                    <div class="total-amount mb-5">
+                      <div class="d-flex justify-content-between">
+                        <label for="" class="fw-bold"><span>Total Amount</span></label>
+                        <div id="item_total_amount" class="d-inline-block h-30px bg-dark text-warning text-center lh-1-8 border-secondary brd-3 @error('total_amount') is-invalid @enderror">{{$purchase->total_amount}}</div>
+                        <input type="hidden" name="total_amount" id="total_amount" class="total_amount form-control border-secondary brd-3" value="{{$purchase->total_amount}}" />
+                      </div>
 
-                      <div id="item_total_amount" class="d-inline-block h-30px bg-dark text-warning text-center lh-1-8 border-secondary brd-3">{{$purchase->total_amount}}</div>
-
-                      <input type="hidden" name="total_amount" id="total_amount" class="total_amount form-control border-secondary brd-3" value="{{$purchase->total_amount}}" />
+                      @if ( $errors->has('total_amount') )
+                        <div class="text-danger fz-14 fw-bold" role="alert">
+                          {{ $errors->first('total_amount') }}
+                        </div>
+                      @endif
                     </div>
                   </div>
 

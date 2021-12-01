@@ -26,17 +26,44 @@ class Employee_Model extends Model
     'name',
     'nickname',
     'active',
+    'birth_date',
+    'father_name',
+    'mother_name',
+    'gender',
+    'marital_status',
+    'religion',
+    'primary_contact',
+    'secondary_contact',
+    'email_personal',
+    'email_official',
+    'present_address',
+    'permanent_address',
+    'country',
+    'joining_date',
+    'confirmation_date',
+    'employment_status',
     'designation_id',
     'department_id',
+    'dept_position',
+    'company',
+    'signatory_role',
+    'work_location',
+    'is_resigned',
+    'in_leave',
+    'salary',
+    'salary_details',
+    'previous_salary',
     'authorize_power',
     'purchase_power',
+    'user_id',
   ];
-
+  
 
   // Declare any field as json array
-  /*protected $casts = [
-    'employees' => 'array',
-  ];*/
+  protected $casts = [
+    'salary_details'  => 'array',
+    'previous_salary' => 'array',
+  ];
 
 
 

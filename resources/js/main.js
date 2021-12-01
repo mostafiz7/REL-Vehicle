@@ -89,6 +89,27 @@
 				x: "hidden"
 			}
 		});
+
+
+		// Set-Element-Height-by-Minus-Figured-Full-Height instead of calc(100% - minusPX);
+		$('.full-height-minus').each(function(){
+			let class_list = $(this).attr('class').split(/\s+/);
+			let minusClassArr, parentHeight, this_height;
+			$.each(class_list, function(index, item){
+				if( item.indexOf('minus-') >= 0 ){
+					minusClassArr = item.split('-');
+				}
+			});
+
+			parentHeight = $(this).closest('.full-height-parent').innerHeight();
+			// let parentHeight = $(this).closest('.full-height-parent').outerHeight();
+			this_height = (parentHeight - Number(minusClassArr[1])) + 'px';
+			$(this).css('height', this_height);
+		});
+
+
+
+		
 		
 		
 	

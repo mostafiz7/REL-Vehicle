@@ -17,7 +17,7 @@
             {{--Purchase-Search-Block--}}
             <div class="purchase-search h-auto fz-14 p-15 pt-20 pb-5">
               {{--onsubmit="getSearchQuery(this);"--}}
-              <form method="GET" action="{{ route('vehicle.parts.purchase.search-result') }}"
+              <form method="GET" action="{{ route('vehicle.parts.purchase.search') }}"
                     name="purchaseSearchForm" id="purchaseSearchForm" class="search-form">
 
                 <div class="row">
@@ -84,7 +84,7 @@
 
                       <input type="reset" value="Clear" id="clearPurchaseSearchForm" class="btn btn-secondary btn-sm bg-secondary fz-14 fw-500 lh-1-4 py-5 px-10 ml-5" />
 
-                      <a href="{{ route('vehicle.parts.purchase.search-result') }}" class="btn btn-dark btn-sm fz-14 fw-500 lh-1-4 py-5 px-10 ml-5">Refresh</a>
+                      <a href="{{ route('vehicle.parts.purchase.search') }}" class="btn btn-dark btn-sm fz-14 fw-500 lh-1-4 py-5 px-10 ml-5">Refresh</a>
                     </div>
                   </div>
                 </div>

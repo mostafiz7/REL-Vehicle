@@ -533,6 +533,10 @@ body.modal-open:not(.swal2-shown) {
 }
 
 
+/* Designations-Page */
+/* .designations-list */
+
+
 /* Vehicle Parts New Purchase Form */
 .Vehicle-Parts-Purchase.New #item_total_qty,
 .Vehicle-Parts-Purchase.New #item_total_amount,

@@ -6,13 +6,18 @@
     @include( 'layouts.includes.auth-header' )
   @endif--}}
 
-  <div class="header-navbar fz-14 px-sm-2">
-    <nav class="navbar navbar-expand-lg justify-content-center py-0 px-10">
+  <div class="header-navbar ps-sm-2">
+    <nav class="navbar navbar-expand-lg py-0 px-10">
+      <a class="navbar-brand pt-7 pb-11" href="/">
+        <img src="{{ asset('assets/img/logo-white.png') }}" alt="" 
+        class="brand-logo h-30px" />
+      </a>
+      
       <button id="pushMenu" class="d-none sidebar-push mr-15">
         <i class="fa fa-bars"></i>
       </button>
 
-      <div class="navbar-header">
+      <div class="navbar-header ms-auto mt--2">
         <ul class="navbar-nav">
           <li class="nav-item">
             <a href="/" class="nav-link {{ str_contains($viewName, 'home') || str_contains($viewName, 'searchForm') ? 'active' : '' }}">Home</a>
@@ -38,7 +43,7 @@
                 </a>
               </li>
               <li class="">
-                <a href="{{ route('vehicle.parts.purchase.search-result') }}"
+                <a href="{{ route('vehicle.parts.purchase.search') }}"
                    class="dropdown-item {{ strpos($viewName, 'purchase-parts') && strpos($viewName, 'searchResult') ? 'active' : '' }}">
                   Purchase Search
                 </a>

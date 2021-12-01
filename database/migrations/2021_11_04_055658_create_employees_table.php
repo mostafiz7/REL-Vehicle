@@ -20,46 +20,43 @@ class CreateEmployeesTable extends Migration
       $table->string('name');
       $table->string('nickname')->nullable();
       $table->boolean('active')->default(1);
-      $table->unsignedBigInteger('designation_id')->nullable();
-      $table->unsignedBigInteger('department_id')->nullable();
-      $table->unsignedBigInteger('user_id')->unique()->nullable(); // APPS User ID
-      $table->boolean('authorize_power')->default(0);
-      // Employee has authorize-power to give order to purchase
-      $table->boolean('purchase_power')->default(0); // Employee has purchase-power
 
       // Personal Info
-      /*
       $table->date('birth_date')->nullable();
       $table->string('father_name')->nullable();
       $table->string('mother_name')->nullable();
       $table->string('gender')->nullable();
       $table->string('marital_status')->nullable();
       $table->string('religion')->nullable();
-      $table->string('contact_no')->unique()->nullable();
+      $table->string('primary_contact')->unique()->nullable();
+      $table->string('secondary_contact')->unique()->nullable();
       $table->string('email_personal')->unique()->nullable();
       $table->string('email_official')->unique()->nullable();
-      $table->string('address1')->nullable();
-      $table->string('address2')->nullable();
-      $table->string('city_village')->nullable();
-      $table->string('post_office')->nullable();
-      $table->string('post_code')->nullable();
-      $table->string('police_station')->nullable();
-      $table->string('district')->nullable();
+      $table->string('present_address')->nullable();
+      $table->string('permanent_address')->nullable();
+      // address1, address2, city_village, post_office, post_code, police_station, district
       $table->string('country')->nullable();
 
       // Official Info
-      $table->date('joining_date');
+      $table->date('joining_date')->nullable();
       $table->date('confirmation_date')->nullable();
-      $table->string('dept_position');
-      $table->string('company');
+      $table->string('employment_status')->nullable();
+      // Permanent / Probation / Casual / Daily-Basis
+      $table->unsignedBigInteger('designation_id')->nullable();
+      $table->unsignedBigInteger('department_id')->nullable();
+      $table->string('dept_position')->nullable();
+      $table->string('company')->nullable();
       $table->string('signatory_role')->nullable();
       $table->string('work_location')->nullable();
       $table->boolean('is_resigned')->default(0); // Working / Resigned
       $table->boolean('in_leave')->default(0); // Working / In-Leave
-      $table->string('employment_status'); // Permanent / Probation / Casual / Daily-Basis
       $table->integer('salary')->nullable();
       $table->json('salary_details')->nullable();
-      */
+      $table->json('previous_salary')->nullable();
+      $table->boolean('authorize_power')->default(0);
+      // Employee has authorize-power to give order to purchase
+      $table->boolean('purchase_power')->default(0); // Employee has purchase-power
+      $table->unsignedBigInteger('user_id')->unique()->nullable(); // APPS User ID
 
       $table->foreign('designation_id')
         ->references('id')->on('designations')->onUpdate('cascade');

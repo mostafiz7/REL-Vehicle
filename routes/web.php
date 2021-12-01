@@ -10,17 +10,15 @@ use App\Http\Controllers\PartsCategory_Controller;
 use App\Http\Controllers\Purchase_Controller;
 use App\Http\Controllers\Vehicle_Controller;
 use App\Http\Controllers\VehicleCategory_Controller;
-use App\Models\PartsCategory_Model;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/', function (){
-  return redirect()->route('vehicle.parts.purchase.search');
-})->name('homepage');
+Route::get('/', [Home_Controller::class, 'Homepage'])->name('homepage');
 
 
-// Create-Symbolic-Link
+// Create-Symbolic-Link & Laravel-Storage-Link
 Route::get('/symlink', [Home_Controller::class, 'CreateSymbolicLink']);
+Route::get('/storage-link', [Home_Controller::class, 'CreateStorageLink']);
 
 // Database/Migration Table programmatically by using Artisan::call()
 Route::get('/migration-update', [Home_Controller::class, 'DatabaseTableUpdate'])->name('database-migration-update');
@@ -52,15 +50,15 @@ Route::post('/module/vehicles/parts-new', [Parts_Controller::class, 'PartsNew_St
 Route::get('/module/vehicles/parts-categories', [PartsCategory_Controller::class, 'PartsCategoryAddForm'])->name('vehicle.parts.categories');
 Route::post('/module/vehicles/parts-categories', [PartsCategory_Controller::class, 'Store_NewPartsCategory'])->name('vehicle.parts.categories');
 
-Route::get('/module/vehicles/parts/purchase-index', [Purchase_Controller::class, 'VehicleParts_Purchase_Index'])->name('vehicle.parts.purchase.all');
-Route::get('/module/vehicles/parts/new-purchase', [Purchase_Controller::class, 'VehicleParts_Purchase_Form'])->name('vehicle.parts.purchase.new');
-Route::post('/module/vehicles/parts/new-purchase', [Purchase_Controller::class, 'VehicleParts_Purchase_Store'])->name('vehicle.parts.purchase.new');
+Route::get('/module/vehicles/parts/purchase-index', [Purchase_Controller::class, 'VehiclePartsPurchase_Index'])->name('vehicle.parts.purchase.all');
+Route::get('/module/vehicles/parts/new-purchase', [Purchase_Controller::class, 'VehiclePartsPurchase_Form'])->name('vehicle.parts.purchase.new');
+Route::post('/module/vehicles/parts/new-purchase', [Purchase_Controller::class, 'VehiclePartsPurchase_Store'])->name('vehicle.parts.purchase.new');
 Route::get('/module/vehicles/parts/purchase/{purchase}/edit', [Purchase_Controller::class, 'VehiclePartsPurchase_EditForm'])->name('vehicle.parts.purchase.edit');
 Route::post('/module/vehicles/parts/purchase/{purchase}/edit', [Purchase_Controller::class, 'VehiclePartsPurchase_Update'])->name('vehicle.parts.purchase.edit');
 
 Route::get('/module/vehicles/parts/purchase/{purchase_uid}/item/{item_uid}/delete', [Purchase_Controller::class, 'VehiclePartsPurchaseItem_Delete'])->name('vehicle.parts.purchase.item.delete');
 
-Route::get('/module/vehicles/parts/purchase-search', [Purchase_Controller::class, 'SearchForm_VehiclePartsPurchase'])->name('vehicle.parts.purchase.search');
-Route::get('/module/vehicles/parts/purchase-search-result', [Purchase_Controller::class, 'SearchResult_VehiclePartsPurchase'])->name('vehicle.parts.purchase.search-result');
+/* Route::get('/module/vehicles/parts/purchase-search', [Purchase_Controller::class, 'SearchForm_VehiclePartsPurchase'])->name('vehicle.parts.purchase.search'); */
+Route::get('/module/vehicles/parts/purchase-search', [Purchase_Controller::class, 'Search_VehiclePartsPurchase'])->name('vehicle.parts.purchase.search');
 
 
