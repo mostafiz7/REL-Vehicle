@@ -9,7 +9,7 @@
   <div class="header-navbar ps-sm-2">
     <nav class="navbar navbar-expand-lg py-0 px-10">
       <a class="navbar-brand pt-7 pb-11" href="/">
-        <img src="{{ asset('assets/img/logo-white.png') }}" alt="" 
+        <img src="{{ asset('assets/img/logo-red.png') }}" alt="" 
         class="brand-logo h-30px" />
       </a>
       

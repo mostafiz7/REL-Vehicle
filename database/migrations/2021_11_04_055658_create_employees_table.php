@@ -16,7 +16,7 @@ class CreateEmployeesTable extends Migration
     Schema::create('employees', function (Blueprint $table) {
       $table->id();
       $table->uuid('uid')->unique();
-      $table->string('office_id')->unique(); // Company Given Employee ID
+      $table->string('office_id')->unique()->nullable(); // Company Given Employee ID
       $table->string('name');
       $table->string('nickname')->nullable();
       $table->boolean('active')->default(1);
@@ -40,8 +40,7 @@ class CreateEmployeesTable extends Migration
       // Official Info
       $table->date('joining_date')->nullable();
       $table->date('confirmation_date')->nullable();
-      $table->string('employment_status')->nullable();
-      // Permanent / Probation / Casual / Daily-Basis
+      $table->string('employment_status')->nullable(); // Permanent / Probation / Daily-Basis / Casual
       $table->unsignedBigInteger('designation_id')->nullable();
       $table->unsignedBigInteger('department_id')->nullable();
       $table->string('dept_position')->nullable();
