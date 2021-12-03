@@ -26,8 +26,8 @@ class Home_Controller extends Controller
   // Create-Symbolic-Link
   public function CreateSymbolicLink()
   {
-    $link_folder   = '/home/rangsapp/public_html/assets';
     $target_folder = '/home/rangsapp/public_html/public/assets';
+    $link_folder   = '/home/rangsapp/public_html/assets';
 
     symlink( $target_folder, $link_folder );
 
