@@ -22,7 +22,7 @@
                 {{--Employee-Name--}}
                 <div class="col-md-6 col-12 mb-30 name">
                   <label for="" class="required w-100 mr-15"><span>Employee Name</span></label>
-                  <input type="text" name="name" id="name" class="required form-control border-secondary brd-3 @error('name') is-invalid @enderror" placeholder="Nurullah Mohammad" value="{{ old('name') }}" />
+                  <input type="text" name="name" id="name" class="required form-control border-secondary brd-3 @error('name') is-invalid @enderror" placeholder="Nurullah Mohammad" value="{{$employee->name}}" />
 
                   @if ( $errors->has('name') )
                     <div class="text-danger fz-14 fw-bold" role="alert">
@@ -34,7 +34,7 @@
                 {{--Nickname--}}
                 <div class="col-md-6 col-12 mb-30 nickname">
                   <label for="" class="w-100 mr-15"><span>Nickname</span></label>
-                  <input type="text" name="nickname" id="nickname" class="form-control border-secondary brd-3 @error('nickname') is-invalid @enderror" placeholder="Nurullah" value="{{ old('nickname') }}" />
+                  <input type="text" name="nickname" id="nickname" class="form-control border-secondary brd-3 @error('nickname') is-invalid @enderror" placeholder="Nurullah" value="{{$employee->nickname}}" />
 
                   @if ( $errors->has('nickname') )
                     <div class="text-danger fz-14 fw-bold" role="alert">
@@ -50,7 +50,7 @@
                     <option value="">Select Job Status</option>
                     @if ( $employment_statuses )
                       @foreach ( $employment_statuses as $status )
-                        <option value="{{$status}}" {{$status == old('employment_status') ? 'selected' : ''}}>
+                        <option value="{{$status}}" {{$status == $employee->employment_status ? 'selected' : ''}}>
                           {{ ucwords( str_replace('-', ' ', $status) ) }}
                         </option>
                       @endforeach
@@ -97,7 +97,7 @@
                 {{--Office-ID--}}
                 <div class="col-md-6 col-12 mb-30 office_id">
                   <label for="" class="{{! old('employment_status') || old('employment_status') == 'permanent' ? 'required' : ''}} w-100 mr-15"><span>Office ID</span></label>
-                  <input type="text" name="office_id" id="office_id" class="{{! old('employment_status') || old('employment_status') == 'permanent' ? 'required' : ''}} form-control border-secondary brd-3 @error('office_id') is-invalid @enderror" placeholder="010058" value="{{ old('office_id') }}" />
+                  <input type="text" name="office_id" id="office_id" class="{{! old('employment_status') || old('employment_status') == 'permanent' ? 'required' : ''}} form-control border-secondary brd-3 @error('office_id') is-invalid @enderror" placeholder="010058" value="{{$employee->office_id}}" />
 
                   @if ( $errors->has('office_id') )
                     <div class="text-danger fz-14 fw-bold" role="alert">
@@ -128,7 +128,7 @@
                     <option value="">Select Department</option>
                     @if ( $department_all )
                       @foreach ( $department_all as $department )
-                        <option value="{{$department->id}}" {{$department->id == old('department_id') ? 'selected' : ''}}>
+                        <option value="{{$department->id}}" {{$department->id == $employee->department_id ? 'selected' : ''}}>
                           {{ $department->name }}
                         </option>
                       @endforeach
@@ -149,7 +149,7 @@
                     <option value="">Select Designation</option>
                     @if ( $designation_all )
                       @foreach ( $designation_all as $designation )
-                        <option value="{{$designation->id}}" {{$designation->id == old('designation_id') ? 'selected' : ''}}>
+                        <option value="{{$designation->id}}" {{$designation->id == $employee->designation_id ? 'selected' : ''}}>
                           {{ $designation->name }}
                         </option>
                       @endforeach
@@ -168,12 +168,12 @@
                   <label for="" class="fw-bold w-100 mr-15"><span>Assigned Role</span></label>
                   <div class="d-flex flex-column flex-sm-row mt-3 pt-10 bt-1">
                     <div class="form-check me-0 me-sm-4 mb-10 authorize_power">
-                      <input type="checkbox" name="authorize_power" id="authorize_power" class="form-check-input border-secondary cur-pointer" value="authorizer" {{old('authorize_power') ? 'checked' : ''}} />
+                      <input type="checkbox" name="authorize_power" id="authorize_power" class="form-check-input border-secondary cur-pointer" value="authorizer" {{$employee->authorize_power ? 'checked' : ''}} />
                       <label class="form-check-label cur-pointer" for="authorize_power">Authorize Power</label>
                     </div>
 
                     <div class="form-check mb-10 purchase_power">
-                      <input type="checkbox" name="purchase_power" id="purchase_power" class="form-check-input border-secondary cur-pointer" value="purchaser" {{old('purchase_power') ? 'checked' : ''}} />
+                      <input type="checkbox" name="purchase_power" id="purchase_power" class="form-check-input border-secondary cur-pointer" value="purchaser" {{$employee->purchase_power ? 'checked' : ''}} />
                       <label class="form-check-label cur-pointer" for="purchase_power">Purchase Power</label>
                     </div>
                   </div>

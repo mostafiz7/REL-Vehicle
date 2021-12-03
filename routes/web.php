@@ -28,7 +28,8 @@ Route::get('/migration-rollback', [Home_Controller::class, 'DatabaseTableRollbac
 
 Route::get('/module/employees/employee-new', [Employee_Controller::class, 'EmployeeNew_Form'])->name('employee.add.new');
 Route::post('/module/employees/employee-new', [Employee_Controller::class, 'EmployeeNew_Store'])->name('employee.add.new');
-Route::get('/module/employees/employee-edit', [Employee_Controller::class, 'EmployeeSingleEdit_Form'])->name('employee.single.edit');
+Route::get('/module/employees/single/{employee}/edit', [Employee_Controller::class, 'EmployeeSingleEdit_Form'])->name('employee.single.edit');
+Route::post('/module/employees/single/{employee}/edit', [Employee_Controller::class, 'EmployeeSingle_Update'])->name('employee.single.edit');
 
 Route::get('/module/employees/departments', [Department_Controller::class, 'DepartmentNew_Form'])->name('department.add.new');
 Route::post('/module/employees/departments', [Department_Controller::class, 'DepartmentNew_Store'])->name('department.add.new');

@@ -83,18 +83,45 @@ class Employee_Controller extends Controller
 
 
   // Single-Employee-Edit_Form
-  function EmployeeSingleEdit_Form( Request $request )
+  function EmployeeSingleEdit_Form( Employee_Model $employee, Request $request )
   {
+    // if( Gate::allows('isAdmin', Auth::user()) ){}
+    /*if( Gate::denies('isAdmins') || Gate::denies('entryEdit') || Gate::denies('routeHasAccess') ){
+      return back()->with('error', 'You are not authorized to perform this action!');
+    }*/
+
+    if( ! $employee ){
+      return back()->with('error', 'The employee not found in system!');
+    }
+
     $department_all  = Department_Model::orderBy('name', 'asc')->get()->all();
     $designation_all = Designation_Model::orderBy('name', 'asc')->get()->all();
 
     $employment_statuses = [ 'daily-basis', 'casual', 'permanent', 'probation' ];
 
     return view('modules.employees.edit')->with([
+      'employee'            => $employee,
       'department_all'      => $department_all,
       'designation_all'     => $designation_all,
       'employment_statuses' => $employment_statuses,
     ]);
+  }
+
+
+  // Single-Employee-Edit_Form
+  function EmployeeSingle_Update( Employee_Model $employee, Request $request )
+  {
+    // if( Gate::allows('isAdmin', Auth::user()) ){}
+    /*if( Gate::denies('isAdmins') || Gate::denies('entryEdit') || Gate::denies('routeHasAccess') ){
+      return back()->with('error', 'You are not authorized to perform this action!');
+    }*/
+
+    if( ! $employee ){
+      return back()->with('error', 'The employee not found in system!');
+    }
+    
+
+    return $employee;
   }
 
 
