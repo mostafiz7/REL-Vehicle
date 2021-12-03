@@ -30,7 +30,7 @@ class Employee_Controller extends Controller
 
 
   // Store New-Employee
-  function EmployeeNew_Store( Request $request ): \Illuminate\Http\RedirectResponse
+  function EmployeeNew_Store( Request $request )
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
     /*if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
@@ -79,6 +79,22 @@ class Employee_Controller extends Controller
     $newEmployeeAdded = Employee_Model::create( $newEmployeeData );
 
     return back()->with('success', 'New Employee added successfully!');
+  }
+
+
+  // Single-Employee-Edit_Form
+  function EmployeeSingleEdit_Form( Request $request )
+  {
+    $department_all  = Department_Model::orderBy('name', 'asc')->get()->all();
+    $designation_all = Designation_Model::orderBy('name', 'asc')->get()->all();
+
+    $employment_statuses = [ 'daily-basis', 'casual', 'permanent', 'probation' ];
+
+    return view('modules.employees.edit')->with([
+      'department_all'      => $department_all,
+      'designation_all'     => $designation_all,
+      'employment_statuses' => $employment_statuses,
+    ]);
   }
 
 
