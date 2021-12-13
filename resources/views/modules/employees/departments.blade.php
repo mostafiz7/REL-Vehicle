@@ -66,7 +66,7 @@
                     Department Lists:
                   </div>
 
-                  <div class="departments-list full-height-minus minus-110 overlay-scrollbar">
+                  <div class="departments-list overlay-scrollbar full-height-minus minus-110">
                     <table class="table table-bordered border-secondary-1 table-hover department-table">
                       <thead class="department-header text-center">
                         <tr class="department-row bb-0">

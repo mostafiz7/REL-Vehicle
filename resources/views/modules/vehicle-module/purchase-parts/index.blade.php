@@ -13,7 +13,7 @@
 
 
         <div class="card-body page-body p-0">
-          <div class="parts-purchase-all-area">
+          <div class="parts-purchase-all-area full-height-parent">
             {{--Purchase-Search-Block--}}
             <div class="purchase-search h-auto fz-14 p-15 pt-10 pb-5">
               {{--onsubmit="getSearchQuery(this);"--}}
@@ -203,7 +203,7 @@
 
             <div class="blank h-auto bt-1 border-secondary-1"></div>
 
-            <div class="overlay-scrollbar purchase-history-details p-10">
+            <div class="purchase-history-details overlay-scrollbar full-height-minus minus-155 p-10">
               <table class="table table-bordered table-hover border-secondary-3 purchase-history-table">
                 <thead class="table-header bg-dark text-white fz-14 text-center">
                   <tr class="table-row header align-middle">

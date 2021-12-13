@@ -66,7 +66,7 @@
                     Designation Lists:
                   </div>
 
-                  <div class="designations-list full-height-minus minus-110 overlay-scrollbar">
+                  <div class="designations-list overlay-scrollbar full-height-minus minus-110">
                     <table class="table table-bordered border-secondary-1 table-hover designation-table">
                       <thead class="designation-header text-center">
                         <tr class="designation-row bb-0">
