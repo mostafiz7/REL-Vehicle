@@ -493,8 +493,11 @@ class Purchase_Controller extends Controller
 
     $purchase_types = [ 'vehicle', 'vehicle-parts', 'electrical', 'electronics', 'stationary', 'furniture' ];
 
+    $units = [ 'foot', 'inch', 'litre', 'metre', 'pcs', 'set' ];
+
     return view('modules.vehicle-module.purchase-parts.new')->with([
       'newPurchaseNo'         => $this->VehiclePartsPurchaseNo(),
+      'units'                 => $units,
       'parts_all'             => $parts_all,
       'vehicle_all'           => $vehicle_all,
       'supplier_all'          => $supplier_all,
@@ -824,10 +827,13 @@ class Purchase_Controller extends Controller
 
     $purchase_types = [ 'vehicle', 'vehicle-parts', 'electrical', 'electronics', 'stationary', 'furniture' ];
 
+    $units = [ 'foot', 'inch', 'litre', 'metre', 'pcs', 'set' ];
+
     /* $settings      = Settings_Model::get()->first();
     $date_format   = $settings && $settings->date_format ? $settings->date_format : 'd-m-Y'; */
 
     return view('modules.vehicle-module.purchase-parts.edit')->with([
+      'units'                 => $units,
       'purchase'              => $purchase,
       'securityToken'         => $securityToken,
       'parts_all'             => $parts_all,

@@ -281,7 +281,7 @@
 
                       @if ( $purchase->details )
                         @foreach ( $purchase->details as $index => $purchase_item )
-                          @include( 'modules.vehicle-module.purchase-parts.accordion-item', $purchase_item )
+                          @include( 'modules.vehicle-module.purchase-parts.accordion-item', [$purchase_item, $units] )
                         @endforeach
                       @else
                         <div class="accordion-item border-secondary-2" id="item_1">
@@ -322,9 +322,13 @@
 
                                 <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-unit">
                                   <select name="item_unit[]" id="item_unit-1" class="item_unit form-select border-secondary brd-3">
-                                    <option value="pcs">Pcs</option>
-                                    <option value="metre">Metre</option>
-                                    <option value="litre">Litre</option>
+
+                                    @foreach ( $units as $unit )
+                                      <option value="{{$unit}}" {{$unit == 'pcs' ? 'selected' : ''}}>
+                                        {{ ucwords($unit) }}
+                                      </option>
+                                    @endforeach
+                                    
                                   </select>
                                 </div>
 
@@ -543,9 +547,13 @@
 
                       <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-unit">
                         <select name="item_unit[]" id="item_unit" class="item_unit form-select border-secondary brd-3">
-                          <option value="pcs">Pcs</option>
-                          <option value="metre">Metre</option>
-                          <option value="litre">Litre</option>
+
+                          @foreach ( $units as $unit )
+                            <option value="{{$unit}}" {{$unit == 'pcs' ? 'selected' : ''}}>
+                              {{ ucwords($unit) }}
+                            </option>
+                          @endforeach
+                          
                         </select>
                       </div>
 
