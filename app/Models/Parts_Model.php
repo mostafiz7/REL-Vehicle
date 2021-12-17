@@ -24,6 +24,7 @@ class Parts_Model extends Model
     'uid',
     'name',
     'slug',
+    'enabled',
     'category_id',
     'description',
     'sizes',
@@ -43,7 +44,7 @@ class Parts_Model extends Model
 
   public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
   {
-    return $this->belongsTo(PartsCategory_Model::class);
+    return $this->belongsTo(PartsCategory_Model::class, 'category_id')->withDefault();
   }
 
 

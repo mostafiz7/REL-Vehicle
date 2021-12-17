@@ -69,13 +69,13 @@ class Employee_Model extends Model
 
   public function designation(): \Illuminate\Database\Eloquent\Relations\BelongsTo
   {
-    return $this->belongsTo(Designation_Model::class);
+    return $this->belongsTo(Designation_Model::class)->withDefault();
   }
 
 
   public function department(): \Illuminate\Database\Eloquent\Relations\BelongsTo
   {
-    return $this->belongsTo(Department_Model::class);
+    return $this->belongsTo(Department_Model::class)->withDefault();
   }
 
 
@@ -87,7 +87,7 @@ class Employee_Model extends Model
 
   public function vehicle(): \Illuminate\Database\Eloquent\Relations\BelongsTo
   {
-    return $this->belongsTo(Vehicle_Model::class, 'driver_id');
+    return $this->belongsTo(Vehicle_Model::class, 'driver_id')->withDefault();
   }
 
 

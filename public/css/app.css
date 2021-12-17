@@ -15760,6 +15760,11 @@ THEMES:
 
 /* Sweet-Alert2 CSS */
 
+body.swal2-shown.swal2-height-auto {
+  height: 100% !important;
+  padding-right: 0 !important;
+}
+
 .swal2-toast-shown .swal2-container,
 .swal2-shown .swal2-container .swal2-modal.swal2-show,
 .swal2-modal.swal2-show .swal2-actions {
@@ -16492,11 +16497,6 @@ a, a:hover, a:focus { text-decoration: none; }
 .color-dark { color: #333333 !important; }
 .color-body { color: #111111 !important; }
 .color-secondary { color: #565959 !important; }
-.color-secondary-1 { color: rgba(167, 167, 167, 1) !important; }
-.color-secondary-2 { color: rgba(167, 167, 167, .8) !important; }
-.color-secondary-3 { color: rgba(167, 167, 167, .6) !important; }
-.color-secondary-4 { color: rgba(167, 167, 167, .4) !important; }
-.color-secondary-5 { color: rgba(167, 167, 167, .2) !important; }
 .color-red { color: #FF0000 !important; }
 .color-white,
 .color-white-hover:hover { color: #FFFFFF !important; }
@@ -16588,7 +16588,13 @@ a, a:hover, a:focus { text-decoration: none; }
 .btn-dark-blue-alt { background-color: #FFFFFF !important;color: #022A6C !important;border-color: #FFFFFF !important; }
 .btn-navy-blue { background-color: #000333 !important;color: #FFFFFF !important;border-color: #000333 !important; }
 .btn-navy-blue-alt { background-color: #FFFFFF !important;color: #000333 !important;border-color: #FFFFFF !important; }
+.btn-purple { background-color: #4608AD !important;color: #FFFFFF !important;border-color: #4608AD !important; }
 
+.text-secondary-1 { color: #dfdfdf !important; }
+.text-secondary-2 { color: #cac8c8 !important; }
+.text-secondary-3 { color: #aaa7a7 !important; }
+.text-secondary-4 { color: #807d7d !important; }
+.text-secondary-5 { color: #646161 !important; }
 .text-white-2 { color: #E4E6EB !important; }
 .text-primary-2 { color: #2E89FF !important; }
 .text-primary-3 { color: #307BD9 !important; }
@@ -16726,6 +16732,19 @@ body.modal-open:not(.swal2-shown) {
 /* .designations-list */
 
 
+
+
+
+/* Vehicle & Parts */
+
+.Employee.Index label,
+.Vehicle.Index label,
+.Parts.Index label {
+  min-width: 100px;
+}
+
+
+
 /* Vehicle Parts New Purchase Form */
 .Vehicle-Parts-Purchase.New #item_total_qty,
 .Vehicle-Parts-Purchase.New #item_total_amount,
@@ -16838,11 +16857,18 @@ body.purchase-parts.searchForm .navbar-header .dropdown-menu {
 
 }
 
+/* Large Devices (Landscape Phones, to 1407px) */
+@media (max-width: 1406.98px) {
+  .purchase-history-table .table-row .action .btn {
+    margin-bottom: 5px;
+  }
+}
+
 /* Large Devices (Desktops, 992px to .....) */
 @media (min-width: 992px) {
 
 }
-/* Large Devices (Desktops, 992px to .....) */
+/* Large Devices (Desktops, to 992px) */
 @media (max-width: 991.98px) {
 
 }

@@ -5,11 +5,18 @@
 
 }
 
+/* Large Devices (Landscape Phones, to 1407px) */
+@media (max-width: 1406.98px) {
+  .purchase-history-table .table-row .action .btn {
+    margin-bottom: 5px;
+  }
+}
+
 /* Large Devices (Desktops, 992px to .....) */
 @media (min-width: 992px) {
 
 }
-/* Large Devices (Desktops, 992px to .....) */
+/* Large Devices (Desktops, to 992px) */
 @media (max-width: 991.98px) {
 
 }

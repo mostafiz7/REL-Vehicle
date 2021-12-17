@@ -11,7 +11,7 @@
           <div class="copyright">
             <p class="m-0">
               &copy; <span class="d-none d-sm-inline-block">&nbsp; Developed by</span>
-              <a href="https://www.linkedin.com/in/nurullah-mohammad/" class="color-secondary-2 color-white-hover">Nurullah Mohammad.</a>
+              <a href="https://www.linkedin.com/in/nurullah-mohammad/" class="text-secondary-4 color-white-hover">Nurullah Mohammad.</a>
             </p>
             {{--<p class="m-0">
               &copy;

@@ -74,6 +74,7 @@
                           <th scope="col" class="serial bb-0">SL#</th>
                           <th scope="col" class="category-name bb-0">Name</th>
                           <th scope="col" class="category-description bb-0">Description</th>
+                          <th scope="col" class="action text-center bb-0">---</th>
                         </tr>
                       </thead>
 
@@ -84,6 +85,14 @@
                               <td class="serial text-center">{{ $index+1 }}</td>
                               <td class="category-name">{{ $category->name }}</td>
                               <td class="category-description">{{ $category->description }}</td>
+                              <td class="action text-center">
+                                <a href="{{ route('vehicle.parts.category.edit', $category) }}" 
+                                  class="category-edit btn btn-success fz-20 p-0 px-7 brd-3 ml-5">
+                                  <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit Category">
+                                    <i class="fa fa-pencil"></i>
+                                  </span>
+                                </a>
+                              </td>
                             </tr>
                           @endforeach
                         @endif

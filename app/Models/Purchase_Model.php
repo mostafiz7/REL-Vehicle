@@ -72,55 +72,55 @@ class Purchase_Model extends Model
 
   public function vehicle(): \Illuminate\Database\Eloquent\Relations\BelongsTo
   {
-    return $this->belongsTo(Vehicle_Model::class);
+    return $this->belongsTo(Vehicle_Model::class)->withDefault();
   }
 
 
   public function requisition(): \Illuminate\Database\Eloquent\Relations\BelongsTo
   {
-    return $this->belongsTo(Requisition_Model::class);
+    return $this->belongsTo(Requisition_Model::class)->withDefault();
   }
 
 
   public function purchaser(): \Illuminate\Database\Eloquent\Relations\BelongsTo
   {
-    return $this->belongsTo(Employee_Model::class, 'purchased_by');
+    return $this->belongsTo(Employee_Model::class, 'purchased_by')->withDefault();
   }
 
 
   public function authorizer(): \Illuminate\Database\Eloquent\Relations\BelongsTo
   {
-    return $this->belongsTo(Employee_Model::class, 'authorized_by');
+    return $this->belongsTo(Employee_Model::class, 'authorized_by')->withDefault();
   }
 
 
   public function checker(): \Illuminate\Database\Eloquent\Relations\BelongsTo
   {
-    return $this->belongsTo(Employee_Model::class, 'checked_by');
+    return $this->belongsTo(Employee_Model::class, 'checked_by')->withDefault();
   }
 
 
   public function supplier(): \Illuminate\Database\Eloquent\Relations\BelongsTo
   {
-    return $this->belongsTo(Supplier_Model::class);
+    return $this->belongsTo(Supplier_Model::class)->withDefault();
   }
 
 
   public function bill(): \Illuminate\Database\Eloquent\Relations\BelongsTo
   {
-    return $this->belongsTo(Bill_Model::class);
+    return $this->belongsTo(Bill_Model::class)->withDefault();
   }
 
 
   public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
   {
-    return $this->belongsTo(User::class);
+    return $this->belongsTo(User::class)->withDefault();
   }
 
 
   public function entryBy(): \Illuminate\Database\Eloquent\Relations\BelongsTo
   {
-    return $this->belongsTo(Employee_Model::class, 'entry_by');
+    return $this->belongsTo(Employee_Model::class, 'entry_by')->withDefault();
   }
 
 

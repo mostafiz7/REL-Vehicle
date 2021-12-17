@@ -10,7 +10,7 @@
         <div class="card-header page-header bg-purple text-white">
           <h5 class="title mb-0">
             <span class="mr-20">Parts-Purchase</span>
-            <span class="form-mode color-red">Edit Mode</span>
+            <span class="edit-mode color-red">Edit-Mode</span>
           </h5>
         </div>
         
@@ -497,7 +497,7 @@
 
                   {{--Submit--}}
                   <div class="order-last align-self-end offset-lg-6 col-lg-3 col-md-4 col-sm-6 col-12 mb-10 text-end">
-                    <button class="btn btn-primary w-100 py-sm-1">Submit</button>
+                    <button class="btn btn-purple w-100 py-sm-1">Update</button>
                   </div>
                 </div> {{--/.row--}}
               </div> {{--/.form-bottom--}}

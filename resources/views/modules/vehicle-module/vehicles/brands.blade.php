@@ -83,16 +83,25 @@
                           <th scope="col" class="serial bb-0">SL#</th>
                           <th scope="col" class="brand-name bb-0">Name</th>
                           <th scope="col" class="brand-origin bb-0">Origin</th>
+                          <th scope="col" class="action text-center bb-0">---</th>
                         </tr>
                       </thead>
 
                       <tbody class="brand-body">
                         @if ( $brand_all )
                           @foreach ( $brand_all as $index => $brand )
-                            <tr class="brand-row">
+                            <tr class="brand-row align-middle">
                               <td class="serial text-center">{{ $index+1 }}</td>
                               <td class="brand-name">{{ $brand->name }}</td>
                               <td class="brand-origin">{{ ucwords( str_replace('-', ' ', $brand->origin) ) }}</td>
+                              <td class="action text-center">
+                                <a href="{{ route('vehicle.brand.edit', $brand) }}" 
+                                  class="brand-edit btn btn-success fz-20 p-0 px-7 brd-3 ml-5">
+                                 <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit Brand">
+                                   <i class="fa fa-pencil"></i>
+                                 </span>
+                               </a>
+                              </td>
                             </tr>
                           @endforeach
                         @endif

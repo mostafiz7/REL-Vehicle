@@ -1313,6 +1313,31 @@ class Purchase_Controller extends Controller
   }
   
   
+  // Delete Vehicle-Parts-Purchase with Items
+  public function VehiclePartsPurchaseDelete( $purchase_uid, Request $request )
+  {
+    $purchase     = Purchase_Model::where('uid', $purchase_uid)->first();
+
+    if( ! $purchase ){
+      return back()->with('error', 'Purchase not found!');
+    }
+
+    $purchase_no = $purchase->purchase_no;
+
+    $purchaseItemsDeleted = $purchase->details()->delete();
+
+    if( $purchaseItemsDeleted ){
+      $purchase->delete();
+
+      return back()->with('success', "Purchase no.# $purchase_no deleted successfully!");
+      // return response()->json(['purchase_no' => $purchase_no], 200);
+
+    } else{
+      return back()->with('error', 'Something went wrong!');
+    }
+  }
+    
+  
   // Delete Single-Item of Vehicle-Parts-Purchase
   public function VehiclePartsPurchaseItem_Delete( $purchase_uid, $item_uid, Request $request ): \Illuminate\Http\JsonResponse
   {

@@ -18,6 +18,7 @@ class CreatePartsTable extends Migration
       $table->uuid('uid')->unique();
       $table->string('name')->unique();
       $table->string('slug')->unique();
+      $table->boolean('enabled')->default(1);
       $table->unsignedBigInteger('category_id'); // Parts-Category: Headlight, Backlight etc.
       $table->string('description')->nullable();
       $table->string('sizes')->nullable();

@@ -7,8 +7,11 @@
   <div class="container-lg">
     <div class="page-content pt-10">
       <div class="card">
-        <div class="card-header page-header bg-success text-white">
-          <h5 class="title mb-0">Edit Employee</h5>
+        <div class="card-header page-header bg-purple text-white">
+          <h5 class="title mb-0">
+            <span class="mr-20">Employee</span>
+            <span class="edit-mode color-red">Edit-Mode</span>
+          </h5>
         </div>
 
 
@@ -194,7 +197,7 @@
                 {{--Submit--}}
                 <div class="col-12 mt-20 mb-50 text-end submit">
                   <div class="">
-                    <button class="btn btn-primary">Submit</button>
+                    <button class="btn btn-purple">Update</button>
                   </div>
                 </div>
 

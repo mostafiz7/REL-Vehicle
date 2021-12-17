@@ -24,8 +24,9 @@ class Vehicle_Model extends Model
     'uid',
     'vehicle_no',
     'slug',
-    'category_id',
+    'enabled',
     'brand_id',
+    'category_id',
     'department_id',
     'driver_id',
     'helper_id',
@@ -48,31 +49,31 @@ class Vehicle_Model extends Model
 
   public function brand(): \Illuminate\Database\Eloquent\Relations\BelongsTo
   {
-    return $this->belongsTo(Brand_Model::class);
+    return $this->belongsTo(Brand_Model::class)->withDefault();
   }
 
 
   public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
   {
-    return $this->belongsTo(VehicleCategory_Model::class);
+    return $this->belongsTo(VehicleCategory_Model::class)->withDefault();
   }
 
 
   public function department(): \Illuminate\Database\Eloquent\Relations\BelongsTo
   {
-    return $this->belongsTo(Department_Model::class);
+    return $this->belongsTo(Department_Model::class)->withDefault();
   }
 
 
   public function driver(): \Illuminate\Database\Eloquent\Relations\HasOne
   {
-    return $this->hasOne(Employee_Model::class, 'driver_id');
+    return $this->hasOne(Employee_Model::class, 'id', 'driver_id')->withDefault();
   }
 
 
   public function helper(): \Illuminate\Database\Eloquent\Relations\HasOne
   {
-    return $this->hasOne(Employee_Model::class, 'helper_id');
+    return $this->hasOne(Employee_Model::class, 'id', 'helper_id')->withDefault();
   }
 
 

@@ -38,13 +38,15 @@
     </a>
 
     {{--@if ( Auth::user()->can('isAdmins') && Auth::user()->can('entryDelete') )
-      <a href="{{ route('transaction.purchase.delete.single', $purchase->uid) }}"
-         onclick="return confirm('Are you sure to delete this purchase?');"
-         class="delete-purchase btn btn-danger btn-sm brd-3 ml-5">
-        <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="Delete Purchase">
-          <i class="far fa-trash-alt"></i>
-        </span>
-      </a>
+    
     @endif--}}
+
+    <a href="{{ route('vehicle.parts.purchase.delete', $purchase->uid) }}"
+        onclick="return confirm('Are you sure to delete this purchase?');"
+        class="delete-purchase btn btn-danger btn-sm brd-3 ml-5">
+      <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="Delete Purchase">
+        <i class="fa fa-trash"></i>
+      </span>
+    </a>
   </td>
 </tr>
