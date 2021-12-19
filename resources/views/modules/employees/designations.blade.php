@@ -73,6 +73,7 @@
                           <th scope="col" class="serial bb-0">SL#</th>
                           <th scope="col" class="designation-name bb-0">Name</th>
                           <th scope="col" class="designation-short_name bb-0">Short-Name</th>
+                          <th scope="col" class="action text-center bb-0">---</th>
                         </tr>
                       </thead>
 
@@ -82,7 +83,17 @@
                             <tr class="designation-row">
                               <td class="serial text-center">{{ $index+1 }}</td>
                               <td class="designation-name">{{ $designation->name }}</td>
-                              <td class="designation-short_name">{{ $designation->short_name }}</td>
+                              <td class="designation-short_name">
+                                {{ $designation->short_name }}
+                              </td>
+                              <td class="action text-center">
+                                <a href="{{ route('designation.single.edit', $designation) }}" 
+                                  class="designation-edit btn btn-success fz-20 p-0 px-7 brd-3 ml-5">
+                                  <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit Designation">
+                                    <i class="fa fa-pencil"></i>
+                                  </span>
+                                </a>
+                              </td>
                             </tr>
                           @endforeach
                         @endif

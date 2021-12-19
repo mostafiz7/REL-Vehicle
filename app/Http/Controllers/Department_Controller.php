@@ -53,6 +53,54 @@ class Department_Controller extends Controller
     return back()->with('success', 'New Department added successfully!');
   }
 
+  
+  // Edit Single Department
+  function DepartmentSingle_Edit( Department_Model $department, Request $request )
+  {
+    // if( Gate::allows('isAdmin', Auth::user()) ){}
+    /*if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
+      return back()->with('error', 'You are not authorized to perform this action!');
+    }*/
+
+    if( ! $department ) return back()->with('error', 'The department not found in system!');
+    
+    return view('modules.employees.department-edit')->with([
+      'department' => $department,
+    ]);
+  }
+
+
+  // Update Department
+  function DepartmentSingle_Update( Department_Model $department, Request $request )
+  {
+    // if( Gate::allows('isAdmin', Auth::user()) ){}
+    /*if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
+      return back()->with('error', 'You are not authorized to perform this action!');
+    }*/
+
+    if( ! $department ) return back()->with('error', 'The department not found in system!');
+
+    $validator = Validator::make( $request->all(), [
+      'name'        => [ 'required', 'string', 'max:50', "unique:departments,name, $department->id" ],
+      'short_name'  => [ 'required', 'string', 'max:20', "unique:departments,short_name, $department->id" ],
+    ], [
+      'name.required'        => 'The department-name is required.',
+      'name.max'             => 'The department-name must be less than 50 characters.',
+      'name.unique'          => 'The department-name must be unique.',
+    ]);
+    if( $validator->fails() ) return back()->withErrors( $validator )->withInput();
+
+    $updateDepartmentData = [
+      'name'        => $request->name,
+      'slug'        => Str::slug( $request->name ),
+      'short_name'  => $request->short_name,
+    ];
+
+    $departmentUpdated = $department->update( $updateDepartmentData );
+
+    return redirect()->route('department.add.new')->with('success', "The department ($department->name) updated successfully!");
+  }
+
 
 
 }

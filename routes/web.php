@@ -21,25 +21,31 @@ Route::get('/symlink', [Home_Controller::class, 'CreateSymbolicLink']);
 Route::get('/storage-link', [Home_Controller::class, 'CreateStorageLink']);
 
 // Database/Migration Table programmatically by using Artisan::call()
-Route::get('/migration-update', [Home_Controller::class, 'DatabaseTableUpdate'])->name('database-migration-update');
-Route::get('/migration-fresh', [Home_Controller::class, 'DatabaseTableFresh'])->name('database-migration-fresh');
-Route::get('/migration-rollback', [Home_Controller::class, 'DatabaseTableRollback'])->name('database-migration-rollback');
+Route::get('/migration-update', [Home_Controller::class, 'DatabaseTableUpdate'])->name('database.migration.update');
+Route::get('/migration-fresh', [Home_Controller::class, 'DatabaseTableFresh'])->name('database.migration.fresh');
+Route::get('/migration-fresh-seed', [Home_Controller::class, 'DatabaseTableFreshSeed'])->name('database.migration.fresh.seed');
+Route::get('/migration-rollback', [Home_Controller::class, 'DatabaseTableRollback'])->name('database.migration.rollback');
+Route::get('/db-seed', [HomeController::class, 'DatabaseSeed'])->name('database.seed');
 
 
 // Employees Routes
 Route::get('/module/employees/employee-index', [Employee_Controller::class, 'EmployeeAll_Index'])->name('employee.all.show');
 Route::get('/module/employees/employee-new', [Employee_Controller::class, 'EmployeeNew_Form'])->name('employee.add.new');
 Route::post('/module/employees/employee-new', [Employee_Controller::class, 'EmployeeNew_Store'])->name('employee.add.new');
-Route::get('/module/employees/single/{employee_uid}/edit', [Employee_Controller::class, 'EmployeeSingleEdit_Form'])->name('employee.single.edit');
+Route::get('/module/employees/single/{employee_uid}/edit', [Employee_Controller::class, 'EmployeeSingle_Edit'])->name('employee.single.edit');
 Route::post('/module/employees/single/{employee_uid}/edit', [Employee_Controller::class, 'EmployeeSingle_Update'])->name('employee.single.edit');
 
 // Departments Routes
 Route::get('/module/employees/departments', [Department_Controller::class, 'DepartmentNew_Form'])->name('department.add.new');
 Route::post('/module/employees/departments', [Department_Controller::class, 'DepartmentNew_Store'])->name('department.add.new');
+Route::get('/module/employees/department/{department}/edit', [Department_Controller::class, 'DepartmentSingle_Edit'])->name('department.single.edit');
+Route::post('/module/employees/department/{department}/edit', [Department_Controller::class, 'DepartmentSingle_Update'])->name('department.single.edit');
 
 // Designations Routes
 Route::get('/module/employees/designations', [Designation_Controller::class, 'DesignationNew_Form'])->name('designation.add.new');
 Route::post('/module/employees/designations', [Designation_Controller::class, 'DesignationNew_Store'])->name('designation.add.new');
+Route::get('/module/employees/designation/{designation}/edit', [Designation_Controller::class, 'DesignationSingle_Edit'])->name('designation.single.edit');
+Route::post('/module/employees/designation/{designation}/edit', [Designation_Controller::class, 'DesignationSingle_Update'])->name('designation.single.edit');
 
 
 // Vehicles Routes

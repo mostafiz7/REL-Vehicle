@@ -126,12 +126,12 @@ class Employee_Controller extends Controller
     $department_all  = Department_Model::orderBy('name', 'asc')->get()->all();
     $designation_all = Designation_Model::orderBy('name', 'asc')->get()->all();
 
-    $employment_statuses = [ 'daily-basis', 'casual', 'permanent', 'probation' ];
+    // $employment_statuses = [ 'daily-basis', 'casual', 'permanent', 'probation' ];
 
     return view('modules.employees.new')->with([
       'department_all'      => $department_all,
       'designation_all'     => $designation_all,
-      'employment_statuses' => $employment_statuses,
+      'employment_statuses' => EmploymentStatus(),
     ]);
   }
 
@@ -144,9 +144,9 @@ class Employee_Controller extends Controller
       return back()->with('error', 'You are not authorized to perform this action!');
     }*/
 
-    $employment_statuses = 'daily-basis,casual,permanent,probation';
+    $employment_statuses = implode(',', EmploymentStatus());
     $employment_status = $request->employment_status == 'permanent';
-
+    
     $validator = Validator::make( $request->all(), [
       'name'              => [ 'required', 'string', 'max:50' ],
       'nickname'          => [ 'nullable', 'string', 'max:20' ],
@@ -162,9 +162,7 @@ class Employee_Controller extends Controller
       'name.max'             => 'The designation-name must be less than 50 characters.',
       'name.unique'          => 'The designation-name must be unique.',*/
     ]);
-    if( $validator->fails() ){
-      return back()->withErrors( $validator )->withInput();
-    }
+    if( $validator->fails() ) return back()->withErrors( $validator )->withInput();
 
     $authorize_power = $request->has('authorize_power') && $request->authorize_power == 'authorizer';
     $purchase_power  = $request->has('purchase_power') && $request->purchase_power == 'purchaser';
@@ -174,7 +172,7 @@ class Employee_Controller extends Controller
       'name'              => $request->name,
       'nickname'          => ucwords( $request->nickname ),
       'active'            => true,
-      'employment_status' => $request->employment_status,
+      'employment_status' => $request->employment_status ?? null,
       'office_id'         => $request->office_id ? strtoupper( $request->office_id ) : null,
       'designation_id'    => $request->designation_id,
       'department_id'     => $request->department_id,
@@ -190,7 +188,7 @@ class Employee_Controller extends Controller
 
 
   // Employee Edit Form
-  function EmployeeSingleEdit_Form( $employee_uid, Request $request )
+  function EmployeeSingle_Edit( $employee_uid, Request $request )
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
     /*if( Gate::denies('isAdmins') || Gate::denies('entryEdit') || Gate::denies('routeHasAccess') ){
@@ -204,13 +202,13 @@ class Employee_Controller extends Controller
     $department_all  = Department_Model::orderBy('name', 'asc')->get()->all();
     $designation_all = Designation_Model::orderBy('name', 'asc')->get()->all();
 
-    $employment_statuses = [ 'daily-basis', 'casual', 'permanent', 'probation' ];
+    // $employment_statuses = [ 'daily-basis', 'casual', 'permanent', 'probation' ];
 
     return view('modules.employees.edit')->with([
       'employee'            => $employee,
       'department_all'      => $department_all,
       'designation_all'     => $designation_all,
-      'employment_statuses' => $employment_statuses,
+      'employment_statuses' => EmploymentStatus(),
     ]);
   }
 
@@ -227,8 +225,46 @@ class Employee_Controller extends Controller
 
     if( ! $employee ) return back()->with('error', 'The employee not found in system!');
     
+    $employment_statuses = implode(',', EmploymentStatus());
+    $employment_status = $request->employment_status == 'permanent';
 
-    return $employee;
+    $validator = Validator::make( $request->all(), [
+      'name'              => [ 'required', 'string', 'max:50' ],
+      'nickname'          => [ 'nullable', 'string', 'max:20' ],
+      'status'            => [ 'required', 'string' ],
+      'employment_status' => [ 'required', 'string', "in:$employment_statuses" ],
+      'office_id'         => [ 'nullable', 'required_if:employment_status,==,permanent', 'string', 'max:10', "unique:employees,office_id, $employee->id" ],
+      /* 'office_id'         => [ 'nullable', Rule::requiredIf( $employment_status ), 'string', 'max:10', 'unique:employees,office_id' ], */
+      'department_id'     => [ 'required', 'integer', 'exists:departments,id' ],
+      'designation_id'    => [ 'required', 'integer', 'exists:designations,id' ],
+      'authorize_power'   => [ 'nullable', 'string', 'in:authorizer' ],
+      'purchase_power'    => [ 'nullable', 'string', 'in:purchaser' ],
+    ], [
+      /*'name.required'        => 'The designation-name is required.',
+      'name.max'             => 'The designation-name must be less than 50 characters.',
+      'name.unique'          => 'The designation-name must be unique.',*/
+    ]);
+    if( $validator->fails() ) return back()->withErrors( $validator )->withInput();
+
+    $authorize_power = $request->has('authorize_power') && $request->authorize_power == 'authorizer' && $request->status == 'active';
+    $purchase_power  = $request->has('purchase_power') && $request->purchase_power == 'purchaser' && $request->status == 'active';
+
+    $employeeUpdateData = [
+      'name'              => $request->name,
+      'nickname'          => ucwords( $request->nickname ),
+      'active'            => $request->status == 'active',
+      'employment_status' => $request->employment_status ?? null,
+      'office_id'         => $request->office_id ? strtoupper( $request->office_id ) : null,
+      'designation_id'    => $request->designation_id,
+      'department_id'     => $request->department_id,
+      'user_id'           => null,
+      'authorize_power'   => $authorize_power,
+      'purchase_power'    => $purchase_power,
+    ];
+
+    $employeeUpdated = $employee->update( $employeeUpdateData );
+
+    return redirect()->route('employee.all.show')->with('success', "The employee ($employee->name) updated successfully!");
   }
 
 

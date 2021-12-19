@@ -20,25 +20,9 @@ class Brand_Controller extends Controller
 
     $brand_all    = Brand_Model::orderBy('name', 'asc')->get()->all();
 
-    // $origin_country = ['bangladesh', 'china', 'germany', 'india', 'indonesia', 'italy', 'japan', 'south-korea', 'thailand', 'taiwan', 'united-kingdom', 'united-states'];
-    $origin_country = [
-      [ 'name' => 'Bangladesh',     'slug' => 'bangladesh' ],
-      [ 'name' => 'China',          'slug' => 'china' ],
-      [ 'name' => 'Germany',        'slug' => 'germany' ],
-      [ 'name' => 'India',          'slug' => 'india' ],
-      [ 'name' => 'Indonesia',      'slug' => 'indonesia' ],
-      [ 'name' => 'Italy',          'slug' => 'italy' ],
-      [ 'name' => 'Japan',          'slug' => 'japan' ],
-      [ 'name' => 'South Korea',    'slug' => 'south-korea' ],
-      [ 'name' => 'Thailand',       'slug' => 'thailand' ],
-      [ 'name' => 'Taiwan',         'slug' => 'taiwan' ],
-      [ 'name' => 'United Kingdom', 'slug' => 'united-kingdom' ],
-      [ 'name' => 'United States',  'slug' => 'united-states' ]
-    ];
-
     return view('modules.vehicle-module.vehicles.brands')->with([
-      'brand_all'      => $brand_all,
-      'origin_country' => $origin_country,
+      'brand_all'  => $brand_all,
+      'countries'  => Countries(),
     ]);
   }
 
@@ -85,26 +69,10 @@ class Brand_Controller extends Controller
     }*/
 
     if( ! $brand ) return back()->with('error', 'The brand not found in system!');
-    
-    // $origin_country = ['bangladesh', 'china', 'germany', 'india', 'indonesia', 'italy', 'japan', 'south-korea', 'thailand', 'taiwan', 'united-kingdom', 'united-states'];
-    $origin_country = [
-      [ 'name' => 'Bangladesh',     'slug' => 'bangladesh' ],
-      [ 'name' => 'China',          'slug' => 'china' ],
-      [ 'name' => 'Germany',        'slug' => 'germany' ],
-      [ 'name' => 'India',          'slug' => 'india' ],
-      [ 'name' => 'Indonesia',      'slug' => 'indonesia' ],
-      [ 'name' => 'Italy',          'slug' => 'italy' ],
-      [ 'name' => 'Japan',          'slug' => 'japan' ],
-      [ 'name' => 'South Korea',    'slug' => 'south-korea' ],
-      [ 'name' => 'Thailand',       'slug' => 'thailand' ],
-      [ 'name' => 'Taiwan',         'slug' => 'taiwan' ],
-      [ 'name' => 'United Kingdom', 'slug' => 'united-kingdom' ],
-      [ 'name' => 'United States',  'slug' => 'united-states' ]
-    ];
 
     return view('modules.vehicle-module.vehicles.brand-edit')->with([
-      'brand'          => $brand,
-      'origin_country' => $origin_country,
+      'brand'      => $brand,
+      'countries'  => Countries(),
     ]);
   }
 

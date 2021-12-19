@@ -188,29 +188,13 @@ class Vehicle_Controller extends Controller
     $helper_all      = Designation_Model::where('slug', 'helper')->first()->employee()
       ->orderBy('name', 'asc')->get()->all();
 
-    // $origin_country = ['bangladesh', 'china', 'germany', 'india', 'indonesia', 'italy', 'japan', 'south-korea', 'thailand', 'taiwan', 'united-kingdom', 'united-states'];
-    $origin_country = [
-      [ 'name' => 'Bangladesh',     'slug' => 'bangladesh' ],
-      [ 'name' => 'China',          'slug' => 'china' ],
-      [ 'name' => 'Germany',        'slug' => 'germany' ],
-      [ 'name' => 'India',          'slug' => 'india' ],
-      [ 'name' => 'Indonesia',      'slug' => 'indonesia' ],
-      [ 'name' => 'Italy',          'slug' => 'italy' ],
-      [ 'name' => 'Japan',          'slug' => 'japan' ],
-      [ 'name' => 'South Korea',    'slug' => 'south-korea' ],
-      [ 'name' => 'Thailand',       'slug' => 'thailand' ],
-      [ 'name' => 'Taiwan',         'slug' => 'taiwan' ],
-      [ 'name' => 'United Kingdom', 'slug' => 'united-kingdom' ],
-      [ 'name' => 'United States',  'slug' => 'united-states' ]
-    ];
-
     return view('modules.vehicle-module.vehicles.new')->with([
       'brand_all'       => $brand_all,
       'category_all'    => $category_all,
       'department_all'  => $department_all,
       'driver_all'      => $driver_all,
       'helper_all'      => $helper_all,
-      'origin_country'  => $origin_country,
+      'countries'       => Countries(),
     ]);
   }
 
@@ -301,33 +285,17 @@ class Vehicle_Controller extends Controller
     $helper_all      = Designation_Model::where('slug', 'helper')->first()->employee()
       ->orderBy('name', 'asc')->get()->all();
 
-    // $origin_country = ['bangladesh', 'china', 'germany', 'india', 'indonesia', 'italy', 'japan', 'south-korea', 'thailand', 'taiwan', 'united-kingdom', 'united-states'];
-    $origin_country = [
-      [ 'name' => 'Bangladesh',     'slug' => 'bangladesh' ],
-      [ 'name' => 'China',          'slug' => 'china' ],
-      [ 'name' => 'Germany',        'slug' => 'germany' ],
-      [ 'name' => 'India',          'slug' => 'india' ],
-      [ 'name' => 'Indonesia',      'slug' => 'indonesia' ],
-      [ 'name' => 'Italy',          'slug' => 'italy' ],
-      [ 'name' => 'Japan',          'slug' => 'japan' ],
-      [ 'name' => 'South Korea',    'slug' => 'south-korea' ],
-      [ 'name' => 'Thailand',       'slug' => 'thailand' ],
-      [ 'name' => 'Taiwan',         'slug' => 'taiwan' ],
-      [ 'name' => 'United Kingdom', 'slug' => 'united-kingdom' ],
-      [ 'name' => 'United States',  'slug' => 'united-states' ]
-    ];
-
     $date_format = 'd-m-Y';
 
     return view('modules.vehicle-module.vehicles.edit')->with([
       'vehicle'         => $vehicle,
+      'date_format'     => $date_format,
       'brand_all'       => $brand_all,
       'category_all'    => $category_all,
       'department_all'  => $department_all,
       'driver_all'      => $driver_all,
       'helper_all'      => $helper_all,
-      'origin_country'  => $origin_country,
-      'date_format'     => $date_format,
+      'countries'       => Countries(),
     ]);
   }
 

@@ -1,32 +1,32 @@
 @extends('layouts.app')
 
-{{--@section('title', 'Edit Vehicle-Brands')--}}
+{{--@section('title', 'Edit Designation')--}}
 
 @section('content')
-<div class="Page Vehicle-Brands Edit">
+<div class="Page Designations Edit">
   <div class="container-lg">
     <div class="page-content pt-10">
       <div class="card">
         <div class="card-header page-header bg-purple text-white">
           <h5 class="title mb-0">
-            <span class="mr-20">Brand</span>
+            <span class="mr-20">Designation</span>
             <span class="edit-mode color-red">Edit-Mode</span>
           </h5>
         </div>
 
 
         <div class="card-body page-body p-0">
-          <div class="vehicleBrands-edit-area">
+          <div class="designations-edit-area">
             <div class="row">
               <div class="col-md-6">
-                <form method="post" action="{{ route('vehicle.brand.edit', $brand) }}"
-                      name="vehicleBrandEditForm" id="vehicleBrandEditForm" class="vehicleBrand-form edit mx-md-3 p-20 pb-0">
+                <form method="post" action="{{ route('designation.single.edit', $designation) }}"
+                      name="designationEditForm" id="designationEditForm" class="designation-form edit mx-md-3 p-20 pb-0">
                   @csrf
 
-                  {{--Brand-Name--}}
+                  {{--Designation-Name--}}
                   <div class="mb-30 name">
-                    <label for="" class="required w-100 mr-15"><span>Brand Name</span></label>
-                    <input type="text" name="name" id="name" class="required form-control border-secondary brd-3 @error('name') is-invalid @enderror" value="{{ $brand->name }}" />
+                    <label for="" class="required w-100 mr-15"><span>Designation Name</span></label>
+                    <input type="text" name="name" id="name" class="required form-control border-secondary brd-3 @error('name') is-invalid @enderror" value="{{ $designation->name }}" />
 
                     @if ( $errors->has('name') )
                       <div class="text-danger fz-14 fw-bold" role="alert">
@@ -35,21 +35,14 @@
                     @endif
                   </div>
 
-                  {{--Origin--}}
-                  <div class="mb-30 origin">
-                    <label for="" class="required w-100 mr-15"><span>Origin</span></label>
-                    <select name="origin" id="origin" class="required form-select border-secondary brd-3 @error('origin') is-invalid @enderror">
-                      <option value="">Select Country</option>
-                      @foreach ( $countries as $country )
-                        <option value="{{$country['slug']}}" {{$country['slug'] == $brand->origin ? 'selected' : ''}}>
-                          {{ $country['name'] }}
-                        </option>
-                      @endforeach
-                    </select>
+                  {{--Short-Name--}}
+                  <div class="mb-30 short_name">
+                    <label for="" class="required w-100 mr-15"><span>Short Name</span></label>
+                    <input type="text" name="short_name" id="short_name" class="required form-control border-secondary brd-3 @error('short_name') is-invalid @enderror" value="{{ $designation->short_name }}" />
 
-                    @if ( $errors->has('origin') )
+                    @if ( $errors->has('short_name') )
                       <div class="text-danger fz-14 fw-bold" role="alert">
-                        {{ $errors->first('origin') }}
+                        {{ $errors->first('short_name') }}
                       </div>
                     @endif
                   </div>
@@ -58,12 +51,13 @@
                   {{--Submit--}}
                   <div class="my-50 submit">
                     <div class="">
-                      <button class="btn btn-purple">Update</button>
+                      <button class="btn btn-purple">Submit</button>
                     </div>
                   </div>
 
                 </form>
               </div>
+              
             </div>
           </div> {{-- ./page-content-area --}}
         </div> {{-- ./card-body --}}

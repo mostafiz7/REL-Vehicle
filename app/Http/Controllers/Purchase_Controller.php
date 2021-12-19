@@ -94,6 +94,7 @@ class Purchase_Controller extends Controller
     $date_end          = $request->date_end ?? null;
     $parts_id          = $request->parts_id ?? null; // Filter in View
     $parts_category    = $request->parts_category ?? null; // Filter in View
+    $country_origin    = $request->country_origin ?? null; // Filter in View
     $vehicle_id        = $request->vehicle_id ?? null; // Filter in View
     $vehicle_category  = $request->vehicle_category ?? null; // Filter in View
     $supplier_by       = $request->supplier_by ?? null; // Not Filtered yet
@@ -102,6 +103,7 @@ class Purchase_Controller extends Controller
 
     $parts_id          = $parts_id == 'all' || $parts_id == "" || $parts_id == null ? null : $parts_id;
     $parts_category    = $parts_category == 'all' || $parts_category == "" || $parts_category == null ? null : $parts_category;
+    $country_origin    = $country_origin == 'all' || $country_origin == "" || $country_origin == null ? null : $country_origin;
     $vehicle_id        = $vehicle_id == 'all' || $vehicle_id == "" || $vehicle_id == null ? null : $vehicle_id;
     $vehicle_category  = $vehicle_category == 'all' || $vehicle_category == "" || $vehicle_category == null ? null : $vehicle_category;
     $supplier_by       = $supplier_by == 'all' || $supplier_by == "" || $supplier_by == null ? null : $supplier_by;
@@ -118,7 +120,7 @@ class Purchase_Controller extends Controller
 
 
     // Filter or Search using relation
-    /*$purchase_all = Purchase_Model::where('purchase_type', $purchase_type)
+    /* $purchase_all = Purchase_Model::where('purchase_type', $purchase_type)
       ->whereDate('date', '>=', date($start_date))
       //->whereDate('date', '<=', date($end_date))
       ->orderBy('date', 'desc')
@@ -129,7 +131,7 @@ class Purchase_Controller extends Controller
       })
       ->get()->all();
 
-    return $purchase_all;*/
+    return $purchase_all; */
 
 
     // search criteria only for start-date
@@ -457,6 +459,8 @@ class Purchase_Controller extends Controller
       'parts_all'             => $parts_all,
       'parts_category'        => $parts_category,
       'parts_category_all'    => $parts_category_all,
+      'country_origin'        => $country_origin,
+      'countries'             => Countries(),
       'vehicle_id'            => $vehicle_id,
       'vehicle_all'           => $vehicle_all,
       'vehicle_category'      => $vehicle_category,
@@ -493,16 +497,14 @@ class Purchase_Controller extends Controller
 
     $purchase_types = [ 'vehicle', 'vehicle-parts', 'electrical', 'electronics', 'stationary', 'furniture' ];
 
-    $units = [ 'foot', 'inch', 'litre', 'metre', 'pcs', 'set' ];
-
     return view('modules.vehicle-module.purchase-parts.new')->with([
       'newPurchaseNo'         => $this->VehiclePartsPurchaseNo(),
-      'units'                 => $units,
+      'units'                 => Units(),
+      'purchaseType'          => $purchaseType,
+      'purchase_types'        => $purchase_types,
       'parts_all'             => $parts_all,
       'vehicle_all'           => $vehicle_all,
       'supplier_all'          => $supplier_all,
-      'purchaseType'          => $purchaseType,
-      'purchase_types'        => $purchase_types,
       'employee_all'          => $employee_all,
       'purchaser_all'         => $purchaser_all,
       'authorizer_all'        => $authorizer_all,
@@ -513,7 +515,7 @@ class Purchase_Controller extends Controller
 
 
   // Store Newly Purchased Vehicle-Parts
-  public function VehiclePartsPurchase_Store( Request $request ): \Illuminate\Http\RedirectResponse
+  public function VehiclePartsPurchase_Store( Request $request )
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
     /*if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
@@ -827,19 +829,20 @@ class Purchase_Controller extends Controller
 
     $purchase_types = [ 'vehicle', 'vehicle-parts', 'electrical', 'electronics', 'stationary', 'furniture' ];
 
-    $units = [ 'foot', 'inch', 'litre', 'metre', 'pcs', 'set' ];
-
     /* $settings      = Settings_Model::get()->first();
     $date_format   = $settings && $settings->date_format ? $settings->date_format : 'd-m-Y'; */
 
+    $date_format = 'd-m-Y';
+
     return view('modules.vehicle-module.purchase-parts.edit')->with([
-      'units'                 => $units,
+      'units'                 => Units(),
       'purchase'              => $purchase,
+      'date_format'           => $date_format,
       'securityToken'         => $securityToken,
+      'purchase_types'        => $purchase_types,
       'parts_all'             => $parts_all,
       'vehicle_all'           => $vehicle_all,
       'supplier_all'          => $supplier_all,
-      'purchase_types'        => $purchase_types,
       'employee_all'          => $employee_all,
       'purchaser_all'         => $purchaser_all,
       'authorizer_all'        => $authorizer_all,

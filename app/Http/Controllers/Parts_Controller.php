@@ -137,28 +137,10 @@ class Parts_Controller extends Controller
     
     $category_all    = PartsCategory_Model::orderBy('name', 'asc')->get()->all();
 
-    // $origin_country = ['bangladesh', 'china', 'germany', 'india', 'indonesia', 'italy', 'japan', 'south-korea', 'thailand', 'taiwan', 'united-kingdom', 'united-states'];
-    $origin_country = [
-      [ 'name' => 'Bangladesh',     'slug' => 'bangladesh' ],
-      [ 'name' => 'China',          'slug' => 'china' ],
-      [ 'name' => 'Germany',        'slug' => 'germany' ],
-      [ 'name' => 'India',          'slug' => 'india' ],
-      [ 'name' => 'Indonesia',      'slug' => 'indonesia' ],
-      [ 'name' => 'Italy',          'slug' => 'italy' ],
-      [ 'name' => 'Japan',          'slug' => 'japan' ],
-      [ 'name' => 'South Korea',    'slug' => 'south-korea' ],
-      [ 'name' => 'Thailand',       'slug' => 'thailand' ],
-      [ 'name' => 'Taiwan',         'slug' => 'taiwan' ],
-      [ 'name' => 'United Kingdom', 'slug' => 'united-kingdom' ],
-      [ 'name' => 'United States',  'slug' => 'united-states' ]
-    ];
-
-    $units  = [ 'feet', 'inch', 'litre', 'mitre', 'pcs' ];
-
     return view('modules.vehicle-module.parts.new')->with([
+      'units'           => Units(),
+      'countries'       => Countries(),
       'category_all'    => $category_all,
-      'origin_country'  => $origin_country,
-      'units'           => $units,
     ]);
   }
 
@@ -231,29 +213,11 @@ class Parts_Controller extends Controller
 
     $category_all = PartsCategory_Model::orderBy('name', 'asc')->get()->all();
 
-    // $origin_country = ['bangladesh', 'china', 'germany', 'india', 'indonesia', 'italy', 'japan', 'south-korea', 'thailand', 'taiwan', 'united-kingdom', 'united-states'];
-    $origin_country = [
-      [ 'name' => 'Bangladesh',     'slug' => 'bangladesh' ],
-      [ 'name' => 'China',          'slug' => 'china' ],
-      [ 'name' => 'Germany',        'slug' => 'germany' ],
-      [ 'name' => 'India',          'slug' => 'india' ],
-      [ 'name' => 'Indonesia',      'slug' => 'indonesia' ],
-      [ 'name' => 'Italy',          'slug' => 'italy' ],
-      [ 'name' => 'Japan',          'slug' => 'japan' ],
-      [ 'name' => 'South Korea',    'slug' => 'south-korea' ],
-      [ 'name' => 'Thailand',       'slug' => 'thailand' ],
-      [ 'name' => 'Taiwan',         'slug' => 'taiwan' ],
-      [ 'name' => 'United Kingdom', 'slug' => 'united-kingdom' ],
-      [ 'name' => 'United States',  'slug' => 'united-states' ]
-    ];
-
-    $units  = [ 'feet', 'inch', 'litre', 'mitre', 'pcs' ];
-
     return view('modules.vehicle-module.parts.edit')->with([
-      'units'           => $units,
+      'units'           => Units(),
       'parts'           => $parts,
+      'countries'       => Countries(),
       'category_all'    => $category_all,
-      'origin_country'  => $origin_country,
     ]);
   }
 

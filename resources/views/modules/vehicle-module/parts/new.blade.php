@@ -57,13 +57,11 @@
                   <label for="" class="required w-100 mr-15"><span>Origin</span></label>
                   <select name="origin" id="origin" class="required form-select border-secondary brd-3 @error('origin') is-invalid @enderror">
                     <option value="">Select Country</option>
-                    @if ( $origin_country )
-                      @foreach ( $origin_country as $origin )
-                        <option value="{{$origin['slug']}}" {{$origin['slug'] == old('origin') ? 'selected' : ''}}>
-                          {{ $origin['name'] }}
-                        </option>
-                      @endforeach
-                    @endif
+                    @foreach ( $countries as $country )
+                      <option value="{{$country['slug']}}" {{$country['slug'] == old('origin') ? 'selected' : ''}}>
+                        {{ $country['name'] }}
+                      </option>
+                    @endforeach
                   </select>
 
                   @if ( $errors->has('origin') )

@@ -73,6 +73,7 @@
                           <th scope="col" class="serial bb-0">SL#</th>
                           <th scope="col" class="department-name bb-0">Name</th>
                           <th scope="col" class="department-origin bb-0">Short-Name</th>
+                          <th scope="col" class="action text-center bb-0">---</th>
                         </tr>
                       </thead>
 
@@ -83,6 +84,14 @@
                               <td class="serial text-center">{{ $index+1 }}</td>
                               <td class="department-name">{{ $department->name }}</td>
                               <td class="department-short_name">{{ $department->short_name }}</td>
+                              <td class="action text-center">
+                                <a href="{{ route('department.single.edit', $department) }}" 
+                                  class="department-edit btn btn-success fz-20 p-0 px-7 brd-3 ml-5">
+                                  <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit Department">
+                                    <i class="fa fa-pencil"></i>
+                                  </span>
+                                </a>
+                              </td>
                             </tr>
                           @endforeach
                         @endif

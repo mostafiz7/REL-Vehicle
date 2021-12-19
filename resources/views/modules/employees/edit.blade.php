@@ -17,7 +17,7 @@
 
         <div class="card-body page-body p-0">
           <div class="employee-edit-area overlay-scrollbar">
-            <form method="post" action="{{ route('employee.single.edit', $employee) }}"
+            <form method="post" action="{{ route('employee.single.edit', $employee->uid) }}"
                   name="employeeEditForm" id="employeeEditForm" class="employee-form edit p-20 pb-0">
               @csrf
 
@@ -25,11 +25,32 @@
                 {{--Employee-Name--}}
                 <div class="col-md-6 col-12 mb-30 name">
                   <label for="" class="required w-100 mr-15"><span>Employee Name</span></label>
-                  <input type="text" name="name" id="name" class="required form-control border-secondary brd-3 @error('name') is-invalid @enderror" placeholder="Nurullah Mohammad" value="{{$employee->name}}" />
+                  <input type="text" name="name" id="name" class="required form-control border-secondary brd-3 @error('name') is-invalid @enderror" value="{{$employee->name}}" />
 
                   @if ( $errors->has('name') )
                     <div class="text-danger fz-14 fw-bold" role="alert">
                       {{ $errors->first('name') }}
+                    </div>
+                  @endif
+                </div>
+
+                {{--Status--}}
+                <div class="col-md-6 col-12 mb-30 status">
+                  <label for="" class="required w-100 mr-15"><span>Status</span></label>
+                  <div class="d-flex flex-wrap">
+                    <span class="form-check ml-30">
+                      <input type="radio" name="status" id="active" class="status form-check-input cur-pointer @error('status') is-invalid @enderror" value="active" {{ $employee->active ? 'checked' : '' }} />
+                      <label for="active" class="form-check-label brd-3 cur-pointer {{ $employee->active ? 'bg-success text-white fw-bold py-1 px-10' : '' }}">Active</label>
+                    </span>
+                    <span class="form-check ml-30">
+                      <input type="radio" name="status" id="not-active" class="status form-check-input cur-pointer @error('status') is-invalid @enderror" value="not-active" {{ $employee->active ? '' : 'checked' }} />
+                      <label for="not-active" class="form-check-label brd-3 cur-pointer {{ $employee->active ? '' : 'bg-danger text-white fw-bold py-1 px-10' }}">Not-Active</label>
+                    </span>
+                  </div>
+
+                  @if ( $errors->has('status') )
+                    <div class="text-danger fw-bold" role="alert">
+                      {{ $errors->first('status') }}
                     </div>
                   @endif
                 </div>
@@ -51,13 +72,11 @@
                   <label for="" class="required w-100 mr-15"><span>Employment Status</span></label>
                   <select name="employment_status" id="employment_status" class="required form-select border-secondary brd-3 @error('employment_status') is-invalid @enderror">
                     <option value="">Select Job Status</option>
-                    @if ( $employment_statuses )
-                      @foreach ( $employment_statuses as $status )
-                        <option value="{{$status}}" {{$status == $employee->employment_status ? 'selected' : ''}}>
-                          {{ ucwords( str_replace('-', ' ', $status) ) }}
-                        </option>
-                      @endforeach
-                    @endif
+                    @foreach ( EmploymentStatus() as $status )
+                      <option value="{{$status}}" {{$status == $employee->employment_status ? 'selected' : ''}}>
+                        {{ ucwords( str_replace('-', ' ', $status) ) }}
+                      </option>
+                    @endforeach
                   </select>
                   
                   @if ( $errors->has('employment_status') )
@@ -99,8 +118,8 @@
 
                 {{--Office-ID--}}
                 <div class="col-md-6 col-12 mb-30 office_id">
-                  <label for="" class="{{! old('employment_status') || old('employment_status') == 'permanent' ? 'required' : ''}} w-100 mr-15"><span>Office ID</span></label>
-                  <input type="text" name="office_id" id="office_id" class="{{! old('employment_status') || old('employment_status') == 'permanent' ? 'required' : ''}} form-control border-secondary brd-3 @error('office_id') is-invalid @enderror" placeholder="010058" value="{{$employee->office_id}}" />
+                  <label for="" class="{{! $employee->employment_status || $employee->employment_status == 'permanent' || ! old('employment_status') || old('employment_status') == 'permanent' ? 'required' : ''}} w-100 mr-15"><span>Office ID</span></label>
+                  <input type="text" name="office_id" id="office_id" class="{{! $employee->employment_status || $employee->employment_status == 'permanent' || ! old('employment_status') || old('employment_status') == 'permanent' ? 'required' : ''}} form-control border-secondary brd-3 @error('office_id') is-invalid @enderror" placeholder="010058" value="{{$employee->office_id}}" />
 
                   @if ( $errors->has('office_id') )
                     <div class="text-danger fz-14 fw-bold" role="alert">

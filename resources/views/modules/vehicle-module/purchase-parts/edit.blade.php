@@ -68,7 +68,7 @@
                         <div class="col-6 purchase_date">
                           <label for="" class="required w-100 mr-15"><span>Memo Date</span></label>
                           <div class="p-relative date-select">
-                            <input type="text" name="date" id="purchase_date" class="input-date required form-control d-inline-block text-start border-secondary brd-3 z-index-9 @error('date') is-invalid @enderror" autocomplete="off" placeholder="dd-mm-yyyy" value="{{ date('d-m-Y', strtotime($purchase->date)) }}" />
+                            <input type="text" name="date" id="purchase_date" class="input-date required form-control d-inline-block text-start border-secondary brd-3 z-index-9 @error('date') is-invalid @enderror" autocomplete="off" placeholder="dd-mm-yyyy" value="{{ date($date_format, strtotime($purchase->date)) }}" />
                             <label for="purchase_date" class="input-label-icon p-absolute pos-top-right text-danger-deep fz-19 lh-1-3 mr-1 p-5 cur-pointer z-index-11"><i class="fa fa-calendar"></i></label>
                           </div>
 

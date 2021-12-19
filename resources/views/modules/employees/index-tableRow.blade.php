@@ -12,7 +12,7 @@
   <td class="employee-department">{{ $employee->department->short_name ?? '- - -' }}</td>
   <td class="employee-designation">{{ $employee->designation->short_name ?? '- - -' }}</td>
   <td class="employee-employment">
-    {{ ucwords( str_replace('-', ' ', $employee->employment_status) ) }}
+    {{ $employee->employment_status ? ucwords( str_replace('-', ' ', $employee->employment_status) ) : '- - -' }}
   </td>
   <td class="employee-assigned_role">
     <span class="authorize_power d-block">

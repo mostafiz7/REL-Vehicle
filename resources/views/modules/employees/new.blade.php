@@ -47,10 +47,9 @@
                 <div class="col-md-6 col-12 mb-30 employment_status">
                   <label for="" class="required w-100 mr-15"><span>Employment Status</span></label>
                   <select name="employment_status" id="employment_status" class="required form-select border-secondary brd-3 @error('employment_status') is-invalid @enderror">
-                    <option value="">Select Job Status</option>
                     @if ( $employment_statuses )
                       @foreach ( $employment_statuses as $status )
-                        <option value="{{$status}}" {{$status == old('employment_status') ? 'selected' : ''}}>
+                        <option value="{{$status}}" {{$status == 'permanent' || $status == old('employment_status') ? 'selected' : ''}}>
                           {{ ucwords( str_replace('-', ' ', $status) ) }}
                         </option>
                       @endforeach

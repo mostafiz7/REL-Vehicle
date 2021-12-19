@@ -78,6 +78,40 @@
                     </div>
                   </div>
 
+                  {{--Purchased-By--}}
+                  <div class="col-md-3 col-sm-6 col-12 mb-10 purchased_by">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <label for="" class="fw-bold mr-20"><span>Purchased By</span></label>
+                      <select name="purchased_by" id="purchased_by" class="form-select d-inline-block border-secondary-1 brd-3">
+                        @if ( $purchaser_all )
+                          <option value="all">All</option>
+                          @foreach ( $purchaser_all as $purchaser )
+                            <option value="{{$purchaser->id}}" {{ $purchaser->id == $purchased_by ? 'selected' : '' }}>
+                              {{ $purchaser->name }}
+                            </option>
+                          @endforeach
+                        @endif
+                      </select>
+                    </div>
+                  </div>
+
+                  {{--Authorized-By--}}
+                  <div class="col-md-3 col-sm-6 col-12 mb-10 authorized_by">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <label for="" class="fw-bold mr-20"><span>Authorized By</span></label>
+                      <select name="authorized_by" id="authorized_by" class="form-select d-inline-block border-secondary-1 brd-3">
+                        @if ( $authorizer_all )
+                          <option value="all">All</option>
+                          @foreach ( $authorizer_all as $authorizer )
+                            <option value="{{$authorizer->id}}" {{ $authorizer->id == $authorized_by ? 'selected' : '' }}>
+                              {{ $authorizer->name }}
+                            </option>
+                          @endforeach
+                        @endif
+                      </select>
+                    </div>
+                  </div>
+
                   {{--Parts-ID--}}
                   <div class="col-md-3 col-sm-6 col-12 mb-10 parts_id">
                     <div class="d-flex justify-content-between align-items-center">
@@ -146,36 +180,17 @@
                     </div>
                   </div>
 
-                  {{--Purchased-By--}}
-                  <div class="col-md-3 col-sm-6 col-12 mb-10 purchased_by">
+                  {{--Parts-Country-Origin--}}
+                  <div class="col-md-3 col-sm-6 col-12 mb-10 country_origin">
                     <div class="d-flex justify-content-between align-items-center">
-                      <label for="" class="fw-bold mr-20"><span>Purchased By</span></label>
-                      <select name="purchased_by" id="purchased_by" class="form-select d-inline-block border-secondary-1 brd-3">
-                        @if ( $purchaser_all )
-                          <option value="all">All</option>
-                          @foreach ( $purchaser_all as $purchaser )
-                            <option value="{{$purchaser->id}}" {{ $purchaser->id == $purchased_by ? 'selected' : '' }}>
-                              {{ $purchaser->name }}
-                            </option>
-                          @endforeach
-                        @endif
-                      </select>
-                    </div>
-                  </div>
-
-                  {{--Authorized-By--}}
-                  <div class="col-md-3 col-sm-6 col-12 mb-10 authorized_by">
-                    <div class="d-flex justify-content-between align-items-center">
-                      <label for="" class="fw-bold mr-20"><span>Authorized By</span></label>
-                      <select name="authorized_by" id="authorized_by" class="form-select d-inline-block border-secondary-1 brd-3">
-                        @if ( $authorizer_all )
-                          <option value="all">All</option>
-                          @foreach ( $authorizer_all as $authorizer )
-                            <option value="{{$authorizer->id}}" {{ $authorizer->id == $authorized_by ? 'selected' : '' }}>
-                              {{ $authorizer->name }}
-                            </option>
-                          @endforeach
-                        @endif
+                      <label for="" class="fw-bold mr-20"><span>Origin Country</span></label>
+                      <select name="country_origin" id="country_origin" class="form-select d-inline-block border-secondary-1 brd-3">
+                        <option value="all">Select Country</option>
+                        @foreach ( $countries as $country )
+                          <option value="{{$country['slug']}}" {{$country['slug'] == $country_origin ? 'selected' : ''}}>
+                            {{ $country['name'] }}
+                          </option>
+                        @endforeach
                       </select>
                     </div>
                   </div>
