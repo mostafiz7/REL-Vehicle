@@ -15,7 +15,7 @@
         <div class="card-body page-body p-0">
           <div class="parts-new-purchase-area overlay-scrollbar">
             <form method="post" action="{{ route('vehicle.parts.purchase.new') }}"
-                  name="partsPurchaseForm" id="partsPurchaseForm" class="parts-purchase new p-20 pb-0">
+                  name="partsPurchaseForm" id="partsPurchaseForm" class="parts-purchase new p-20 pt-10 pb-0">
               @csrf
 
               <div class="form-top-and-center">
