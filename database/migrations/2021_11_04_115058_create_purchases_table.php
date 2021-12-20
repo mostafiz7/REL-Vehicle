@@ -50,6 +50,8 @@ class CreatePurchasesTable extends Migration
       $table->string('ip_address')->nullable();
       $table->string('session_id')->nullable();
 
+      $table->timestamps();
+
       $table->foreign('vehicle_id')
         ->references('id')->on('vehicles')->onUpdate('cascade');
       $table->foreign('requisition_id')
@@ -68,8 +70,6 @@ class CreatePurchasesTable extends Migration
         ->references('id')->on('users')->onUpdate('cascade');
       $table->foreign('entry_by')
         ->references('id')->on('employees')->onUpdate('cascade');
-
-      $table->timestamps();
     });
   }
 

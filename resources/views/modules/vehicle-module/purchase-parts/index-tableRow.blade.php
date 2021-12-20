@@ -1,4 +1,4 @@
-<tr class="table-row content align-middle">
+<tr class="table-row content align-middle {{ ($index+1) % 2 == 0 ? 'bg-success-light' : '' }}">
   <td class="serial w-30px-min text-center">{{ $index+1 }}</td>
   <td class="purchase-number text-primary text-center">
     <a href="{{ route('vehicle.parts.purchase.edit', $purchase) }}" class="edit-link text-primary">
@@ -9,7 +9,11 @@
   <td class="vehicle-number">{{ $purchase->vehicle->vehicle_no }}</td>
   <td class="parts-list">
     @foreach ( $purchase->details as $purchaseItem )
-      <li><span class="p-relative ml--10">{{ $purchaseItem->parts->name }}</span></li>
+      <li>
+        <span class="parts-name p-relative ml--10">{{ $purchaseItem->parts->name }}</span>
+        <span class="mx-1"> - </span>
+        <span class="parts-country">{{ ucwords($purchaseItem->origin) }}</span>
+      </li>
     @endforeach
   </td>
   <td class="shop-name">{{ $purchase->shop_name }}</td>

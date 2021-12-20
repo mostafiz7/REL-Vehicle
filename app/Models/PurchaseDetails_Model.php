@@ -27,6 +27,7 @@ class PurchaseDetails_Model extends Model
     'purchase_no',
     'parts_id',
     'vehicle_id',
+    'origin',
     'size',
     'serials',
     'quantity',

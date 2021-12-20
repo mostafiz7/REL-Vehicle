@@ -291,8 +291,8 @@
                             </button>
                             <span onclick="RemoveAccordionItem(this);"
                                   class="remove-accordion-item d-none before-shadow p-absolute pos-top-right w-30px h-30px bg-danger text-white fz-20 text-center lh-1-5 mt-10 mr-50 brd-50 cur-pointer z-index-11">
-                            <i class="fa fa-close"></i>
-                          </span>
+                              <i class="fa fa-close"></i>
+                            </span>
                           </h2>
 
                           <input type="hidden" name="previousItem_id[]" value="" />
@@ -308,8 +308,23 @@
                                   <input type="hidden" name="item_slug[]" id="item_slug-1" class="item_slug" value="" />
                                 </div>
 
-                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-size">
-                                  <input type="text" name="item_size[]" id="item_size-1" class="item_size form-control border-secondary brd-3" placeholder="Size" value="" />
+                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 size-and-origin">
+                                  <div class="row g-2">
+                                    <div class="col-sm-6 col-12 mb-15 item-origin">
+                                      <select name="item_country[]" id="item_country-1" class="item_country form-select border-secondary brd-3">
+                                        <option value="">Origin Country</option>
+                                        @foreach ( $countries as $country )
+                                          <option value="{{$country['slug']}}">
+                                            {{ $country['name'] }}
+                                          </option>
+                                        @endforeach
+                                      </select>
+                                    </div>
+  
+                                    <div class="col-sm-6 col-12 mb-15 item-size">
+                                      <input type="text" name="item_size[]" id="item_size-1" class="item_size form-control border-secondary brd-3" placeholder="Size" value="" />
+                                    </div>
+                                  </div>
                                 </div>
 
                                 <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-serials">
@@ -322,13 +337,11 @@
 
                                 <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-unit">
                                   <select name="item_unit[]" id="item_unit-1" class="item_unit form-select border-secondary brd-3">
-
                                     @foreach ( $units as $unit )
                                       <option value="{{$unit}}" {{$unit == 'pcs' ? 'selected' : ''}}>
                                         {{ ucwords($unit) }}
                                       </option>
                                     @endforeach
-                                    
                                   </select>
                                 </div>
 
@@ -533,8 +546,23 @@
                         <input type="hidden" name="item_slug[]" id="item_slug" class="item_slug" value="" />
                       </div>
 
-                      <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-size">
-                        <input type="text" name="item_size[]" id="item_size" class="item_size form-control border-secondary brd-3" placeholder="Size" value="" />
+                      <div class="col-lg-3 col-md-4 col-sm-6 col-12 size-and-origin">
+                        <div class="row g-2">
+                          <div class="col-sm-6 col-12 mb-15 item-origin">
+                            <select name="item_country[]" id="item_country" class="item_country form-select border-secondary brd-3">
+                              <option value="">Origin Country</option>
+                              @foreach ( $countries as $country )
+                                <option value="{{$country['slug']}}">
+                                  {{ $country['name'] }}
+                                </option>
+                              @endforeach
+                            </select>
+                          </div>
+
+                          <div class="col-sm-6 col-12 mb-15 item-size">
+                            <input type="text" name="item_size[]" id="item_size" class="item_size form-control border-secondary brd-3" placeholder="Size" value="" />
+                          </div>
+                        </div>
                       </div>
 
                       <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-serials">
@@ -897,6 +925,7 @@
     $("#Clone-Accordion .accordion-body input.item_id").attr("id", `item_id-${x}`);
     $("#Clone-Accordion .accordion-body input.item_uid").attr("id", `item_uid-${x}`);
     $("#Clone-Accordion .accordion-body input.item_slug").attr("id", `item_slug-${x}`);
+    $("#Clone-Accordion .accordion-body input.item_country").attr("id", `item_country-${x}`);
     $("#Clone-Accordion .accordion-body input.item_size").attr("id", `item_size-${x}`);
     $("#Clone-Accordion .accordion-body input.item_serials").attr("id", `item_serials-${x}`);
     $("#Clone-Accordion .accordion-body select.item_unit").attr("id", `item_unit-${x}`);

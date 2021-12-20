@@ -116,32 +116,7 @@
                   @if ( $date_start || $date_end || $parts_id || $vehicle_id )
                     @if ( $purchases_all && count($purchases_all) > 0 )
                       @foreach ( $purchases_all as $index => $purchase )
-                        @if ( $parts_id || $vehicle_id )
-                          <?php
-                            /* @var $purchase */
-                            $parts_id_all = []; $vehicle_id_all = [];
-                            foreach( $purchase->details as $purchaseItem ){
-                              $parts_id_all[]   = $purchaseItem->parts_id;
-                              $vehicle_id_all[] = $purchaseItem->vehicle_id;
-                            }
-                          ?>
-
-                          @if ( $parts_id && ! $vehicle_id )
-                            @if ( in_array($parts_id, $parts_id_all) )
-                              @include('modules.vehicle-module.purchase-parts.index-tableRow', $purchase)
-                            @endif
-                          @elseif ( ! $parts_id && $vehicle_id )
-                            @if ( in_array($vehicle_id, $vehicle_id_all) )
-                              @include('modules.vehicle-module.purchase-parts.index-tableRow', $purchase)
-                            @endif
-                          @elseif ( $parts_id && $vehicle_id )
-                            @if ( in_array($parts_id, $parts_id_all) && in_array($vehicle_id, $vehicle_id_all) )
-                              @include('modules.vehicle-module.purchase-parts.index-tableRow', $purchase)
-                            @endif
-                          @endif
-                        @else
-                          @include('modules.vehicle-module.purchase-parts.index-tableRow', $purchase)
-                        @endif
+                        @include('modules.vehicle-module.purchase-parts.index-tableRow', $purchase)
                       @endforeach
                     @else
                       <tr class="table-row content no-purchase align-middle">

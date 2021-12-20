@@ -22,6 +22,7 @@ class CreatePurchaseDetailsTable extends Migration
       $table->string('purchase_no');
       $table->unsignedBigInteger('parts_id');
       $table->unsignedBigInteger('vehicle_id')->nullable();
+      $table->string('origin'); // Country of Origin
       $table->string('size')->nullable();
       $table->string('serials')->nullable();
       $table->integer('quantity'); // Maximum 1 crore (1,00,00,000) allowed
@@ -31,6 +32,8 @@ class CreatePurchaseDetailsTable extends Migration
       $table->decimal('amount', $precision = 12, $scale = 2)->nullable();
       // Maximum 900 crore (900,00,00,000) allowed
       $table->string('remarks')->nullable();
+
+      $table->timestamps();
       
       $table->foreign('purchase_id')
         ->references('id')->on('purchases')
@@ -39,8 +42,6 @@ class CreatePurchaseDetailsTable extends Migration
         ->references('id')->on('parts')->onUpdate('cascade');
       $table->foreign('vehicle_id')
         ->references('id')->on('vehicles')->onUpdate('cascade');
-
-      $table->timestamps();
     });
   }
 

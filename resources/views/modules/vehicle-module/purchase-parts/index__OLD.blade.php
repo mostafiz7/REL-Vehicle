@@ -238,7 +238,83 @@
                 <tbody class="table-body fz-12 align-middle">
                   @if ( $purchases_all && count($purchases_all) > 0 )
                     @foreach ( $purchases_all as $index => $purchase )
-                      @include('modules.vehicle-module.purchase-parts.index-tableRow', $purchase)
+                      @if ( $parts_id || $parts_category || $vehicle_id || $vehicle_category )
+                        <?php
+                          /* @var $purchase */
+                          $parts_id_all = []; $parts_category_ids = [];
+                          $vehicle_id_all = []; $vehicle_category_ids = [];
+                          foreach( $purchase->details as $purchaseItem ){
+                            $parts_id_all[]         = $purchaseItem->parts_id;
+                            $parts_category_ids[]   = $purchaseItem->parts->category->id;
+                            $vehicle_id_all[]       = $purchaseItem->vehicle_id;
+                            $vehicle_category_ids[] = $purchaseItem->vehicle->category->id;
+                          }
+                        ?>
+
+                        @if ( $parts_id && !$parts_category && !$vehicle_id && !$vehicle_category )
+                          @if ( in_array($parts_id, $parts_id_all) )
+                            @include('modules.vehicle-module.purchase-parts.index-tableRow', $purchase)
+                          @endif
+                        @elseif ( $parts_id && $parts_category && !$vehicle_id && !$vehicle_category )
+                          @if ( in_array($parts_id, $parts_id_all) && in_array($parts_category, $parts_category_ids) )
+                            @include('modules.vehicle-module.purchase-parts.index-tableRow', $purchase)
+                          @endif
+                        @elseif ( $parts_id && !$parts_category && $vehicle_id && !$vehicle_category )
+                          @if ( in_array($parts_id, $parts_id_all) && in_array($vehicle_id, $vehicle_id_all) )
+                            @include('modules.vehicle-module.purchase-parts.index-tableRow', $purchase)
+                          @endif
+                        @elseif ( $parts_id && !$parts_category && !$vehicle_id && $vehicle_category )
+                          @if ( in_array($parts_id, $parts_id_all) && in_array($vehicle_category, $vehicle_category_ids) )
+                            @include('modules.vehicle-module.purchase-parts.index-tableRow', $purchase)
+                          @endif
+                        @elseif ( $parts_id && $parts_category && $vehicle_id && !$vehicle_category )
+                          @if ( in_array($parts_id, $parts_id_all) && in_array($parts_category, $parts_category_ids) && in_array($vehicle_id, $vehicle_id_all) )
+                            @include('modules.vehicle-module.purchase-parts.index-tableRow', $purchase)
+                          @endif
+                        @elseif ( $parts_id && $parts_category && !$vehicle_id && $vehicle_category )
+                          @if ( in_array($parts_id, $parts_id_all) && in_array($parts_category, $parts_category_ids) && in_array($vehicle_category, $vehicle_category_ids) )
+                            @include('modules.vehicle-module.purchase-parts.index-tableRow', $purchase)
+                          @endif
+                        @elseif ( $parts_id && !$parts_category && $vehicle_id && $vehicle_category )
+                          @if ( in_array($parts_id, $parts_id_all) && in_array($vehicle_id, $vehicle_id_all) && in_array($vehicle_category, $vehicle_category_ids) )
+                            @include('modules.vehicle-module.purchase-parts.index-tableRow', $purchase)
+                          @endif
+                        @elseif ( !$parts_id && $parts_category && !$vehicle_id && !$vehicle_category )
+                          @if ( in_array($parts_category, $parts_category_ids) )
+                            @include('modules.vehicle-module.purchase-parts.index-tableRow', $purchase)
+                          @endif
+                        @elseif ( !$parts_id && $parts_category && $vehicle_id && !$vehicle_category )
+                          @if ( in_array($parts_category, $parts_category_ids) && in_array($vehicle_id, $vehicle_id_all) )
+                            @include('modules.vehicle-module.purchase-parts.index-tableRow', $purchase)
+                          @endif
+                        @elseif ( !$parts_id && $parts_category && !$vehicle_id && $vehicle_category )
+                          @if ( in_array($parts_category, $parts_category_ids) && in_array($vehicle_category, $vehicle_category_ids) )
+                            @include('modules.vehicle-module.purchase-parts.index-tableRow', $purchase)
+                          @endif
+                        @elseif ( !$parts_id && $parts_category && $vehicle_id && $vehicle_category )
+                          @if ( in_array($parts_category, $parts_category_ids) && in_array($vehicle_id, $vehicle_id_all) && in_array($vehicle_category, $vehicle_category_ids) )
+                            @include('modules.vehicle-module.purchase-parts.index-tableRow', $purchase)
+                          @endif
+                        @elseif ( !$parts_id && !$parts_category && $vehicle_id && !$vehicle_category )
+                          @if ( in_array($vehicle_id, $vehicle_id_all) )
+                            @include('modules.vehicle-module.purchase-parts.index-tableRow', $purchase)
+                          @endif
+                        @elseif ( !$parts_id && !$parts_category && $vehicle_id && $vehicle_category )
+                          @if ( in_array($vehicle_id, $vehicle_id_all) && in_array($vehicle_category, $vehicle_category_ids) )
+                            @include('modules.vehicle-module.purchase-parts.index-tableRow', $purchase)
+                          @endif
+                        @elseif ( !$parts_id && !$parts_category && !$vehicle_id && $vehicle_category )
+                          @if ( in_array($vehicle_category, $vehicle_category_ids) )
+                            @include('modules.vehicle-module.purchase-parts.index-tableRow', $purchase)
+                          @endif
+                        @elseif ( $parts_id && $parts_category && $vehicle_id && $vehicle_category )
+                          @if ( in_array($parts_id, $parts_id_all) && in_array($parts_category, $parts_category_ids) && in_array($vehicle_id, $vehicle_id_all) && in_array($vehicle_category, $vehicle_category_ids) )
+                            @include('modules.vehicle-module.purchase-parts.index-tableRow', $purchase)
+                          @endif
+                        @endif
+                      @else
+                        @include('modules.vehicle-module.purchase-parts.index-tableRow', $purchase)
+                      @endif
                     @endforeach
                   @else
                     <tr class="table-row content no-purchase align-middle">

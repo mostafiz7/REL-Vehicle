@@ -518,6 +518,12 @@ body.modal-open:not(.swal2-shown) {
 }
 
 
+td.action,
+td.actions {
+  min-width: 130px;
+}
+
+
 
 /* Site-Wrapper */
 /* Site-Header & Site-Footer's height minus from Site-Wrapper element */

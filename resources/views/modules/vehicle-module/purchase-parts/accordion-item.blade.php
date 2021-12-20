@@ -24,8 +24,23 @@
           <input type="hidden" name="item_slug[]" id="item_slug-{{$index+1}}" class="item_slug" value="{{$purchase_item->parts->slug}}" />
         </div>
 
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-size">
-          <input type="text" name="item_size[]" id="item_size-{{$index+1}}" class="item_size form-control border-secondary brd-3" placeholder="Size" value="{{$purchase_item->size}}" />
+        <div class="col-lg-3 col-md-4 col-sm-6 col-12 size-and-origin">
+          <div class="row g-2">
+            <div class="col-sm-6 col-12 mb-15 item-origin">
+              <select name="item_country[]" id="item_country-{{$index+1}}" class="item_country form-select border-secondary brd-3">
+                <option value="">- - -</option>
+                @foreach ( $countries as $country )
+                  <option value="{{$country['slug']}} {{ $purchase_item->origin == $country['slug'] ? 'selected' : '' }}">
+                    {{ $country['name'] }}
+                  </option>
+                @endforeach
+              </select>
+            </div>
+
+            <div class="col-sm-6 col-12 mb-15 item-size">
+              <input type="text" name="item_size[]" id="item_size-{{$index+1}}" class="item_size form-control border-secondary brd-3" placeholder="Size" value="{{$purchase_item->size}}" />
+            </div>
+          </div>
         </div>
 
         <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-serials">
@@ -38,13 +53,11 @@
 
         <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-15 item-unit">
           <select name="item_unit[]" id="item_unit-{{$index+1}}" class="item_unit form-select border-secondary brd-3">
-
             @foreach ( $units as $unit )
               <option value="{{$unit}}" {{$unit == $purchase_item->unit ? 'selected' : ''}}>
                 {{ ucwords($unit) }}
               </option>
             @endforeach
-            
           </select>
         </div>
 
