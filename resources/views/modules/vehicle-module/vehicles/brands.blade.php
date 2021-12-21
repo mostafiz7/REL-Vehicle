@@ -77,7 +77,7 @@
                   <div class="vehicle-brands-list full-height-minus minus-110 overlay-scrollbar">
                     <table class="table table-bordered border-secondary-1 table-hover vehicle-brand-table">
                       <thead class="brand-header text-center">
-                        <tr class="brand-row bb-0">
+                        <tr class="brand-row align-middle bb-0">
                           <th scope="col" class="serial bb-0">SL#</th>
                           <th scope="col" class="brand-name bb-0">Name</th>
                           <th scope="col" class="brand-origin bb-0">Origin</th>

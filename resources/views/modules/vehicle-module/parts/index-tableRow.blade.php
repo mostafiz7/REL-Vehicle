@@ -9,10 +9,12 @@
     @endif
   </td>
   <td class="parts-category">{{ $parts->category->name ?? '- - -' }}</td>
-  <td class="parts-description">{{ $parts->description ?? '- - -' }}</td>
-  <td class="parts-unit">{{ $parts->unit ?? '- - -' }}</td>
-  <td class="parts-origin">{{ $parts->origin ?? '- - -' }}</td>
+  <td class="parts-origin">
+    {{ $parts->origin ? ucwords(str_replace('-', ' ', $parts->origin)) : '- - -' }}
+  </td>
+  <td class="parts-unit">{{ $parts->unit ? ucwords($parts->unit) : '- - -' }}</td>
   <td class="parts-sizes">{{ $parts->sizes ?? '- - -' }}</td>
+  <td class="parts-description">{{ $parts->description ?? '- - -' }}</td>
   <td class="parts-metals">{{ $parts->metals ?? '- - -' }}</td>
   <td class="parts-materials">{{ $parts->materials ?? '- - -' }}</td>
   <td class="action text-center">

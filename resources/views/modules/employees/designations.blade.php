@@ -69,7 +69,7 @@
                   <div class="designations-list overlay-scrollbar full-height-minus minus-110">
                     <table class="table table-bordered border-secondary-1 table-hover designation-table">
                       <thead class="designation-header text-center">
-                        <tr class="designation-row bb-0">
+                        <tr class="designation-row align-middle bb-0">
                           <th scope="col" class="serial bb-0">SL#</th>
                           <th scope="col" class="designation-name bb-0">Name</th>
                           <th scope="col" class="designation-short_name bb-0">Short-Name</th>
@@ -80,7 +80,7 @@
                       <tbody class="designation-body">
                         @if ( $designation_all )
                           @foreach ( $designation_all as $index => $designation )
-                            <tr class="designation-row">
+                            <tr class="designation-row align-middle">
                               <td class="serial text-center">{{ $index+1 }}</td>
                               <td class="designation-name">{{ $designation->name }}</td>
                               <td class="designation-short_name">

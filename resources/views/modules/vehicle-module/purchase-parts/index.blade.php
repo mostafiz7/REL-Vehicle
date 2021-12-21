@@ -202,8 +202,7 @@
 
                   {{--Action-Buttons--}}
                   <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-10 actions-btn">
-                    <label for="" class="d-none text-white fw-bold mb-5"><span>Actions</span></label>
-                    <div class="w-100">
+                    <div class="w-100 text-center">
                       <button class="btn btn-primary btn-sm fz-14 fw-bold lh-1-4 py-5 px-10">Search</button>
 
                       <input type="reset" value="Clear" id="clearPurchaseSearchForm" class="btn btn-secondary btn-sm bg-secondary fz-14 fw-bold lh-1-4 py-5 px-10 ml-5" />
@@ -235,7 +234,7 @@
                   </tr>
                 </thead>
 
-                <tbody class="table-body fz-12 align-middle">
+                <tbody class="table-body fz-12">
                   @if ( $purchases_all && count($purchases_all) > 0 )
                     @foreach ( $purchases_all as $index => $purchase )
                       @include('modules.vehicle-module.purchase-parts.index-tableRow', $purchase)

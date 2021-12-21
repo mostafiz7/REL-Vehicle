@@ -43,9 +43,7 @@ class Brand_Controller extends Controller
       'name.max'             => 'The brand-name must be less than 50 characters.',
       'name.unique'          => 'The brand-name must be unique.',
     ]);
-    if( $validator->fails() ){
-      return back()->withErrors( $validator )->withInput();
-    }
+    if( $validator->fails() ) return back()->withErrors( $validator )->withInput();
 
     $newVehicleBrandData = [
       'uid'     => Str::uuid(),

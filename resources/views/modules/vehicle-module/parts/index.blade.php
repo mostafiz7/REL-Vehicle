@@ -23,7 +23,7 @@
                   {{--Search-By--}}
                   <div class="col-md-3 col-sm-6 col-12 mb-10 search_by">
                     <div class="d-flex justify-content-between align-items-center">
-                      <label for="" class="fw-bold mr-15"><span>Search By</span></label>
+                      <label for="" class="fw-bold text-md-end mr-10"><span>Search By</span></label>
                       <input type="text" name="search_by" id="search_by" class="form-control d-inline-block fz-14 lh-1-8 border-secondary-1 brd-3" placeholder="Parts Name" value="{{ $search_by ?? '' }}" />
                     </div>
                   </div>
@@ -31,7 +31,7 @@
                   {{--Category--}}
                   <div class="col-md-3 col-sm-6 col-12 mb-10 parts_category">
                     <div class="d-flex justify-content-between align-items-center">
-                      <label for="" class="fw-bold mr-20"><span>Category</span></label>
+                      <label for="" class="fw-bold text-md-end mr-10"><span>Category</span></label>
                       <select name="parts_category" id="parts_category" class="form-select d-inline-block border-secondary-1 brd-3">
                         @if ( $category_all )
                           <option value="all">All</option>
@@ -48,7 +48,7 @@
                   {{--Status--}}
                   <div class="col-md-3 col-sm-6 col-12 mb-10 status">
                     <div class="d-flex justify-content-between align-items-center">
-                      <label for="" class="fw-bold mr-20"><span>Status</span></label>
+                      <label for="" class="fw-bold text-md-end mr-10"><span>Status</span></label>
                       <select name="status" id="status" class="form-select d-inline-block border-secondary-1 brd-3">
                         <option value="">General</option>
                         <option value="enabled" {{ $status == 'enabled' ? 'selected' : '' }}>Enabled</option>
@@ -59,8 +59,7 @@
 
                   {{--Action-Buttons--}}
                   <div class="col-md-3 col-sm-6 col-12 mb-10 action-btns">
-                    <label for="" class="d-none text-white fw-bold mb-5"><span>Actions</span></label>
-                    <div class="w-100">
+                    <div class="w-100 text-center">
                       <button class="btn btn-primary btn-sm fz-14 fw-bold lh-1-4 py-5 px-10">Search</button>
 
                       <input type="reset" value="Clear" id="clearPartsSearchForm" class="btn btn-secondary btn-sm bg-secondary fz-14 fw-bold lh-1-4 py-5 px-10 ml-5" />
@@ -82,17 +81,17 @@
                     <th scope="col" class="parts-name">Parts Name</th>
                     <th scope="col" class="parts-status">Status</th>
                     <th scope="col" class="parts-category">Category</th>
-                    <th scope="col" class="parts-description">Description</th>
-                    <th scope="col" class="parts-unit">Unit</th>
                     <th scope="col" class="parts-origin">Origin</th>
+                    <th scope="col" class="parts-unit">Unit</th>
                     <th scope="col" class="parts-sizes">Sizes</th>
+                    <th scope="col" class="parts-description">Description</th>
                     <th scope="col" class="parts-metals">Metals</th>
                     <th scope="col" class="parts-materials">Materials</th>
                     <th scope="col" class="action">---</th>
                   </tr>
                 </thead>
 
-                <tbody class="table-body fz-12 align-middle">
+                <tbody class="table-body fz-12">
                   @if ( $parts_all && count($parts_all) > 0 )
                     @foreach ( $parts_all as $index => $parts )
                       @include('modules.vehicle-module.parts.index-tableRow', $parts)

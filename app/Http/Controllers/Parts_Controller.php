@@ -152,44 +152,42 @@ class Parts_Controller extends Controller
     /*if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
       return back()->with('error', 'You are not authorized to perform this action!');
     }*/
+    
+    $countries = [];
+    foreach( Countries() as $country ){ $countries[] = $country['slug']; }
+    $countries = implode(',', $countries);
 
     $validator = Validator::make( $request->all(), [
       'name'           => [ 'required', 'string', 'max:50', 'unique:parts,name' ],
       'category_id'    => [ 'required', 'integer', 'exists:parts_category,id' ],
       'unit'           => [ 'required', 'string', 'max:10' ],
-      'origin'         => [ 'required', 'string', 'max:20' ],
 
       'description'    => [ 'nullable', 'string', 'max:191' ],
       'sizes'          => [ 'nullable', 'string', 'max:191' ],
       'metals'         => [ 'nullable', 'string', 'max:191' ],
       'materials'      => [ 'nullable', 'string', 'max:191' ],
+      'origin'         => [ 'nullable', 'string', "in:$countries", 'max:20' ],
     ], [
       'name.required'        => 'The parts-name is required.',
       'name.max'             => 'The parts-name must be less than 50 characters.',
       'name.unique'          => 'The parts-name must be unique.',
       'category_id.required' => 'The category is required.',
       'category_id.exists'   => 'The category does not exists.',
-      'origin.required'      => 'The origin-country is required.',
-      'origin.max'           => 'The origin-country must be less than 20 characters.',
+      'origin.in'            => 'The origin-country must be within given list.',
     ]);
-    if( $validator->fails() ){
-      return back()->withErrors( $validator )->withInput();
-    }
-
-    $origin = ucwords( str_replace('-', ' ', $request->origin) );
-    $parts_name = $request->name . ' - ' . str_replace(' ', '-', $origin);
+    if( $validator->fails() ) return back()->withErrors( $validator )->withInput();
 
     $newPartsData = [
       'uid'          => Str::uuid(),
-      'name'         => $parts_name,
-      'slug'         => Str::slug( $parts_name ),
+      'name'         => $request->name,
+      'slug'         => Str::slug( $request->name ),
       'enabled'      => true,
-      'category_id'  => $request->category_id ?? null,
+      'category_id'  => $request->category_id,
       'description'  => $request->description ?? null,
       'sizes'        => $request->sizes ?? null,
       'metals'       => $request->metals ?? null,
       'materials'    => $request->materials ?? null,
-      'unit'         => $request->unit ?? null,
+      'unit'         => $request->unit,
       'origin'       => $request->origin ?? null,
     ];
 
@@ -233,18 +231,22 @@ class Parts_Controller extends Controller
     $parts = Parts_Model::where('uid', $parts_uid)->first();
 
     if( ! $parts ) return back()->with('error', 'The parts not found in system!');
+    
+    $countries = [];
+    foreach( Countries() as $country ){ $countries[] = $country['slug']; }
+    $countries = implode(',', $countries);
 
     $validator = Validator::make( $request->all(), [
       'name'        => [ 'required', 'string', 'max:50', "unique:parts,name, $parts->id" ],
       'status'      => [ 'required', 'in:active,not-active' ],
       'category_id' => [ 'required', 'integer', 'exists:parts_category,id' ],
       'unit'        => [ 'required', 'string', 'max:10' ],
-      'origin'      => [ 'required', 'string', 'max:20' ],
 
       'description' => [ 'nullable', 'string', 'max:191' ],
       'sizes'       => [ 'nullable', 'string', 'max:191' ],
       'metals'      => [ 'nullable', 'string', 'max:191' ],
       'materials'   => [ 'nullable', 'string', 'max:191' ],
+      'origin'      => [ 'nullable', 'string', "in:$countries", 'max:20' ],
     ], [
       'name.required'        => 'The parts-name is required.',
       'name.max'             => 'The parts-name must be less than 50 characters.',
@@ -252,17 +254,13 @@ class Parts_Controller extends Controller
       'status.required'      => 'The parts-status is required.',
       'category_id.required' => 'The category is required.',
       'category_id.exists'   => 'The category does not exists.',
-      'origin.required'      => 'The origin-country is required.',
-      'origin.max'           => 'The origin-country must be less than 20 characters.',
+      'origin.in'            => 'The origin-country must be within given list.',
     ]);
     if( $validator->fails() ) return back()->withErrors( $validator )->withInput();
 
-    $origin     = ucwords( str_replace('-', ' ', $request->origin) );
-    $parts_name = $request->name . ' - ' . str_replace(' ', '-', $origin);
-
     $updatePartsData = [
-      'name'         => $parts_name,
-      'slug'         => Str::slug( $parts_name ),
+      'name'         => $request->name,
+      'slug'         => Str::slug( $request->name ),
       'enabled'      => $request->status === 'active',
       'category_id'  => $request->category_id,
       'description'  => $request->description ?? null,
@@ -270,7 +268,7 @@ class Parts_Controller extends Controller
       'metals'       => $request->metals ?? null,
       'materials'    => $request->materials ?? null,
       'unit'         => $request->unit,
-      'origin'       => $request->origin,
+      'origin'       => $request->origin ?? null,
     ];
 
     $vehicleUpdated = $parts->update( $updatePartsData );

@@ -23,7 +23,7 @@
                   {{--Search-By--}}
                   <div class="col-md-3 col-sm-6 col-12 mb-10 search_by">
                     <div class="d-flex justify-content-between align-items-center">
-                      <label for="" class="fw-bold mr-15"><span>Search By</span></label>
+                      <label for="" class="fw-bold text-end mr-10"><span>Search By</span></label>
                       <input type="text" name="search_by" id="search_by" class="form-control d-inline-block fz-14 lh-1-8 border-secondary-1 brd-3" placeholder="Vehicle No." value="{{ $search_by ?? '' }}" />
                     </div>
                   </div>
@@ -31,7 +31,7 @@
                   {{--Category--}}
                   <div class="col-md-3 col-sm-6 col-12 mb-10 category_id">
                     <div class="d-flex justify-content-between align-items-center">
-                      <label for="" class="fw-bold mr-20"><span>Category</span></label>
+                      <label for="" class="fw-bold text-end mr-10"><span>Category</span></label>
                       <select name="category_id" id="category_id" class="form-select d-inline-block border-secondary-1 brd-3">
                         @if ( $category_all )
                           <option value="all">All</option>
@@ -48,7 +48,7 @@
                   {{--Brand--}}
                   <div class="col-md-3 col-sm-6 col-12 mb-10 brand_id">
                     <div class="d-flex justify-content-between align-items-center">
-                      <label for="" class="fw-bold mr-20"><span>Brand</span></label>
+                      <label for="" class="fw-bold text-end mr-10"><span>Brand</span></label>
                       <select name="brand_id" id="brand_id" class="form-select d-inline-block border-secondary-1 brd-3">
                         @if ( $brand_all )
                           <option value="all">All</option>
@@ -65,7 +65,7 @@
                   {{--Department--}}
                   <div class="col-md-3 col-sm-6 col-12 mb-10 department_id">
                     <div class="d-flex justify-content-between align-items-center">
-                      <label for="" class="fw-bold mr-20"><span>Department</span></label>
+                      <label for="" class="fw-bold text-end mr-10"><span>Department</span></label>
                       <select name="department_id" id="department_id" class="form-select d-inline-block border-secondary-1 brd-3">
                         @if ( $department_all )
                           <option value="all">All</option>
@@ -82,7 +82,7 @@
                   {{--Driver--}}
                   <div class="col-md-3 col-sm-6 col-12 mb-10 driver_id">
                     <div class="d-flex justify-content-between align-items-center">
-                      <label for="" class="fw-bold mr-20"><span>Driver</span></label>
+                      <label for="" class="fw-bold text-end mr-10"><span>Driver</span></label>
                       <select name="driver_id" id="driver_id" class="form-select d-inline-block border-secondary-1 brd-3">
                         @if ( $driver_all )
                           <option value="all">All</option>
@@ -99,7 +99,7 @@
                   {{--Helper--}}
                   <div class="col-md-3 col-sm-6 col-12 mb-10 helper_id">
                     <div class="d-flex justify-content-between align-items-center">
-                      <label for="" class="fw-bold mr-20"><span>Helper</span></label>
+                      <label for="" class="fw-bold text-end mr-10"><span>Helper</span></label>
                       <select name="helper_id" id="helper_id" class="form-select d-inline-block border-secondary-1 brd-3">
                         @if ( $helper_all )
                           <option value="all">All</option>
@@ -116,7 +116,7 @@
                   {{--Status--}}
                   <div class="col-md-3 col-sm-6 col-12 mb-10 status">
                     <div class="d-flex justify-content-between align-items-center">
-                      <label for="" class="fw-bold mr-20"><span>Status</span></label>
+                      <label for="" class="fw-bold text-end mr-10"><span>Status</span></label>
                       <select name="status" id="status" class="form-select d-inline-block border-secondary-1 brd-3">
                         <option value="">General</option>
                         <option value="enabled" {{ $status == 'enabled' ? 'selected' : '' }}>Enabled</option>
@@ -127,8 +127,7 @@
 
                   {{--Action-Buttons--}}
                   <div class="col-md-3 col-sm-6 col-12 mb-10 action-btns">
-                    <label for="" class="d-none text-white fw-bold mb-5"><span>Actions</span></label>
-                    <div class="w-100">
+                    <div class="w-100 text-center">
                       <button class="btn btn-primary btn-sm fz-14 fw-bold lh-1-4 py-5 px-10">Search</button>
 
                       <input type="reset" value="Clear" id="clearVehicleSearchForm" class="btn btn-secondary btn-sm bg-secondary fz-14 fw-bold lh-1-4 py-5 px-10 ml-5" />
@@ -160,7 +159,7 @@
                   </tr>
                 </thead>
 
-                <tbody class="table-body fz-12 align-middle">
+                <tbody class="table-body fz-12">
                   @if ( $vehicle_all && count($vehicle_all) > 0 )
                     @foreach ( $vehicle_all as $index => $vehicle )
                       @include('modules.vehicle-module.vehicles.index-tableRow', $vehicle)

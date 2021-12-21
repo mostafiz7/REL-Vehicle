@@ -69,7 +69,7 @@
                   <div class="departments-list overlay-scrollbar full-height-minus minus-110">
                     <table class="table table-bordered border-secondary-1 table-hover department-table">
                       <thead class="department-header text-center">
-                        <tr class="department-row bb-0">
+                        <tr class="department-row align-middle bb-0">
                           <th scope="col" class="serial bb-0">SL#</th>
                           <th scope="col" class="department-name bb-0">Name</th>
                           <th scope="col" class="department-origin bb-0">Short-Name</th>
@@ -80,7 +80,7 @@
                       <tbody class="department-body">
                         @if ( $department_all )
                           @foreach ( $department_all as $index => $department )
-                            <tr class="department-row">
+                            <tr class="department-row align-middle">
                               <td class="serial text-center">{{ $index+1 }}</td>
                               <td class="department-name">{{ $department->name }}</td>
                               <td class="department-short_name">{{ $department->short_name }}</td>

@@ -8,7 +8,12 @@
     <div class="page-content pt-10">
       <div class="card">
         <div class="card-header page-header bg-success text-white">
-          <h5 class="title mb-0">Purchase Search</h5>
+          <div class="d-flex justify-content-between align-items-center">
+            <h5 class="title mb-0">Purchase Search</h5>
+            <span class="">
+              <a href="{{ route('vehicle.parts.purchase.all') }}" class="btn btn-purple py-5 px-10">Deep Search</a>
+            </span>
+          </div>
         </div>
 
 
@@ -45,7 +50,7 @@
                   {{--Parts-ID--}}
                   <div class="col-lg-3 col-md-6 col-12 mb-20 parts_id">
                     <div class="d-flex justify-content-between justify-content-lg-end align-items-center">
-                      <label for="" class="fw-500 mr-15"><span>Parts</span></label>
+                      <label for="" class="fw-500 mr-10"><span>Parts</span></label>
                       <select name="parts_id" id="parts_id" class="form-select border-secondary-1 brd-3">
                         @if ( $parts_all )
                           <option value="all">All</option>
@@ -62,7 +67,7 @@
                   {{--Vehicle-ID--}}
                   <div class="col-lg-3 col-md-6 col-12 mb-20 vehicle_id">
                     <div class="d-flex justify-content-between justify-content-lg-end align-items-center">
-                      <label for="" class="fw-500 mr-15"><span>Vehicles</span></label>
+                      <label for="" class="fw-500 mr-10"><span>Vehicles</span></label>
                       <select name="vehicle_id" id="vehicle_id" class="form-select d-inline-block border-secondary-1 brd-3">
                         @if ( $vehicle_all )
                           <option value="all">All</option>
@@ -78,8 +83,7 @@
 
                   {{--Action-Buttons--}}
                   <div class="col-lg-3 col-md-6 col-12 mb-20 actions-btn">
-                    {{--<label for="" class="d-none text-white fw-bold mb-5"><span>Actions</span></label>--}}
-                    <div class="text-center text-sm-end">
+                    <div class="text-center">
                       <button class="btn btn-primary btn-sm fz-14 fw-500 lh-1-4 py-5 px-10">Search</button>
 
                       <input type="reset" value="Clear" id="clearPurchaseSearchForm" class="btn btn-secondary btn-sm bg-secondary fz-14 fw-500 lh-1-4 py-5 px-10 ml-5" />
@@ -94,7 +98,7 @@
 
             <div class="blank h-auto bt-1 border-secondary-1"></div>
 
-            <div class="purchase-history-details overlay-scrollbar full-height-minus minus-90 p-10">
+            <div class="purchase-history-details overlay-scrollbar full-height-minus minus-100 p-10">
               <table class="table table-bordered table-hover border-secondary-3 purchase-history-table">
                 <thead class="table-header bg-dark text-white fz-14 text-center">
                   <tr class="table-row header align-middle">

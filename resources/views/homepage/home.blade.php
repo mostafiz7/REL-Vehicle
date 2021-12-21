@@ -93,9 +93,8 @@
 
                   {{--Action-Buttons--}}
                   <div class="col-12 mt-10 text-center actions-btn">
-                    {{--<label for="" class="d-none text-white fw-bold mb-5"><span>Actions</span></label>--}}
                     <div class="w-100">
-                      <button class="btn btn-navy-blue-alt fz-22 fw-bold py-5 px-20">Search</button>
+                      <button class="btn btn-purple fz-22 fw-400 py-10 px-30">Search</button>
                     </div>
                   </div>
                 </div>

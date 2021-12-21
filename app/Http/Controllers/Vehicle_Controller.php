@@ -206,11 +206,17 @@ class Vehicle_Controller extends Controller
     /*if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
       return back()->with('error', 'You are not authorized to perform this action!');
     }*/
+    
+    $countries = [];
+    foreach( Countries() as $country ){ $countries[] = $country['slug']; }
+    $countries = implode(',', $countries);
 
     $validator = Validator::make( $request->all(), [
       'vehicle_no'     => [ 'required', 'string', 'max:50', 'unique:vehicles,vehicle_no' ],
       'brand_id'       => [ 'required', 'integer', 'exists:brands,id' ],
       'category_id'    => [ 'required', 'integer', 'exists:vehicle_category,id' ],
+      'origin'         => [ 'required', 'string', "in:$countries", 'max:20' ],
+
       'purchase_date'  => [ 'nullable', 'date_format:d-m-Y' ],
       'department_id'  => [ 'nullable', 'integer', 'exists:departments,id' ],
       'driver_id'      => [ 'nullable', 'integer', 'exists:employees,id' ],
@@ -218,7 +224,6 @@ class Vehicle_Controller extends Controller
       'helper_name'    => [ 'nullable', 'string', 'max:50' ],
       'wheels'         => [ 'nullable', 'integer', 'max:10' ],
       'engine_cc'      => [ 'nullable', 'integer', 'max:2000' ],
-      'origin'         => [ 'nullable', 'string', 'max:20' ],
     ], [
       'vehicle_no.required'   => 'The Vehicle-number is required.',
       'vehicle_no.max'        => 'The Vehicle-number must be less than 50 characters.',
@@ -228,6 +233,8 @@ class Vehicle_Controller extends Controller
       'brand_id.exists'        => 'The brand does not exists.',
       'category_id.required'   => 'The category is required.',
       'category_id.exists'     => 'The category does not exists.',
+      'origin.required'        => 'The origin-country is required.',
+      'origin.in'              => 'The origin-country must be within given list.',
       'department_id.required' => 'The department is required.',
       'department_id.exists'   => 'The department does not exists.',
       'driver_id.exists'       => 'The driver does not exists.',
@@ -253,7 +260,7 @@ class Vehicle_Controller extends Controller
       'is_running'    => true,
       'wheels'        => $request->wheels ?? null,
       'engine_cc'     => $request->engine_cc ?? null,
-      'origin'        => $request->origin ?? null,
+      'origin'        => $request->origin,
       'purchase_date' => $purchase_date,
       'sold_date'     => null,
     ];
@@ -311,6 +318,10 @@ class Vehicle_Controller extends Controller
     $vehicle = Vehicle_Model::where('uid', $vehicle_uid)->first();
 
     if( ! $vehicle ) return back()->with('error', 'The vehicle not found in system!');
+    
+    $countries = [];
+    foreach( Countries() as $country ){ $countries[] = $country['slug']; }
+    $countries = implode(',', $countries);
 
     $validator = Validator::make( $request->all(), [
       'vehicle_no'        => [ 'required', 'string', 'max:50', "unique:vehicles,vehicle_no,$vehicle->id" ],
@@ -318,6 +329,8 @@ class Vehicle_Controller extends Controller
       'present_condition' => [ 'required', 'in:running,stopped' ],
       'brand_id'          => [ 'required', 'integer', 'exists:brands,id' ],
       'category_id'       => [ 'required', 'integer', 'exists:vehicle_category,id' ],
+      'origin'            => [ 'required', 'string', "in:$countries", 'max:20' ],
+
       'purchase_date'     => [ 'nullable', 'date_format:d-m-Y' ],
       'department_id'     => [ 'nullable', 'integer', 'exists:departments,id' ],
       'driver_id'         => [ 'nullable', 'integer', 'exists:employees,id' ],
@@ -325,7 +338,6 @@ class Vehicle_Controller extends Controller
       'helper_name'       => [ 'nullable', 'string', 'max:50' ],
       'wheels'            => [ 'nullable', 'integer', 'max:10' ],
       'engine_cc'         => [ 'nullable', 'integer', 'max:2000' ],
-      'origin'            => [ 'nullable', 'string', 'max:20' ],
     ], [
       'vehicle_no.required'   => 'The vehicle-number is required.',
       'vehicle_no.max'        => 'The vehicle-number must be less than 50 characters.',
@@ -336,6 +348,8 @@ class Vehicle_Controller extends Controller
       'brand_id.exists'        => 'The brand does not exists.',
       'category_id.required'   => 'The category is required.',
       'category_id.exists'     => 'The category does not exists.',
+      'origin.required'        => 'The origin-country is required.',
+      'origin.in'              => 'The origin-country must be within given list.',
       'department_id.required' => 'The department is required.',
       'department_id.exists'   => 'The department does not exists.',
       'driver_id.exists'       => 'The driver does not exists.',
@@ -358,7 +372,7 @@ class Vehicle_Controller extends Controller
       'is_running'    => $request->present_condition === 'running',
       'wheels'        => $request->wheels ?? null,
       'engine_cc'     => $request->engine_cc ?? null,
-      'origin'        => $request->origin ?? null,
+      'origin'        => $request->origin,
       'purchase_date' => $purchase_date,
       // 'sold_date'     => null,
     ];

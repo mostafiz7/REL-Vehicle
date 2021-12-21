@@ -11,8 +11,10 @@
   <td class="vehicle-brand">{{ $vehicle->brand->name ?? '- - -' }}</td>
   <td class="vehicle-category">{{ $vehicle->category->name ?? '- - -' }}</td>
   <td class="vehicle-cc">{{ $vehicle->engine_cc ?? '- - -' }}</td>
-  <td class="vehicle-origin">{{ $vehicle->origin ?? '- - -' }}</td>
-  <td class="vehicle-department">{{ $vehicle->department->name ?? '- - -' }}</td>
+  <td class="vehicle-origin">
+    {{ $vehicle->origin ? ucwords(str_replace('-', ' ', $vehicle->origin)) : '- - -' }}
+  </td>
+  <td class="vehicle-department">{{ $vehicle->department->short_name ?? '- - -' }}</td>
   <td class="vehicle-driver">{{ $vehicle->driver->name ?? '- - -' }}</td>
   <td class="vehicle-helper">{{ $vehicle->helper->name ?? ($vehicle->helper_name ?? '- - -') }}</td>
   <td class="action text-center">

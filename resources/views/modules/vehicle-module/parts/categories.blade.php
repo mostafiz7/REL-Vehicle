@@ -70,7 +70,7 @@
                   <div class="parts-categories-list full-height-minus minus-110 overlay-scrollbar">
                     <table class="table table-bordered border-secondary-1 table-hover parts-category-table">
                       <thead class="category-header text-center">
-                        <tr class="category-row bb-0">
+                        <tr class="category-row align-middle bb-0">
                           <th scope="col" class="serial bb-0">SL#</th>
                           <th scope="col" class="category-name bb-0">Name</th>
                           <th scope="col" class="category-description bb-0">Description</th>
@@ -81,7 +81,7 @@
                       <tbody class="category-body">
                         @if ( $category_all )
                           @foreach ( $category_all as $index => $category )
-                            <tr class="category-row">
+                            <tr class="category-row align-middle">
                               <td class="serial text-center">{{ $index+1 }}</td>
                               <td class="category-name">{{ $category->name }}</td>
                               <td class="category-description">{{ $category->description }}</td>

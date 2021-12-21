@@ -23,7 +23,7 @@
                   {{--Search-By--}}
                   <div class="col-md-3 col-sm-6 col-12 mb-10 search_by">
                     <div class="d-flex justify-content-between align-items-center">
-                      <label for="" class="fw-bold mr-15"><span>Search By</span></label>
+                      <label for="" class="fw-bold text-md-end mr-10"><span>Search By</span></label>
                       <input type="text" name="search_by" id="search_by" class="form-control d-inline-block fz-14 lh-1-8 border-secondary-1 brd-3" placeholder="Employee Name/ Office-ID" value="{{ $search_by ?? '' }}" />
                     </div>
                   </div>
@@ -31,7 +31,7 @@
                   {{--Department--}}
                   <div class="col-md-3 col-sm-6 col-12 mb-10 department_id">
                     <div class="d-flex justify-content-between align-items-center">
-                      <label for="" class="fw-bold mr-20"><span>Department</span></label>
+                      <label for="" class="fw-bold text-md-end mr-10"><span>Department</span></label>
                       <select name="department_id" id="department_id" class="form-select d-inline-block border-secondary-1 brd-3">
                         @if ( $department_all )
                           <option value="all">All</option>
@@ -48,7 +48,7 @@
                   {{--Designation--}}
                   <div class="col-md-3 col-sm-6 col-12 mb-10 designation_id">
                     <div class="d-flex justify-content-between align-items-center">
-                      <label for="" class="fw-bold mr-20"><span>Designation</span></label>
+                      <label for="" class="fw-bold text-md-end mr-10"><span>Designation</span></label>
                       <select name="designation_id" id="designation_id" class="form-select d-inline-block border-secondary-1 brd-3">
                         @if ( $designation_all )
                           <option value="all">All</option>
@@ -65,7 +65,7 @@
                   {{--Assigned-Role--}}
                   <div class="col-md-3 col-sm-6 col-12 mb-10 assigned_role">
                     <div class="d-flex justify-content-between align-items-center">
-                      <label for="" class="fw-bold mr-20"><span>Assigned Role</span></label>
+                      <label for="" class="fw-bold text-md-end mr-10"><span>Assigned Role</span></label>
                       <select name="assigned_role" id="assigned_role" class="form-select d-inline-block border-secondary-1 brd-3">
                         <option value="all">All</option>
                         <option value="authorize_power" {{ $assigned_role == 'authorize_power' ? 'selected' : '' }}>Authorize Power</option>
@@ -77,7 +77,7 @@
                   {{--Employment-Status--}}
                   <div class="col-md-3 col-sm-6 col-12 mb-10 employment_status">
                     <div class="d-flex justify-content-between align-items-center">
-                      <label for="" class="fw-bold mr-20"><span>Employment</span></label>
+                      <label for="" class="fw-bold text-md-end mr-10"><span>Employment</span></label>
                       <select name="employment_status" id="employment_status" class="form-select d-inline-block border-secondary-1 brd-3">
                         @if ( $employment_statuses )
                           <option value="all">All</option>
@@ -94,7 +94,7 @@
                   {{--Status--}}
                   <div class="col-md-3 col-sm-6 col-12 mb-10 status">
                     <div class="d-flex justify-content-between align-items-center">
-                      <label for="" class="fw-bold mr-20"><span>Status</span></label>
+                      <label for="" class="fw-bold text-md-end mr-10"><span>Status</span></label>
                       <select name="status" id="status" class="form-select d-inline-block border-secondary-1 brd-3">
                         <option value="all">All</option>
                         <option value="active" {{ $status == 'active' ? 'selected' : '' }}>Active</option>
@@ -105,8 +105,7 @@
 
                   {{--Action-Buttons--}}
                   <div class="col-md-3 col-sm-6 col-12 mb-10 action-btns">
-                    <label for="" class="d-none text-white fw-bold mb-5"><span>Actions</span></label>
-                    <div class="w-100">
+                    <div class="w-100 text-center">
                       <button class="btn btn-primary btn-sm fz-14 fw-bold lh-1-4 py-5 px-10">Search</button>
 
                       <input type="reset" value="Clear" id="clearEmployeeSearchForm" class="btn btn-secondary btn-sm bg-secondary fz-14 fw-bold lh-1-4 py-5 px-10 ml-5" />

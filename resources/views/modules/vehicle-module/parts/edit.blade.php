@@ -76,25 +76,6 @@
                   @endif
                 </div>
 
-                {{--Origin-Country--}}
-                <div class="col-md-6 col-12 mb-30 origin">
-                  <label for="" class="required w-100 mr-15"><span>Origin</span></label>
-                  <select name="origin" id="origin" class="required form-select border-secondary brd-3 @error('origin') is-invalid @enderror">
-                    <option value="">Select Country</option>
-                    @foreach ( $countries as $country )
-                      <option value="{{$country['slug']}}" {{$country['slug'] == $parts->origin ? 'selected' : ''}}>
-                        {{ $country['name'] }}
-                      </option>
-                    @endforeach
-                  </select>
-
-                  @if ( $errors->has('origin') )
-                    <div class="text-danger fz-14 fw-bold" role="alert">
-                      {{ $errors->first('origin') }}
-                    </div>
-                  @endif
-                </div>
-
                 {{--Unit--}}
                 <div class="col-md-6 col-12 mb-30 unit">
                   <label for="" class="required w-100 mr-15"><span>Unit</span></label>
@@ -136,6 +117,25 @@
                   @if ( $errors->has('sizes') )
                     <div class="text-danger fz-14 fw-bold" role="alert">
                       {{ $errors->first('sizes') }}
+                    </div>
+                  @endif
+                </div>
+
+                {{--Origin-Country--}}
+                <div class="col-md-6 col-12 mb-30 origin">
+                  <label for="" class="w-100 mr-15"><span>Origin</span></label>
+                  <select name="origin" id="origin" class="form-select border-secondary brd-3 @error('origin') is-invalid @enderror">
+                    <option value="">Select Country</option>
+                    @foreach ( $countries as $country )
+                      <option value="{{ $country['slug'] }}" {{ $country['slug'] == $parts->origin ? 'selected' : '' }}>
+                        {{ $country['name'] }}
+                      </option>
+                    @endforeach
+                  </select>
+
+                  @if ( $errors->has('origin') )
+                    <div class="text-danger fz-14 fw-bold" role="alert">
+                      {{ $errors->first('origin') }}
                     </div>
                   @endif
                 </div>

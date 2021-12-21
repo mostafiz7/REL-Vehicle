@@ -69,11 +69,11 @@
 
                 {{--Country-Origin--}}
                 <div class="col-md-6 col-12 mb-30 origin">
-                  <label for="" class="w-100 mr-15"><span>Origin</span></label>
-                  <select name="origin" id="origin" class="form-select border-secondary brd-3 @error('origin') is-invalid @enderror">
+                  <label for="" class="required w-100 mr-15"><span>Origin</span></label>
+                  <select name="origin" id="origin" class="required form-select border-secondary brd-3 @error('origin') is-invalid @enderror">
                     <option value="">Select Country</option>
                     @foreach ( $countries as $country )
-                      <option value="{{$country['slug']}}" {{$country['slug'] == old('origin') ? 'selected' : ''}}>
+                      <option value="{{ $country['slug'] }}" {{ $country['slug'] == old('origin') ? 'selected' : '' }}>
                         {{ $country['name'] }}
                       </option>
                     @endforeach
