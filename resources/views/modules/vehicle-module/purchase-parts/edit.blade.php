@@ -314,7 +314,7 @@
                                       <select name="item_country[]" id="item_country-1" class="item_country form-select border-secondary brd-3">
                                         <option value="">Origin Country</option>
                                         @foreach ( $countries as $country )
-                                          <option value="{{$country['slug']}}">
+                                          <option value="{{ $country['slug'] }}">
                                             {{ $country['name'] }}
                                           </option>
                                         @endforeach
@@ -552,7 +552,7 @@
                             <select name="item_country[]" id="item_country" class="item_country form-select border-secondary brd-3">
                               <option value="">Origin Country</option>
                               @foreach ( $countries as $country )
-                                <option value="{{$country['slug']}}">
+                                <option value="{{ $country['slug'] }}">
                                   {{ $country['name'] }}
                                 </option>
                               @endforeach

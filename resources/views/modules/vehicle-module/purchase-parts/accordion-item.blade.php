@@ -30,7 +30,7 @@
               <select name="item_country[]" id="item_country-{{$index+1}}" class="item_country form-select border-secondary brd-3">
                 <option value="">- - -</option>
                 @foreach ( $countries as $country )
-                  <option value="{{$country['slug']}} {{ $purchase_item->origin == $country['slug'] ? 'selected' : '' }}">
+                  <option value="{{ $country['slug'] }}" {{ $purchase_item->origin == $country['slug'] ? 'selected' : '' }}>
                     {{ $country['name'] }}
                   </option>
                 @endforeach
