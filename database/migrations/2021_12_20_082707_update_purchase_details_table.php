@@ -13,14 +13,13 @@ class UpdatePurchaseDetailsTable extends Migration
    */
   public function up()
   {
-    Schema::table('purchase_details', function (Blueprint $table) {
+    /* Schema::table('purchase_details', function (Blueprint $table) {
       $table->string('origin')->after('vehicle_id');
       // $table->string('origin')->nullable()->after('vehicle_id');
       
-      /* $table->unsignedBigInteger('category_id')->nullable()->after('meta_description');
-      $table->foreign('category_id')
-        ->references('id')->on('categories')->onUpdate('cascade'); */
-    });
+      //$table->unsignedBigInteger('category_id')->nullable()->after('meta_description');
+      //$table->foreign('category_id')->references('id')->on('categories')->onUpdate('cascade');
+    }); */
   }
 
 
@@ -30,11 +29,11 @@ class UpdatePurchaseDetailsTable extends Migration
    */
   public function down()
   {
-    Schema::table('purchase_details', function (Blueprint $table) {
+    /* Schema::table('purchase_details', function (Blueprint $table) {
       $table->dropColumn(['origin']);
-      /* $table->dropForeign(['category_id']);
-      $table->dropColumn(['category_id']); */
-    });
+      //$table->dropForeign(['category_id']);
+      //$table->dropColumn(['category_id']);
+    }); */
   }
 
 }

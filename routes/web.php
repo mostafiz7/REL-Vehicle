@@ -25,7 +25,7 @@ Route::get('/migration-update', [Home_Controller::class, 'DatabaseTableUpdate'])
 Route::get('/migration-fresh', [Home_Controller::class, 'DatabaseTableFresh'])->name('database.migration.fresh');
 Route::get('/migration-fresh-seed', [Home_Controller::class, 'DatabaseTableFreshSeed'])->name('database.migration.fresh.seed');
 Route::get('/migration-rollback', [Home_Controller::class, 'DatabaseTableRollback'])->name('database.migration.rollback');
-Route::get('/db-seed', [HomeController::class, 'DatabaseSeed'])->name('database.seed');
+Route::get('/db-seed', [Home_Controller::class, 'DatabaseSeed'])->name('database.seed');
 
 
 // Employees Routes

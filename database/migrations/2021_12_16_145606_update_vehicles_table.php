@@ -13,13 +13,12 @@ class UpdateVehiclesTable extends Migration
    */
   public function up()
   {
-    Schema::table('vehicles', function (Blueprint $table) {
+    /* Schema::table('vehicles', function (Blueprint $table) {
       $table->boolean('enabled')->default(1)->after('slug');
       
-      /* $table->unsignedBigInteger('category_id')->nullable()->after('meta_description');
-      $table->foreign('category_id')
-        ->references('id')->on('categories')->onUpdate('cascade'); */
-    });
+      //$table->unsignedBigInteger('category_id')->nullable()->after('meta_description');
+      //$table->foreign('category_id')->references('id')->on('categories')->onUpdate('cascade');
+    }); */
   }
 
 
@@ -29,10 +28,10 @@ class UpdateVehiclesTable extends Migration
    */
   public function down()
   {
-    Schema::table('vehicles', function (Blueprint $table) {
+    /* Schema::table('vehicles', function (Blueprint $table) {
       $table->dropColumn(['enabled']);
-      /* $table->dropForeign(['category_id']);
-      $table->dropColumn(['category_id']); */
-    });
+      //$table->dropForeign(['category_id']);
+      //$table->dropColumn(['category_id']);
+    }); */
   }
 }
