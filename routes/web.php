@@ -1,16 +1,23 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Home_Controller;
 use App\Http\Controllers\Brand_Controller;
+use App\Http\Controllers\Parts_Controller;
+use App\Http\Controllers\Vehicle_Controller;
+use App\Http\Controllers\Employee_Controller;
+use App\Http\Controllers\Purchase_Controller;
 use App\Http\Controllers\Department_Controller;
 use App\Http\Controllers\Designation_Controller;
-use App\Http\Controllers\Employee_Controller;
-use App\Http\Controllers\Home_Controller;
-use App\Http\Controllers\Parts_Controller;
 use App\Http\Controllers\PartsCategory_Controller;
-use App\Http\Controllers\Purchase_Controller;
-use App\Http\Controllers\Vehicle_Controller;
 use App\Http\Controllers\VehicleCategory_Controller;
-use Illuminate\Support\Facades\Route;
+
+
+
+Auth::routes();
+
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
 Route::get('/', [Home_Controller::class, 'Homepage'])->name('homepage');
@@ -94,5 +101,3 @@ Route::get('/module/vehicles/parts/purchase-search', [Purchase_Controller::class
 
 Route::get('/module/vehicles/parts/purchase/{purchase_uid}/delete', [Purchase_Controller::class, 'VehiclePartsPurchaseDelete'])->name('vehicle.parts.purchase.delete');
 Route::get('/module/vehicles/parts/purchase/{purchase_uid}/item/{item_uid}/delete', [Purchase_Controller::class, 'VehiclePartsPurchaseItem_Delete'])->name('vehicle.parts.purchase.item.delete');
-
-

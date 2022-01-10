@@ -20,6 +20,18 @@ class Employee_Seeder extends Seeder
 
     Employee_Model::create([
       'uid'             => Str::uuid(),
+      'office_id'       => '010032',
+      'name'            => 'Nurullah Mohammad',
+      'nickname'        => 'Mostafiz',
+      'active'          => true,
+      'designation_id'  => 8,
+      'department_id'   => 1,
+      'authorize_power' => 0,
+      'purchase_power'  => 0,
+    ]);
+
+    Employee_Model::create([
+      'uid'             => Str::uuid(),
       'office_id'       => '010078',
       'name'            => 'Md. Din Islam',
       'nickname'        => 'Din Islam',

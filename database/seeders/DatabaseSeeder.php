@@ -29,6 +29,8 @@ class DatabaseSeeder extends Seeder
     $this->call(Parts_Seeder::class);
     $this->call(VehicleCategory_Seeder::class);
     $this->call(Vehicle_Seeder::class);
+    
+    $this->call(User_Seeder::class);
 
   }
 

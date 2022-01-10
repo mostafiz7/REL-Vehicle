@@ -6,16 +6,17 @@ const mix = require('laravel-mix');
  |--------------------------------------------------------------------------
  |
  | Mix provides a clean, fluent API for defining some Webpack build steps
- | for your Laravel applications. By default, we are compiling the CSS
+ | for your Laravel application. By default, we are compiling the Sass
  | file for the application as well as bundling up all the JS files.
  |
  */
 
+
 mix.js('resources/js/app.js', 'public/js')
-	.postCss('resources/css/app.css', 'public/css', [
-		// require('bootstrap'),
-	])
-	.sourceMaps();
+    .postCss('resources/css/app.css', 'public/css', [
+        // require('bootstrap'),
+    ])
+    .sourceMaps();
 
 
 // for using Bootstrap, jQuery & Popper js
@@ -38,7 +39,7 @@ mix.js('resources/js/app.js', 'public/js')
 	},
 	externalsType: "import"
 })
-	.js('resources/js/app.js', 'public/js')
-	.postCss('resources/css/app.css', 'public/css', [
-		// require('bootstrap'),
-	]);*/
+.js('resources/js/app.js', 'public/js')
+.postCss('resources/css/app.css', 'public/css', [
+    // require('bootstrap'),
+]);*/

@@ -17,10 +17,10 @@ try{
 /**
  * To load css & js resource from laravel asset
  */
-window.asset = function(path){
+/* window.asset = function(path){
 	let base_path = window._asset || '';
 	return base_path + path;
-};
+}; */
 
 window.axios = require('axios');
 
@@ -35,9 +35,9 @@ window.Toast = Swal.mixin({
 	timer: 3000,
 	timerProgressBar: true,
 	/*didOpen: (toast) => {
-	 toast.addEventListener('mouseenter', Swal.stopTimer)
-	 toast.addEventListener('mouseleave', Swal.resumeTimer)
-	 }*/
+	  toast.addEventListener('mouseenter', Swal.stopTimer)
+	  toast.addEventListener('mouseleave', Swal.resumeTimer)
+	}*/
 });
 
 /**

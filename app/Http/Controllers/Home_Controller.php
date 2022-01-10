@@ -10,7 +10,20 @@ use Illuminate\Support\Facades\Artisan;
 
 class Home_Controller extends Controller
 {
-  // Homepage
+  /**
+   * Create a new controller instance.
+   * @return void
+   */
+  /* public function __construct()
+  {
+    $this->middleware('auth');
+  } */
+
+
+  /**
+   * Show the application dashboard.
+   * @return \Illuminate\Contracts\Support\Renderable
+   */
   public function Homepage()
   {
     $parts_all   = Parts_Model::orderBy( 'name', 'asc' )->get()->all();
