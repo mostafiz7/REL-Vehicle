@@ -29,10 +29,9 @@
 		};
   </script>
 </head>
-
 <body class="layout-fixed {{$viewName}} {{Auth::check() ? "user-logged" : "guest"}}">
 
-  {{--App --- Site-Wrapper--}}
+  {{--App--}}
   <div id="app">
 
     {{--Site-Sidebar--}}
@@ -40,25 +39,26 @@
       @include('layouts.includes.sidebar')
     @show
 
-    {{--Site-Header--}}
-    @section('header')
-      @include('layouts.includes.header')
-    @show
+
+    {{--Site-Wrapper--}}
+    <div id="SiteWrapper" class="site-wrapper transition">
+      {{--Site-Header--}}
+      @section('header')
+        @include('layouts.includes.header')
+      @show
 
 
-    <div class="site-wrapper expand-default" id="Site-Wrapper">
-      <main class="main-content" id="MainContent">
-
+      {{--Main-Content--}}
+      <main id="MainContent" class="main-content">
         @yield('content')
-
       </main>
+
+
+      {{--Site-Footer--}}
+      @section('footer')
+        @include('layouts.includes.footer')
+      @show
     </div>
-
-
-    {{--Site-Footer--}}
-    @section('footer')
-      @include('layouts.includes.footer')
-    @show
 
   </div>{{-- #/app --}}
 

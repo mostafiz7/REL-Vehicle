@@ -430,6 +430,13 @@ a, a:hover, a:focus { text-decoration: none; }
 .z-index-14 { z-index: 14 !important; }
 .z-index-15 { z-index: 15 !important; }
 .z-index-20 { z-index: 20 !important; }
+.z-index-50 { z-index: 50 !important; }
+.z-index-60 { z-index: 60 !important; }
+.z-index-70 { z-index: 70 !important; }
+.z-index-80 { z-index: 80 !important; }
+.z-index-89 { z-index: 89 !important; }
+.z-index-90 { z-index: 90 !important; }
+.z-index-98 { z-index: 98 !important; }
 .z-index-99 { z-index: 99 !important; }
 .z-index-111 { z-index: 111 !important; }
 .z-index-999 { z-index: 999 !important; }
@@ -526,8 +533,8 @@ td.actions {
 
 
 /* Site-Wrapper */
-/* Site-Header & Site-Footer's height minus from Site-Wrapper element */
-#Site-Wrapper {
+/* SiteHeader & Site-Footer's height minus from SiteWrapper element */
+#SiteWrapper {
   height: calc(100% - 100px) !important;
 }
 

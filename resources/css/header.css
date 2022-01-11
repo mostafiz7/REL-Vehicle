@@ -1,6 +1,6 @@
 /* Header-CSS */
 /*
-#Site-Header.header-area
+#SiteHeader.header-area
 .header-navbar
 .navbar.navbar-expand-lg
 #pushMenu.sidebar-push
@@ -14,14 +14,15 @@
 */
 
 
-#Site-Header {
+#SiteHeader {
   height: 50px;
   /*background-color: #0A2150 !important;*/
 }
 
 .navbar-header .nav-item > .nav-link {
-  padding-top: 15px;
-  padding-bottom: 14px;
+  line-height: 1;
+  padding-top: 12px;
+  padding-bottom: 12px;
   margin-right: 5px;
 }
 

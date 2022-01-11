@@ -1,4 +1,4 @@
-<header id="Site-Header" class="header-area bg-navy-blue text-white">
+<header id="SiteHeader" class="header-area bg-navy-blue text-white">
   
   {{--@include( 'layouts.includes.header-top' )--}}
   {{--@include( 'layouts.includes.header-nav' )--}}
@@ -7,20 +7,25 @@
   @endif--}}
 
   <div class="header-navbar ps-sm-2">
-    <nav class="navbar navbar-expand-lg py-0 px-10">
-      <a class="navbar-brand pt-7 pb-11" href="/">
+    <nav class="navbar navbar-expand-lg py-5 px-10">
+      {{-- <a class="navbar-brand mr-30 pt-7 pb-11" href="/">
         <img src="{{ asset('assets/img/logo-red.png') }}" alt="" 
         class="brand-logo h-30px" />
-      </a>
+      </a> --}}
       
-      <button id="pushMenu" class="d-none sidebar-push mr-15">
-        <i class="fa fa-bars"></i>
+      {{-- bg-transparent text-white --}}
+      <button id="PushMenu" class="sidebar-push fz-22 lh-1 mr-15 ml--5 py-3 px-5 border-0">
+        <i class="fa fa-bars lh-1"></i>
       </button>
 
-      <div class="navbar-header ms-auto mt--2">
+      <div class="navbar-header">
         <ul class="navbar-nav">
           <li class="nav-item">
             <a href="/" class="nav-link {{ str_contains($viewName, 'home') || str_contains($viewName, 'searchForm') ? 'active' : '' }}">Home</a>
+          </li>
+          
+          <li class="nav-item">
+            <a href="/" class="nav-link {{ '' }}">Dashboard</a>
           </li>
 
           {{--Purchase-Dropdown--}}
@@ -177,7 +182,64 @@
               </li> --}}
             </ul>
           </li>
+        </ul>
+      </div>
 
+      <!-- Right Side of Navbar -->
+      <div class="navbar-header right ms-auto">
+        <ul class="navbar-nav">
+          {{--Authentication-Links--}}
+          @guest
+            {{-- @if (Route::has('login')) --}}
+            @if ( ! request()->routeIs('login') )
+              <li class="nav-item">
+                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+              </li>
+            @endif
+
+            {{-- @if (Route::has('register')) --}}
+            @if ( ! request()->routeIs('register') )
+              <li class="nav-item">
+                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+              </li>
+            @endif
+          @else
+            <li class="nav-item dropdown">
+              <a id="Header-Nav-Account" class="nav-link dropdown-toggle {{ '' }}"
+                href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                {{ Auth::user()->name }}
+              </a>
+
+              <ul class="dropdown-menu dropdown-menu-right mt--1 brd-0"
+                aria-labelledby="Header-Nav-Account">
+                <li class="">
+                  <a href="{{ route('homepage') }}" class="dropdown-item {{ '' }}">
+                    Account Settings
+                  </a>
+                </li>
+
+                <li class="">
+                  <a href="{{ route('homepage') }}" class="dropdown-item {{ '' }}">
+                    Password Change
+                  </a>
+                </li>
+                
+                <li class="dropdown-item-divider border-secondary-4 my-3"></li>
+
+                <li class="">
+                  <a href="{{ route('logout') }}" class="dropdown-item {{ '' }}"
+                    onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">
+                    {{ __('Logout') }}
+                  </a>
+
+                  <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                  </form>
+                </li>
+              </ul>
+            </li>
+          @endguest
         </ul>
       </div>
     </nav>
