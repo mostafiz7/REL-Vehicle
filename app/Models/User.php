@@ -26,6 +26,7 @@ class User extends Authenticatable
     'username',
     'active',
     'password',
+    'role_id',
     'employee_id',
     'email_verified_at',
     'permissions',
@@ -65,6 +66,14 @@ class User extends Authenticatable
 
 
 
+  // relationship with Role model
+  public function role(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+  {
+    return $this->belongsTo(Role_Model::class)->withDefault();
+  }
+
+
+  // relationship with Employee model
   public function employee(): \Illuminate\Database\Eloquent\Relations\BelongsTo
   {
     return $this->belongsTo(Employee_Model::class)->withDefault();

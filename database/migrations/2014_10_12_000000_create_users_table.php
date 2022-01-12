@@ -21,6 +21,8 @@ class CreateUsersTable extends Migration
       $table->string('username')->unique();
       $table->boolean('active')->default(1);
       $table->string('password');
+      // $table->tinyText('role');
+      $table->tinyInteger('role_id');
       $table->unsignedBigInteger('employee_id')->unique(); // Employee ID
       $table->timestamp('email_verified_at')->nullable();
       $table->json('permissions');
@@ -29,6 +31,8 @@ class CreateUsersTable extends Migration
       $table->rememberToken();
       $table->timestamps();
       
+      $table->foreign('role_id')
+        ->references('id')->on('roles')->onUpdate('cascade');
       $table->foreign('employee_id')
         ->references('id')->on('employees')->onUpdate('cascade');
     });

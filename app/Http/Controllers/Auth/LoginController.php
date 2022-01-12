@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -21,22 +22,25 @@ class LoginController extends Controller
   protected $redirectTo = RouteServiceProvider::HOME;
     protected function redirectTo()
       {
-        return route('homepage');
+        //return route('homepage');
 
-        /* if( Auth::user()->active ){
+        if( Auth::user()->active ){
           // $Role_id = Auth::user()->role_id;
           $Role_id = Auth::user()->role_id;
-          if( $Role_id == 1 || $Role_id == 2 || $Role_id == 3 || $Role_id == 4 || $Role_id == 5 ){
+          if( $Role_id == 1 || $Role_id == 2 ){
             return route('admin.dashboard');
-          } elseif( $Role_id == 6 ){
-            return route('members.home');
+          } else{
+            Session::flush();
+            Auth::logout();
+            session()->flash('error', 'The user not matched!');
+            return route('login');
           }
         } else{
-          Auth::logout();
           Session::flush();
-          session()->flash('error', 'The user not active.');
+          Auth::logout();
+          session()->flash('error', 'The user not active!');
           return route('login');
-        } */
+        }
       }
 
 
@@ -70,7 +74,7 @@ class LoginController extends Controller
     // Returned validated fields also contain the csrf token
     if( Auth::attempt( $credentials ) ){
       $Role_id = Auth::user()->role_id;
-      if( $Role_id == 1 || $Role_id == 2 || $Role_id == 3 || $Role_id == 4 || $Role_id == 5 ){
+      if( $Role_id == 1 || $Role_id == 2 ){
         return redirect()->route('admin.dashboard');
 
       } elseif( $Role_id == 6 ){
