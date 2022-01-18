@@ -9,7 +9,7 @@
           {{ __('Login') }}
         </div>
 
-        <div class="card-body py-80">
+        <div class="card-body py-60">
           <form method="POST" action="{{ route('login') }}">
             @csrf
 

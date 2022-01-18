@@ -13,6 +13,7 @@ use App\Http\Controllers\Department_Controller;
 use App\Http\Controllers\Designation_Controller;
 use App\Http\Controllers\PartsCategory_Controller;
 use App\Http\Controllers\VehicleCategory_Controller;
+use App\Http\Controllers\Auth\LoginController;
 
 
 
@@ -22,6 +23,9 @@ Auth::routes();
 
 
 Route::get('/', [Home_Controller::class, 'Homepage'])->name('homepage');
+
+Route::get('/login', [LoginController::class, 'loginForm'])->name('login');
+
 
 
 // Symbolic-Link & Laravel-Storage-Link

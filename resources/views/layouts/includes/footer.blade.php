@@ -22,7 +22,7 @@
 
         <div class="col-6 text-end">
           <div class="version">
-            v1.0.0
+            v1.0
           </div>
         </div>
       </div>

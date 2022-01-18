@@ -88,6 +88,24 @@
 			}
 		});
 
+
+		// Sidebar Dropdown-Menu
+		$('.dropdown-toggler').on('click', function(){
+			$(this).toggleClass('active');
+			$(this).next().toggleClass('show');
+			
+			/* $('.dropdown-toggler').each(function(){
+				if( $(this).hasClass('active') ) $(this).removeClass('active');
+				if( $(this).next().hasClass('show') ) $(this).next().removeClass('show');
+			});
+			if( ! $(this).hasClass('active') ){
+				$(this).addClass('active');
+			}
+			if( ! $(this).next().hasClass('show') ){
+				$(this).next().addClass('show');
+			} */
+		});
+
 		
 		// For Date-Picker
 		$(".date-select .input-date").datepicker({

@@ -21,27 +21,32 @@ class LoginController extends Controller
    */
   protected $redirectTo = RouteServiceProvider::HOME;
     protected function redirectTo()
-      {
-        //return route('homepage');
+    {
+      //return route('homepage');
 
-        if( Auth::user()->active ){
-          // $Role_id = Auth::user()->role_id;
-          $Role_id = Auth::user()->role_id;
-          if( $Role_id == 1 || $Role_id == 2 ){
-            return route('admin.dashboard');
-          } else{
-            Session::flush();
-            Auth::logout();
-            session()->flash('error', 'The user not matched!');
-            return route('login');
-          }
+      // $previousRoute = session()->has('previousRoute') && session('previousRoute') == 'homepage';
+      $previousRoute = session('previousRoute');
+
+      if( Auth::user()->active ){
+        // $Role_id = Auth::user()->role_id;
+        $Role_id = Auth::user()->role_id;
+        if( $Role_id == 1 || $Role_id == 2 ){
+          // return route('admin.dashboard');
+          return route($previousRoute);
+          
         } else{
           Session::flush();
           Auth::logout();
-          session()->flash('error', 'The user not active!');
+          session()->flash('error', 'The user not matched!');
           return route('login');
         }
+      } else{
+        Session::flush();
+        Auth::logout();
+        session()->flash('error', 'The user not active!');
+        return route('login');
       }
+    }
 
 
   /**
@@ -54,11 +59,16 @@ class LoginController extends Controller
   }
 
 
+
   // Show the Login-Form
-  /*public function loginForm()
+  public function loginForm()
   {
+    $previousRoute = app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName();
+    
+    session()->flash('previousRoute', $previousRoute);
+
     return view('auth.login');
-  }*/
+  }
 
 
   // Where to redirect users after login.
