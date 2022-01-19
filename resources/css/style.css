@@ -534,8 +534,9 @@ td.actions {
 
 /* Site-Wrapper */
 /* SiteHeader & Site-Footer's height minus from SiteWrapper element */
-#SiteWrapper {
-  height: calc(100% - 100px) !important;
+#SiteWrapper,
+#MainContent {
+  height: calc(100% - 50px) !important;
 }
 
 /* Page-Content */

@@ -36,12 +36,14 @@
 
     {{--Site-Sidebar--}}
     @section('sidebar')
-      @include('layouts.includes.sidebar')
+      @if ( Auth::check() && request()->route()->getName() != 'homepage' )
+        @include('layouts.includes.sidebar')
+      @endif
     @show
 
 
     {{--Site-Wrapper--}}
-    <div id="SiteWrapper" class="site-wrapper transition">
+    <div id="SiteWrapper" class="site-wrapper transition {{Auth::check() && request()->route()->getName() != 'homepage' ? 'admin' : ''}}">
       {{--Site-Header--}}
       @section('header')
         @include('layouts.includes.header')

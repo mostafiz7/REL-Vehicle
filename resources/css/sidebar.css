@@ -9,17 +9,15 @@
   width: 70px;
 }
 
-#SiteWrapper {
+#SiteWrapper.admin {
   margin-left: 70px;
 }
 
-/* #Sidebar.expand { */
-#Sidebar {
+#Sidebar.expand {
   width: 250px;
 }
 
-/* #SiteWrapper.expand { */
-#SiteWrapper {
+#SiteWrapper.expand {
   margin-left: 250px;
 }
 
@@ -63,6 +61,19 @@
   font-size: 14px;
 }
 
+#Sidebar:not(.expand) .sidebar-menu li a {
+  max-width: max-content;
+}
+
+#Sidebar:not(.expand) .sidebar-menu > a .text,
+#Sidebar:not(.expand) .sidebar-menu li a .text {
+  display: none;
+}
+
+#Sidebar:not(.expand) .sidebar-menu li ul {
+  padding-left: 3px;
+}
+
 .sidebar-menu > a:hover,
 .sidebar-menu > a.active,
 .sidebar-menu li a:hover,
@@ -81,6 +92,7 @@
 
 .sidebar-menu li ul {
   padding-left: 35px;
+  transition: 0.3s;
 }
 
 .sidebar-dropdown {

@@ -13,10 +13,10 @@
 
 
         <div class="card-body page-body">
-          <div class="dashboard-area">
+          <div class="dashboard-area overlay-scrollbar">
             
             <h3>Admin Dashboard</h3>
-            
+
           </div> {{-- ./page-content-area --}}
         </div> {{-- ./card-body --}}
       </div> {{-- ./card --}}

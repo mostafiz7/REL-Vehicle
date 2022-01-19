@@ -40,6 +40,25 @@ class User_Seeder extends Seeder
       ],
     ]);
     
+
+    User::create([
+      'uid'               => Str::uuid(),
+      'name'              => 'Kamrul Islam',
+      'email'             => 'kamrul_islam@gmail.com',
+      'username'          => 'kamrul_islam',
+      'active'            => 1,
+      'password'          => '00000000',
+      'role_id'           => 2,
+      'employee_id'       => 2,
+      'email_verified_at' => now(),
+      'permissions'       => ['index', 'create', 'view', 'edit', 'delete', 'print'],
+      'routes'            => [
+        'employee.all.show',
+        'employee.add.new',
+        'employee.single.edit',
+      ],
+    ]);
+    
   }
 
 }

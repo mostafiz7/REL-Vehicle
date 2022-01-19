@@ -16206,17 +16206,15 @@ body.pos-module.swal2-shown.swal2-height-auto {
   width: 70px;
 }
 
-#SiteWrapper {
+#SiteWrapper.admin {
   margin-left: 70px;
 }
 
-/* #Sidebar.expand { */
-#Sidebar {
+#Sidebar.expand {
   width: 250px;
 }
 
-/* #SiteWrapper.expand { */
-#SiteWrapper {
+#SiteWrapper.expand {
   margin-left: 250px;
 }
 
@@ -16264,6 +16262,21 @@ body.pos-module.swal2-shown.swal2-height-auto {
   font-size: 14px;
 }
 
+#Sidebar:not(.expand) .sidebar-menu li a {
+  max-width: -webkit-max-content;
+  max-width: -moz-max-content;
+  max-width: max-content;
+}
+
+#Sidebar:not(.expand) .sidebar-menu > a .text,
+#Sidebar:not(.expand) .sidebar-menu li a .text {
+  display: none;
+}
+
+#Sidebar:not(.expand) .sidebar-menu li ul {
+  padding-left: 3px;
+}
+
 .sidebar-menu > a:hover,
 .sidebar-menu > a.active,
 .sidebar-menu li a:hover,
@@ -16282,6 +16295,7 @@ body.pos-module.swal2-shown.swal2-height-auto {
 
 .sidebar-menu li ul {
   padding-left: 35px;
+  transition: 0.3s;
 }
 
 .sidebar-dropdown {
@@ -16903,8 +16917,9 @@ td.actions {
 
 /* Site-Wrapper */
 /* SiteHeader & Site-Footer's height minus from SiteWrapper element */
-#SiteWrapper {
-  height: calc(100% - 100px) !important;
+#SiteWrapper,
+#MainContent {
+  height: calc(100% - 50px) !important;
 }
 
 /* Page-Content */

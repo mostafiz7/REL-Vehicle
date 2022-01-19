@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
     $this->call(VehicleCategory_Seeder::class);
     $this->call(Vehicle_Seeder::class);
     
+    $this->call(Role_Seeder::class);
     $this->call(User_Seeder::class);
 
   }
