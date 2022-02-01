@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\User_Controller;
 use App\Http\Controllers\Home_Controller;
 use App\Http\Controllers\Brand_Controller;
 use App\Http\Controllers\Parts_Controller;
@@ -9,6 +10,7 @@ use App\Http\Controllers\Vehicle_Controller;
 use App\Http\Controllers\Employee_Controller;
 use App\Http\Controllers\Purchase_Controller;
 use App\Http\Controllers\Dashboard_Controller;
+use App\Http\Controllers\MyProfile_Controller;
 use App\Http\Controllers\Department_Controller;
 use App\Http\Controllers\Designation_Controller;
 use App\Http\Controllers\PartsCategory_Controller;
@@ -46,6 +48,13 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin'], 'namespace
 
   // Admin-Dashboard Routes
   Route::get('/dashboard', [Dashboard_Controller::class, 'AdminDashboard'])->name('admin.dashboard');
+
+  Route::get('/my-profile/password-change', [MyProfile_Controller::class, 'PasswordChange'])->name('profile.password.change');
+  Route::post('/my-profile/password-change', [MyProfile_Controller::class, 'ChangePassword'])->name('profile.password.change');
+
+  // Users Routes
+  Route::get('/user/new', [User_Controller::class, 'NewUser_Form'])->name('user.add.new');
+  Route::post('/user/new', [User_Controller::class, 'Store_NewUser'])->name('user.add.new');
 
   // Employees Routes
   Route::get('/module/employees/employee-index', [Employee_Controller::class, 'EmployeeAll_Index'])->name('employee.all.show');

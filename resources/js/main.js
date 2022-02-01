@@ -51,6 +51,26 @@
 		});
 		
 		
+		// Password-Show for Input Label
+		$(".show-password").on("click", function(){
+			let icon = $(this)[0].children[0];
+			let password = $(this).prev()[0];
+			if( password.type === 'password' ){
+				password.type = 'text';
+				$(this).removeClass('text-secondary');
+				$(this).addClass('text-danger');
+				icon.classList.remove('fa-eye');
+				icon.classList.add('fa-eye-slash');
+			} else{
+				password.type = 'password';
+				$(this).removeClass('text-danger');
+				$(this).addClass('text-secondary');
+				icon.classList.remove('fa-eye-slash');
+				icon.classList.add('fa-eye');
+			}
+		});
+
+
 		// Header Navbar
 		// $("#SiteHeader .navbar-header .nav-link.dropdown-toggle");
 		
@@ -195,6 +215,27 @@
 			}
 		});
 
+
+		// Select-All Permission Checkboxs
+		$("input[type=checkbox].permission.select-all").on("click", function(){
+			$("input[type=checkbox].permission").prop("checked", $(this).prop("checked"));
+		});
+		$("input[type=checkbox].permission").on("click", function(){
+			if( ! $(this).prop("checked") ){
+				$("input[type=checkbox].permission.select-all").prop("checked", false);
+			}
+		});
+		
+		
+		// Select-All Route Checkboxs
+		$("input[type=checkbox].route.select-all").on("click", function(){
+			$("input[type=checkbox].route").prop("checked", $(this).prop("checked"));
+		});
+		$("input[type=checkbox].route").on("click", function(){
+			if( ! $(this).prop("checked") ){
+				$("input[type=checkbox].route.select-all").prop("checked", false);
+			}
+		});
 
 
 		

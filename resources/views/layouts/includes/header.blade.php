@@ -216,7 +216,7 @@
             @endif --}}
           @else
             <li class="nav-item dropdown">
-              <a id="Header-Nav-Account" class="nav-link dropdown-toggle {{ '' }}"
+              <a id="Header-Nav-Account" class="nav-link dropdown-toggle {{ strpos($viewName, 'my-profile') ? 'active' : '' }}"
                 href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                 {{ Auth::user()->name }}
               </a>
@@ -230,7 +230,7 @@
                 </li>
 
                 <li class="">
-                  <a href="{{ route('homepage') }}" class="dropdown-item {{ '' }}">
+                  <a href="{{ route('profile.password.change') }}" class="dropdown-item {{ strpos($viewName, 'password-change') ? 'active' : '' }}">
                     Password Change
                   </a>
                 </li>

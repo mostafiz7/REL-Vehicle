@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Support\Str;
+use App\Models\Employee_Model;
 use Illuminate\Database\Seeder;
 
 class User_Seeder extends Seeder
@@ -47,7 +48,7 @@ class User_Seeder extends Seeder
       'email'             => 'kamrul_islam@gmail.com',
       'username'          => 'kamrul_islam',
       'active'            => 1,
-      'password'          => '00000000',
+      'password'          => '00',
       'role_id'           => 2,
       'employee_id'       => 2,
       'email_verified_at' => now(),
@@ -58,6 +59,9 @@ class User_Seeder extends Seeder
         'employee.single.edit',
       ],
     ]);
+
+
+    Employee_Model::find(1)->update([ 'user_id' => 1 ]);
     
   }
 
