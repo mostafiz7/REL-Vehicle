@@ -178,7 +178,7 @@
               </a>
             </li>
             <li class="menu-item">
-              <a href="{{ route('user.add.new') }}"
+              <a href="{{ route('user.all.index') }}"
                    class="link {{ strpos($viewName, 'user') && strpos($viewName, 'index') ? 'active' : '' }}">
                 <i class="fa fa-home icon"></i>
                 <span class="text">User Index</span>

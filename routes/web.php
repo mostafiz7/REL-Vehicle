@@ -52,11 +52,14 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin'], 'namespace
   Route::get('/my-profile/password-change', [MyProfile_Controller::class, 'PasswordChange'])->name('profile.password.change');
   Route::post('/my-profile/password-change', [MyProfile_Controller::class, 'ChangePassword'])->name('profile.password.change');
 
-  // Users Routes
+  // User Routes
+  Route::get('/user/index', [User_Controller::class, 'UserAll_Index'])->name('user.all.index');
   Route::get('/user/new', [User_Controller::class, 'NewUser_Form'])->name('user.add.new');
   Route::post('/user/new', [User_Controller::class, 'Store_NewUser'])->name('user.add.new');
+  Route::get('/user/{uid}/edit', [User_Controller::class, 'EditUser_Form'])->name('user.single.edit');
+  Route::post('/user/{uid}/edit', [User_Controller::class, 'Update_User'])->name('user.single.edit');
 
-  // Employees Routes
+  // Employee Routes
   Route::get('/module/employees/employee-index', [Employee_Controller::class, 'EmployeeAll_Index'])->name('employee.all.show');
   Route::get('/module/employees/employee-new', [Employee_Controller::class, 'EmployeeNew_Form'])->name('employee.add.new');
   Route::post('/module/employees/employee-new', [Employee_Controller::class, 'EmployeeNew_Store'])->name('employee.add.new');
