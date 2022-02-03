@@ -162,34 +162,34 @@
           </ul>
         </li>
 
-        {{--Users-Dropdown--}}
-        <li class="menu-item">
-          <a href="#" class="link dropdown-toggler {{ strpos($viewName, 'user') ? 'active' : '' }}">
-            <i class="fa fa-home icon"></i>
-            <span class="text">Users</span>
-          </a>
+        {{-- Users-and-Settings-Dropdown --}}
+        @can ( 'isSuperAdmin', Auth::user() )
+          {{-- User-Dropdown --}}
+          <li class="menu-item">
+            <a href="#" class="link dropdown-toggler {{ strpos($viewName, 'user') ? 'active' : '' }}">
+              <i class="fa fa-home icon"></i>
+              <span class="text">Users</span>
+            </a>
+            
+            <ul class="sidebar-dropdown list-style-none {{ strpos($viewName, 'user') ? 'show' : '' }}">
+              <li class="menu-item">
+                <a href="{{ route('user.add.new') }}"
+                    class="link {{ strpos($viewName, 'user') && strpos($viewName, 'new') ? 'active' : '' }}">
+                  <i class="fa fa-home icon"></i>
+                  <span class="text">New User</span>
+                </a>
+              </li>
+              <li class="menu-item">
+                <a href="{{ route('user.all.index') }}"
+                    class="link {{ strpos($viewName, 'user') && strpos($viewName, 'index') ? 'active' : '' }}">
+                  <i class="fa fa-home icon"></i>
+                  <span class="text">User Index</span>
+                </a>
+              </li>
+            </ul>
+          </li>
           
-          <ul class="sidebar-dropdown list-style-none {{ strpos($viewName, 'user') ? 'show' : '' }}">
-            <li class="menu-item">
-              <a href="{{ route('user.add.new') }}"
-                   class="link {{ strpos($viewName, 'user') && strpos($viewName, 'new') ? 'active' : '' }}">
-                <i class="fa fa-home icon"></i>
-                <span class="text">New User</span>
-              </a>
-            </li>
-            <li class="menu-item">
-              <a href="{{ route('user.all.index') }}"
-                   class="link {{ strpos($viewName, 'user') && strpos($viewName, 'index') ? 'active' : '' }}">
-                <i class="fa fa-home icon"></i>
-                <span class="text">User Index</span>
-              </a>
-            </li>
-          </ul>
-        </li>
-
-        {{--Settings-Dropdown--}}
-        {{-- @can ( 'isSuperAdmin', Auth::user() ) --}}
-        @can ( 'isSuperAdmin' )
+          {{-- Settings-Dropdown --}}
           <li class="menu-item">
             <a href="#" class="link dropdown-toggler {{ strpos($viewName, 'settings') ? 'active' : '' }}">
               <i class="fa fa-home icon"></i>
@@ -235,24 +235,6 @@
             </ul>
           </li>
         @endcan
-
-
-        {{--Dropdown-Menu--}}
-        {{-- <li class="menu-item">
-          <a href="#" class="link dropdown-toggler ">
-            <i class="fa fa-home icon"></i>
-            <span class="text">Dashboard</span>
-          </a>
-          
-          <ul class="sidebar-dropdown list-style-none">
-            <li class="menu-item">
-              <a href="#" class="link ">
-                <i class="fa fa-home icon"></i>
-                <span class="text">Dashboard</span>
-              </a>
-            </li>
-          </ul>
-        </li> --}}
       </ul>
     </div>
   </div>

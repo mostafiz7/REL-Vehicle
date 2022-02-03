@@ -8,6 +8,7 @@ use App\Models\Employee_Model;
 use Illuminate\Validation\Rule;
 use App\Models\Department_Model;
 use App\Models\Designation_Model;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -17,9 +18,10 @@ class Employee_Controller extends Controller
   function EmployeeAll_Index( Request $request )
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
-    /*if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
+    if( Gate::denies('isAdmins') || Gate::denies('entryIndex') || Gate::denies('routeHasAccess') ){
       return back()->with('error', 'You are not authorized to perform this action!');
-    }*/
+    }
+
 
     $status             = $request->status ?? null;
     $search_by          = $request->search_by ?? null;
@@ -119,9 +121,10 @@ class Employee_Controller extends Controller
   function EmployeeNew_Form( Request $request )
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
-    /*if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
+    if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
       return back()->with('error', 'You are not authorized to perform this action!');
-    }*/
+    }
+
 
     $department_all  = Department_Model::orderBy('name', 'asc')->get()->all();
     $designation_all = Designation_Model::orderBy('name', 'asc')->get()->all();
@@ -140,9 +143,10 @@ class Employee_Controller extends Controller
   function EmployeeNew_Store( Request $request )
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
-    /*if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
+    if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
       return back()->with('error', 'You are not authorized to perform this action!');
-    }*/
+    }
+
 
     $employment_statuses = implode(',', EmploymentStatus());
     $employment_status = $request->employment_status == 'permanent';
@@ -191,9 +195,10 @@ class Employee_Controller extends Controller
   function EmployeeSingle_Edit( $employee_uid, Request $request )
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
-    /*if( Gate::denies('isAdmins') || Gate::denies('entryEdit') || Gate::denies('routeHasAccess') ){
+    if( Gate::denies('isAdmins') || Gate::denies('entryEdit') || Gate::denies('routeHasAccess') ){
       return back()->with('error', 'You are not authorized to perform this action!');
-    }*/
+    }
+
 
     $employee = Employee_Model::where('uid', $employee_uid)->first();
 
@@ -217,9 +222,10 @@ class Employee_Controller extends Controller
   function EmployeeSingle_Update( $employee_uid, Request $request )
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
-    /*if( Gate::denies('isAdmins') || Gate::denies('entryEdit') || Gate::denies('routeHasAccess') ){
+    if( Gate::denies('isAdmins') || Gate::denies('entryEdit') || Gate::denies('routeHasAccess') ){
       return back()->with('error', 'You are not authorized to perform this action!');
-    }*/
+    }
+
 
     $employee = Employee_Model::where('uid', $employee_uid)->first();
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\PartsCategory_Model;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -13,6 +14,12 @@ class PartsCategory_Controller extends Controller
   // Show Parts-Category-Add-Form
   function PartsCategoryAddForm( Request $request )
   {
+    // if( Gate::allows('isAdmin', Auth::user()) ){}
+    if( Gate::denies('isAdmins') || Gate::denies('entryIndex') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
+      return back()->with('error', 'You are not authorized to perform this action!');
+    }
+    
+
     $category_all    = PartsCategory_Model::orderBy('name', 'asc')->get()->all();
 
     return view('modules.vehicle-module.parts.categories')->with([
@@ -25,9 +32,10 @@ class PartsCategory_Controller extends Controller
   function Store_NewPartsCategory( Request $request ): \Illuminate\Http\RedirectResponse
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
-    /*if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
+    if( Gate::denies('isAdmins') || Gate::denies('entryIndex') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
       return back()->with('error', 'You are not authorized to perform this action!');
-    }*/
+    }
+    
 
     $validator = Validator::make( $request->all(), [
       'name'        => [ 'required', 'string', 'max:50', 'unique:parts_category,name' ],
@@ -56,9 +64,10 @@ class PartsCategory_Controller extends Controller
   function PartsCategoryEditForm( PartsCategory_Model $category, Request $request )
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
-    /*if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
+    if( Gate::denies('isAdmins') || Gate::denies('entryEdit') || Gate::denies('routeHasAccess') ){
       return back()->with('error', 'You are not authorized to perform this action!');
-    }*/
+    }
+
 
     if( ! $category ) return back()->with('error', 'The category not found in system!');
 
@@ -72,9 +81,10 @@ class PartsCategory_Controller extends Controller
   function PartsCategoryUpdate( PartsCategory_Model $category, Request $request )
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
-    /*if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
+    if( Gate::denies('isAdmins') || Gate::denies('entryEdit') || Gate::denies('routeHasAccess') ){
       return back()->with('error', 'You are not authorized to perform this action!');
-    }*/
+    }
+    
 
     if( ! $category ) return back()->with('error', 'The category not found in system!');
 

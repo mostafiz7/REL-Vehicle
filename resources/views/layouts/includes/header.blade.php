@@ -26,7 +26,8 @@
             <a href="/" class="nav-link {{ str_contains($viewName, 'home') || str_contains($viewName, 'searchForm') ? 'active' : '' }}">Home</a>
           </li>
           
-          @if ( Auth::check() && request()->route()->getName() == 'homepage' )
+          {{-- @if ( Auth::check() && request()->route()->getName() == 'homepage' ) --}}
+          @if ( Auth::check() )
             <li class="nav-item">
               <a href="{{ route('admin.dashboard') }}" class="nav-link {{ strpos($viewName, 'dashboard') ? 'active' : '' }}">
                 Dashboard
@@ -161,33 +162,70 @@
             </li>
 
 
-            {{--Settings-Dropdown--}}
-            {{-- <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle {{ strpos($viewName, 'settings') ? 'active' : '' }}"
-                href="#" id="Header-Nav-Settings" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Settings
-              </a>
-              <ul class="dropdown-menu mt--1 brd-0" aria-labelledby="Header-Nav-Settings">
-                <li class="">
-                  <a href="{{ route('database-migration-update') }}"
-                    class="dropdown-item {{ strpos($viewName, 'settings') ? 'active' : '' }}">
-                    Migrate
-                  </a>
-                </li>
-                <li class="">
-                  <a href="{{ route('database-migration-fresh') }}"
-                    class="dropdown-item {{ strpos($viewName, 'settings') ? 'active' : '' }}">
-                    Migrate Fresh
-                  </a>
-                </li>
-                <li class="">
-                  <a href="{{ route('database-migration-rollback') }}"
-                    class="dropdown-item {{ strpos($viewName, 'settings') ? 'active' : '' }}">
-                    Migrate Rollback
-                  </a>
-                </li>
-              </ul>
-            </li> --}}
+            {{-- User-and-Settings-Dropdown --}}
+            @can( 'isSuperAdmin', Auth::user() )
+              {{-- User-Dropdown --}}
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle {{ strpos($viewName, 'user') ? 'active' : '' }}"
+                  href="#" id="Header-Nav-Users" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Users
+                </a>
+                <ul class="dropdown-menu mt--1 brd-0" aria-labelledby="Header-Nav-Users">
+                  <li class="">
+                    <a href="{{ route('user.add.new') }}"
+                      class="dropdown-item {{ strpos($viewName, 'user') && strpos($viewName, 'new') ? 'active' : '' }}">
+                      Add User
+                    </a>
+                  </li>
+                  <li class="">
+                    <a href="{{ route('user.all.index') }}"
+                      class="dropdown-item {{ strpos($viewName, 'user') && strpos($viewName, 'index') ? 'active' : '' }}">
+                      User Index
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              
+              {{-- Settings-Dropdown --}}
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle {{ strpos($viewName, 'settings') ? 'active' : '' }}"
+                  href="#" id="Header-Nav-Settings" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Settings
+                </a>
+                <ul class="dropdown-menu mt--1 brd-0" aria-labelledby="Header-Nav-Settings">
+                  <li class="">
+                    <a href="{{ route('database.migration.update') }}"
+                      class="dropdown-item {{ strpos($viewName, 'settings') ? 'active' : '' }}">
+                      Migrate Update
+                    </a>
+                  </li>
+                  <li class="">
+                    <a href="{{ route('database.migration.fresh') }}"
+                      class="dropdown-item {{ strpos($viewName, 'settings') ? 'active' : '' }}">
+                      Migrate Fresh
+                    </a>
+                  </li>
+                  <li class="">
+                    <a href="{{ route('database.migration.fresh.seed') }}"
+                      class="dropdown-item {{ strpos($viewName, 'settings') ? 'active' : '' }}">
+                      Migrate Fresh Seed
+                    </a>
+                  </li>
+                  <li class="">
+                    <a href="{{ route('database.migration.rollback') }}"
+                      class="dropdown-item {{ strpos($viewName, 'settings') ? 'active' : '' }}">
+                      Migrate Rollback
+                    </a>
+                  </li>
+                  <li class="">
+                    <a href="{{ route('database.seed') }}"
+                      class="dropdown-item {{ strpos($viewName, 'settings') ? 'active' : '' }}">
+                      Database Seed
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            @endcan
           @endif
         </ul>
       </div>

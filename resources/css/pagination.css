@@ -1,0 +1,121 @@
+
+/* Pagination-Style */
+
+.pagination-links,
+.pagination-links div {
+  height: auto !important;
+}
+
+.pagination-links .flex {
+  display: flex;
+}
+
+.pagination-links .inline-flex {
+  display: inline-flex;
+}
+
+.pagination-links .justify-between {
+  justify-content: space-between;
+}
+
+.pagination-links .items-center {
+  align-items: center;
+}
+
+.pagination-links nav > div:first-child {
+  display: none;
+}
+
+.pagination-links p {
+  margin-bottom: 0;
+}
+
+.pagination-links .hidden {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 1 1 0%;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.pagination-links .relative {
+  position: relative;
+}
+
+.pagination-links .text-sm {
+  font-size: 80%;
+}
+
+.pagination-links .ml-3 {
+  margin-left: 12px !important;
+}
+
+.pagination-links .px-4 {
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+}
+
+.pagination-links .py-2 {
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+}
+
+.pagination-links .px-2 {
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+}
+
+.pagination-links .z-0 {
+  z-index: 0;
+}
+
+.pagination-links .hidden div {
+  width: auto !important;
+}
+
+.pagination-links .hidden div > span > :first-child,
+.pagination-links .hidden div > span > :first-child > span,
+.pagination-links .hidden div > span > :last-child,
+.pagination-links .hidden div > span > :last-child > span {
+  display: inline-block;
+  width: 31px !important;
+  height: 31px !important;
+}
+
+.pagination-links .hidden div > span > :first-child > *,
+.pagination-links .hidden div > span > :first-child > span > *,
+.pagination-links .hidden div > span > :last-child > *,
+.pagination-links .hidden div > span > :last-child > span > * {
+  display: none;
+}
+
+.pagination-links .hidden div > span > :first-child:before,
+.pagination-links .hidden div > span > :first-child > span:before,
+.pagination-links .hidden div > span > :last-child:before,
+.pagination-links .hidden div > span > :last-child > span:before {
+  position: absolute;
+  content: "\f100";
+  font-family: 'FontAwesome';
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background-color: transparent;
+  color: #000;
+  font-size: 16px;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.pagination-links .hidden div > span > :last-child:before,
+.pagination-links .hidden div > span > :last-child > span:before {
+  content: "\f101" !important;
+}
+
+.pagination-links.first-page .hidden div > span > :first-child:before,
+.pagination-links.last-page .hidden div > span > :last-child:before {
+  display: none;
+}
+
+

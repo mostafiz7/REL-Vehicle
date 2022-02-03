@@ -13,14 +13,18 @@ class UpdateUsersTable extends Migration
    */
   public function up()
   {
-    /* Schema::table('users', function (Blueprint $table) {
-      // $table->boolean('enabled')->default(1)->after('slug');
+    Schema::table('users', function (Blueprint $table) {
+      // $table->boolean('active')->default(1)->after('username');
       // $table->tinyText('role')->after('password');
       // $table->tinyInteger('role_id')->after('role');
       $table->tinyInteger('role_id')->after('password');
+      $table->unsignedBigInteger('employee_id')->unique()->after('role_id');
 
-      $table->foreign('role_id')->references('id')->on('roles')->onUpdate('cascade');
-    }); */
+      $table->foreign('role_id')
+        ->references('id')->on('roles')->onUpdate('cascade');
+      $table->foreign('employee_id')
+        ->references('id')->on('employees')->onUpdate('cascade');
+    });
   }
 
 
@@ -30,9 +34,9 @@ class UpdateUsersTable extends Migration
    */
   public function down()
   {
-    /* Schema::table('users', function (Blueprint $table) {
-      $table->dropColumn(['role_id']);
-      //$table->dropForeign(['role', 'role_id']);
-    }); */
+    Schema::table('users', function (Blueprint $table) {
+      $table->dropForeign(['role_id', 'employee_id']);
+      $table->dropColumn(['role_id', 'employee_id']);
+    });
   }
 }

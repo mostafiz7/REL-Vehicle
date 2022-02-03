@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Brand_Model;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -14,9 +15,10 @@ class Brand_Controller extends Controller
   function BrandAddForm( Request $request )
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
-    /*if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
+    if( Gate::denies('isAdmins') || Gate::denies('entryIndex') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
       return back()->with('error', 'You are not authorized to perform this action!');
-    }*/
+    }
+
 
     $brand_all    = Brand_Model::orderBy('name', 'asc')->get()->all();
 
@@ -31,9 +33,10 @@ class Brand_Controller extends Controller
   function Store_NewBrand( Request $request ): \Illuminate\Http\RedirectResponse
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
-    /*if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
+    if( Gate::denies('isAdmins') || Gate::denies('entryIndex') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
       return back()->with('error', 'You are not authorized to perform this action!');
-    }*/
+    }
+
 
     $validator = Validator::make( $request->all(), [
       'name'    => [ 'required', 'string', 'max:50', 'unique:brands,name' ],
@@ -62,9 +65,10 @@ class Brand_Controller extends Controller
   function BrandEditForm( Brand_Model $brand, Request $request )
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
-    /*if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
+    if( Gate::denies('isAdmins') || Gate::denies('entryEdit') || Gate::denies('routeHasAccess') ){
       return back()->with('error', 'You are not authorized to perform this action!');
-    }*/
+    }
+
 
     if( ! $brand ) return back()->with('error', 'The brand not found in system!');
 
@@ -79,9 +83,10 @@ class Brand_Controller extends Controller
   function BrandUpdate( Brand_Model $brand, Request $request )
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
-    /*if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
+    if( Gate::denies('isAdmins') || Gate::denies('entryEdit') || Gate::denies('routeHasAccess') ){
       return back()->with('error', 'You are not authorized to perform this action!');
-    }*/
+    }
+    
 
     if( ! $brand ) return back()->with('error', 'The brand not found in system!');
 

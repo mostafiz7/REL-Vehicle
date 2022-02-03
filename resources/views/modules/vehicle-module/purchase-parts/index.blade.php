@@ -7,8 +7,14 @@
   <div class="container-fluid">
     <div class="page-content pt-10">
       <div class="card">
-        <div class="card-header page-header bg-success text-white">
+        <div class="card-header page-header d-flex justify-content-between align-items-center bg-success text-white">
           <h5 class="title mb-0">Purchase History</h5>
+
+          <div class="">
+            <a href="{{ route('vehicle.parts.purchase.new') }}" class="btn btn-light btn-sm fw-bold">
+              New Purchase
+            </a>
+          </div>
         </div>
 
 
@@ -217,35 +223,50 @@
             <div class="blank h-auto bt-1 border-secondary-1"></div>
 
             <div class="purchase-history-details overlay-scrollbar full-height-minus minus-115 p-10">
-              <table class="table table-bordered table-hover border-secondary-3 purchase-history-table">
-                <thead class="table-header bg-dark text-white fz-14 text-center">
-                  <tr class="table-row header align-middle">
-                    <th scope="col" class="serial w-30px-min">S/L</th>
-                    <th scope="col" class="purchase-number">Purchase No.#</th>
-                    <th scope="col" class="purchase-date">Date</th>
-                    <th scope="col" class="vehicle-number">Vehicle</th>
-                    <th scope="col" class="parts-list">Parts List</th>
-                    <th scope="col" class="shop-name">Shop Name</th>
-                    <th scope="col" class="total-qty">Total Qty</th>
-                    <th scope="col" class="total-amount">Total Amount</th>
-                    <th scope="col" class="purchased-by">Purchased-By</th>
-                    <th scope="col" class="authorized-by">Authorized-By</th>
-                    <th scope="col" class="action">---</th>
-                  </tr>
-                </thead>
-
-                <tbody class="table-body fz-12">
-                  @if ( $purchases_all && count($purchases_all) > 0 )
-                    @foreach ( $purchases_all as $index => $purchase )
-                      @include('modules.vehicle-module.purchase-parts.index-tableRow', $purchase)
-                    @endforeach
-                  @else
-                    <tr class="table-row content no-purchase align-middle">
-                      <td colspan="11" class="error text-danger fz-22 fw-bold text-center py-100">Sorry! Currently there are no record available.</td>
+              @if ( $purchases_all && count($purchases_all) > 0 )
+                {{-- Paginate-Links --}}
+                <div class="pagination-links h-auto {{ $purchases_all->total() > $pagination_count ? 'mb-5' : '' }} {{ $purchases_all->currentPage() == 1 ? 'first-page' : ($purchases_all->currentPage() == $purchases_all->lastPage() ? 'last-page' : '') }}">
+                  {{ $purchases_all->withQueryString()->links() }}
+                </div>
+                
+                <table class="table table-bordered table-hover border-secondary-3 purchase-history-table">
+                  <thead class="table-header bg-dark text-white fz-14 text-center">
+                    <tr class="table-row header align-middle">
+                      <th scope="col" class="serial w-30px-min">S/L</th>
+                      <th scope="col" class="purchase-number">Purchase No.#</th>
+                      <th scope="col" class="purchase-date">Date</th>
+                      <th scope="col" class="vehicle-number">Vehicle</th>
+                      <th scope="col" class="parts-list">Parts List</th>
+                      <th scope="col" class="shop-name">Shop Name</th>
+                      <th scope="col" class="total-qty">Total Qty</th>
+                      <th scope="col" class="total-amount">Total Amount</th>
+                      <th scope="col" class="purchased-by">Purchased-By</th>
+                      <th scope="col" class="authorized-by">Authorized-By</th>
+                      <th scope="col" class="action">---</th>
                     </tr>
-                  @endif
-                </tbody>
-              </table>
+                  </thead>
+
+                  @php
+                    $serial = $purchases_all->currentPage() == 1 ? 1 : ((($purchases_all->currentPage() - 1) * $pagination_count) + 1);
+                  @endphp
+
+                  <tbody class="table-body fz-12">
+                    @foreach ( $purchases_all as $index => $purchase )
+                      @include('modules.vehicle-module.purchase-parts.index-tableRow', ['purchase' => $purchase, 'serial' => $serial++])
+                    @endforeach
+                  </tbody>
+                </table>
+
+                {{-- Paginate-Links --}}
+                <div class="pagination-links {{ $purchases_all->total() > $pagination_count ? 'mt-20' : '' }} {{ $purchases_all->currentPage() == 1 ? 'first-page' : ($purchases_all->currentPage() == $purchases_all->lastPage() ? 'last-page' : '') }}">
+                  {{ $purchases_all->withQueryString()->links() }}
+                </div>
+              @else
+                <div class="no-purchase text-danger align-middle fz-22 fw-bold text-center py-100">
+                  Sorry! Currently there are no record available.
+                </div>
+              @endif
+
             </div>
 
 

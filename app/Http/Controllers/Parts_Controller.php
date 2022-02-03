@@ -6,6 +6,7 @@ use App\Models\Parts_Model;
 use App\Models\PartsCategory_Model;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -15,9 +16,10 @@ class Parts_Controller extends Controller
   function Parts_Index( Request $request )
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
-    /*if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
+    if( Gate::denies('isAdmins') || Gate::denies('entryIndex') || Gate::denies('routeHasAccess') ){
       return back()->with('error', 'You are not authorized to perform this action!');
-    }*/
+    }
+
 
     $search_by      = $request->search_by ?? null;
     $status         = $request->status ?? null;
@@ -131,9 +133,10 @@ class Parts_Controller extends Controller
   function Show_PartsAddForm( Request $request )
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
-    /*if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
+    if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
       return back()->with('error', 'You are not authorized to perform this action!');
-    }*/
+    }
+
     
     $category_all    = PartsCategory_Model::orderBy('name', 'asc')->get()->all();
 
@@ -149,9 +152,10 @@ class Parts_Controller extends Controller
   function PartsNew_Store( Request $request ): \Illuminate\Http\RedirectResponse
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
-    /*if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
+    if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
       return back()->with('error', 'You are not authorized to perform this action!');
-    }*/
+    }
+    
     
     $countries = [];
     foreach( Countries() as $country ){ $countries[] = $country['slug']; }
@@ -201,9 +205,10 @@ class Parts_Controller extends Controller
   function SinglePartsEditForm( $parts_uid, Request $request )
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
-    /*if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
+    if( Gate::denies('isAdmins') || Gate::denies('entryEdit') || Gate::denies('routeHasAccess') ){
       return back()->with('error', 'You are not authorized to perform this action!');
-    }*/
+    }
+
 
     $parts = Parts_Model::where('uid', $parts_uid)->first();
 
@@ -224,9 +229,10 @@ class Parts_Controller extends Controller
   function SinglePartsUpdate( $parts_uid, Request $request )
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
-    /*if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
+    if( Gate::denies('isAdmins') || Gate::denies('entryEdit') || Gate::denies('routeHasAccess') ){
       return back()->with('error', 'You are not authorized to perform this action!');
-    }*/
+    }
+
 
     $parts = Parts_Model::where('uid', $parts_uid)->first();
 

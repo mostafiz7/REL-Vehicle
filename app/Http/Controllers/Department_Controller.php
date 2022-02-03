@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Department_Model;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -13,6 +14,12 @@ class Department_Controller extends Controller
   // Show New-Department-Form
   function DepartmentNew_Form( Request $request )
   {
+    // if( Gate::allows('isAdmin', Auth::user()) ){}
+    if( Gate::denies('isAdmins') || Gate::denies('entryIndex') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
+      return back()->with('error', 'You are not authorized to perform this action!');
+    }
+    
+
     $department_all = Department_Model::orderBy('name', 'asc')->get()->all();
 
     return view('modules.employees.departments')->with([
@@ -25,9 +32,10 @@ class Department_Controller extends Controller
   function DepartmentNew_Store( Request $request ): \Illuminate\Http\RedirectResponse
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
-    /*if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
+    if( Gate::denies('isAdmins') || Gate::denies('entryIndex') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
       return back()->with('error', 'You are not authorized to perform this action!');
-    }*/
+    }
+
 
     $validator = Validator::make( $request->all(), [
       'name'       => [ 'required', 'string', 'max:50', 'unique:departments,name' ],
@@ -58,9 +66,10 @@ class Department_Controller extends Controller
   function DepartmentSingle_Edit( Department_Model $department, Request $request )
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
-    /*if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
+    if( Gate::denies('isAdmins') || Gate::denies('entryEdit') || Gate::denies('routeHasAccess') ){
       return back()->with('error', 'You are not authorized to perform this action!');
-    }*/
+    }
+
 
     if( ! $department ) return back()->with('error', 'The department not found in system!');
     
@@ -74,9 +83,10 @@ class Department_Controller extends Controller
   function DepartmentSingle_Update( Department_Model $department, Request $request )
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
-    /*if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
+    if( Gate::denies('isAdmins') || Gate::denies('entryEdit') || Gate::denies('routeHasAccess') ){
       return back()->with('error', 'You are not authorized to perform this action!');
-    }*/
+    }
+
 
     if( ! $department ) return back()->with('error', 'The department not found in system!');
 

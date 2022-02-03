@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\VehicleCategory_Model;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -13,6 +14,12 @@ class VehicleCategory_Controller extends Controller
   // Show Vehicle-Category-Add-Form
   function VehicleCategoryAddForm( Request $request )
   {
+    // if( Gate::allows('isAdmin', Auth::user()) ){}
+    if( Gate::denies('isAdmins') || Gate::denies('entryIndex') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
+      return back()->with('error', 'You are not authorized to perform this action!');
+    }
+    
+
     $category_all    = VehicleCategory_Model::orderBy('name', 'asc')->get()->all();
 
     return view('modules.vehicle-module.vehicles.categories')->with([
@@ -25,9 +32,10 @@ class VehicleCategory_Controller extends Controller
   function Store_NewVehicleCategory( Request $request ): \Illuminate\Http\RedirectResponse
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
-    /*if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
+    if( Gate::denies('isAdmins') || Gate::denies('entryIndex') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
       return back()->with('error', 'You are not authorized to perform this action!');
-    }*/
+    }
+    
 
     $validator = Validator::make( $request->all(), [
       'name'        => [ 'required', 'string', 'max:50', 'unique:vehicle_category,name' ],
@@ -58,9 +66,10 @@ class VehicleCategory_Controller extends Controller
   function VehicleCategoryEditForm( VehicleCategory_Model $category, Request $request )
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
-    /*if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
+    if( Gate::denies('isAdmins') || Gate::denies('entryEdit') || Gate::denies('routeHasAccess') ){
       return back()->with('error', 'You are not authorized to perform this action!');
-    }*/
+    }
+
 
     if( ! $category ) return back()->with('error', 'The category not found in system!');
 
@@ -74,9 +83,10 @@ class VehicleCategory_Controller extends Controller
   function VehicleCategoryUpdate( VehicleCategory_Model $category, Request $request )
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
-    /*if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
+    if( Gate::denies('isAdmins') || Gate::denies('entryEdit') || Gate::denies('routeHasAccess') ){
       return back()->with('error', 'You are not authorized to perform this action!');
-    }*/
+    }
+    
 
     if( ! $category ) return back()->with('error', 'The category not found in system!');
 

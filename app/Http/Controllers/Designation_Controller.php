@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Designation_Model;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -13,6 +14,12 @@ class Designation_Controller extends Controller
   // Show New-Designation-Form
   function DesignationNew_Form( Request $request )
   {
+    // if( Gate::allows('isAdmin', Auth::user()) ){}
+    if( Gate::denies('isAdmins') || Gate::denies('entryIndex') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
+      return back()->with('error', 'You are not authorized to perform this action!');
+    }
+    
+
     $designation_all = Designation_Model::orderBy('name', 'asc')->get()->all();
 
     return view('modules.employees.designations')->with([
@@ -25,9 +32,10 @@ class Designation_Controller extends Controller
   function DesignationNew_Store( Request $request ): \Illuminate\Http\RedirectResponse
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
-    /*if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
+    if( Gate::denies('isAdmins') || Gate::denies('entryIndex') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
       return back()->with('error', 'You are not authorized to perform this action!');
-    }*/
+    }
+    
 
     $validator = Validator::make( $request->all(), [
       'name'       => [ 'required', 'string', 'max:50', 'unique:designations,name' ],
@@ -58,9 +66,10 @@ class Designation_Controller extends Controller
   function DesignationSingle_Edit( Designation_Model $designation, Request $request )
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
-    /*if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
+    if( Gate::denies('isAdmins') || Gate::denies('entryEdit') || Gate::denies('routeHasAccess') ){
       return back()->with('error', 'You are not authorized to perform this action!');
-    }*/
+    }
+
 
     if( ! $designation ) return back()->with('error', 'The designation not found in system!');
     
@@ -74,9 +83,10 @@ class Designation_Controller extends Controller
   function DesignationSingle_Update( Designation_Model $designation, Request $request )
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
-    /*if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
+    if( Gate::denies('isAdmins') || Gate::denies('entryEdit') || Gate::denies('routeHasAccess') ){
       return back()->with('error', 'You are not authorized to perform this action!');
-    }*/
+    }
+
 
     if( ! $designation ) return back()->with('error', 'The designation not found in system!');
 

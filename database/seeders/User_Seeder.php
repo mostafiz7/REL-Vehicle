@@ -30,6 +30,7 @@ class User_Seeder extends Seeder
       'email_verified_at' => now(),
       'permissions'       => ['index', 'create', 'view', 'edit', 'delete', 'print'],
       'routes'            => [
+        'admin.dashboard',
         'database.migration.update',
         'database.migration.fresh',
         'database.migration.fresh.seed',
@@ -38,11 +39,15 @@ class User_Seeder extends Seeder
         'employee.all.show',
         'employee.add.new',
         'employee.single.edit',
+        'profile.password.change',
+        'user.all.index',
+        'user.add.new',
+        'user.single.edit',
       ],
     ]);
     
 
-    User::create([
+    /* User::create([
       'uid'               => Str::uuid(),
       'name'              => 'Kamrul Islam',
       'email'             => 'kamrul_islam@gmail.com',
@@ -58,7 +63,7 @@ class User_Seeder extends Seeder
         'employee.add.new',
         'employee.single.edit',
       ],
-    ]);
+    ]); */
 
 
     Employee_Model::find(1)->update([ 'user_id' => 1 ]);

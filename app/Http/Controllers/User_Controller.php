@@ -20,9 +20,10 @@ class User_Controller extends Controller
   public function UserAll_Index( Request $request )
   {
     // if( Gate::allows('isSuperAdmin', Auth::user()) ){}
-    /* if( Gate::denies('isSuperAdmin') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
+    if( Gate::denies('isSuperAdmin') || Gate::denies('entryIndex') || Gate::denies('routeHasAccess') ){
       return back()->with('error', 'You are not authorized to perform this action!');
-    } */
+    }
+
 
     $search_by            = $request->search_by ?? null;
     $permission_selected  = $request->permission_selected ?? null;
@@ -68,9 +69,10 @@ class User_Controller extends Controller
   public function NewUser_Form( Request $request )
   {
     // if( Gate::allows('isSuperAdmin', Auth::user()) ){}
-    /* if( Gate::denies('isSuperAdmin') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
+    if( Gate::denies('isSuperAdmin') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
       return back()->with('error', 'You are not authorized to perform this action!');
-    } */
+    }
+
 
     $employees = Employee_Model::whereNull('user_id')->where('active', true)
                                ->orderBy('name', 'asc')->get()->all();
@@ -90,9 +92,10 @@ class User_Controller extends Controller
   public function Store_NewUser( Request $request )
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
-    /* if( Gate::denies('isSuperAdmin') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
+    if( Gate::denies('isSuperAdmin') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
       return back()->with('error', 'You are not authorized to perform this action!');
-    } */
+    }
+
 
     $employee = Employee_Model::find( $request->employee_id );
 
@@ -150,9 +153,10 @@ class User_Controller extends Controller
   public function EditUser_Form( $uid, Request $request )
   {
     // if( Gate::allows('isSuperAdmin', Auth::user()) ){}
-    /* if( Gate::denies('isSuperAdmin') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
+    if( Gate::denies('isSuperAdmin') || Gate::denies('entryEdit') || Gate::denies('routeHasAccess') ){
       return back()->with('error', 'You are not authorized to perform this action!');
-    } */
+    }
+
 
     $user = User::where('uid', $uid)->first();
 
@@ -172,10 +176,11 @@ class User_Controller extends Controller
   // Update User
   public function Update_User( $uid, Request $request )
   {
-    // if( Gate::allows('isAdmin', Auth::user()) ){}
-    /* if( Gate::denies('isSuperAdmin') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
+    // if( Gate::allows('isSuperAdmin', Auth::user()) ){}
+    if( Gate::denies('isSuperAdmin') || Gate::denies('entryEdit') || Gate::denies('routeHasAccess') ){
       return back()->with('error', 'You are not authorized to perform this action!');
-    } */
+    }
+
 
     $user = User::where('uid', $uid)->first();
 

@@ -10,6 +10,7 @@ use App\Models\VehicleCategory_Model;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use DateTime;
 
@@ -20,9 +21,10 @@ class Vehicle_Controller extends Controller
   function Vehicle_Index( Request $request )
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
-    /*if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
+    if( Gate::denies('isAdmins') || Gate::denies('entryIndex') || Gate::denies('routeHasAccess') ){
       return back()->with('error', 'You are not authorized to perform this action!');
-    }*/
+    }
+
 
     $search_by      = $request->search_by ?? null;
     $status         = $request->status ?? null;
@@ -175,9 +177,10 @@ class Vehicle_Controller extends Controller
   function Show_VehicleAddForm( Request $request )
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
-    /*if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
+    if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
       return back()->with('error', 'You are not authorized to perform this action!');
-    }*/
+    }
+
     
     $brand_all       = Brand_Model::orderBy('name', 'asc')->get()->all();
     $category_all    = VehicleCategory_Model::orderBy('name', 'asc')->get()->all();
@@ -203,9 +206,10 @@ class Vehicle_Controller extends Controller
   function VehicleNew_Store( Request $request ): \Illuminate\Http\RedirectResponse
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
-    /*if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
+    if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
       return back()->with('error', 'You are not authorized to perform this action!');
-    }*/
+    }
+    
     
     $countries = [];
     foreach( Countries() as $country ){ $countries[] = $country['slug']; }
@@ -275,9 +279,10 @@ class Vehicle_Controller extends Controller
   function SingleVehicleEditForm( $vehicle_uid, Request $request )
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
-    /*if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
+    if( Gate::denies('isAdmins') || Gate::denies('entryEdit') || Gate::denies('routeHasAccess') ){
       return back()->with('error', 'You are not authorized to perform this action!');
-    }*/
+    }
+
 
     $vehicle = Vehicle_Model::where('uid', $vehicle_uid)->first();
 
@@ -311,9 +316,10 @@ class Vehicle_Controller extends Controller
   function SingleVehicleUpdate( $vehicle_uid, Request $request )
   {
     // if( Gate::allows('isAdmin', Auth::user()) ){}
-    /*if( Gate::denies('isAdmins') || Gate::denies('entryCreate') || Gate::denies('routeHasAccess') ){
+    if( Gate::denies('isAdmins') || Gate::denies('entryEdit') || Gate::denies('routeHasAccess') ){
       return back()->with('error', 'You are not authorized to perform this action!');
-    }*/
+    }
+
 
     $vehicle = Vehicle_Model::where('uid', $vehicle_uid)->first();
 
