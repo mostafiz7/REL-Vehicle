@@ -120,35 +120,50 @@
             <div class="blank h-auto bt-1 border-secondary-1"></div>
 
             <div class="employee-all-details overlay-scrollbar full-height-minus minus-120 p-10">
-              <table class="table table-bordered table-hover border-secondary-3 employee-all-table">
-                <thead class="table-header bg-dark text-white fz-14 text-center">
-                  <tr class="table-row header align-middle">
-                    <th scope="col" class="serial w-30px-min">S/L</th>
-                    <th scope="col" class="employee-name">Employee Name</th>
-                    <th scope="col" class="employee-status">Status</th>
-                    <th scope="col" class="employee-office_id">Office-ID</th>
-                    <th scope="col" class="employee-department">Department</th>
-                    <th scope="col" class="employee-designation">Designation</th>
-                    <th scope="col" class="employee-employment">Employment</th>
-                    <th scope="col" class="employee-assigned_role">Assigned Role</th>
-                    <th scope="col" class="action">---</th>
-                  </tr>
-                </thead>
+              @if ( $employee_all && count($employee_all) > 0 )
+                {{-- Paginate-Links --}}
+                <div class="pagination-links {{ $employee_all->total() > $pagination_count ? 'mb-5' : '' }} {{ $employee_all->currentPage() == 1 ? 'first-page' : ($employee_all->currentPage() == $employee_all->lastPage() ? 'last-page' : '') }}">
+                  {{ $employee_all->withQueryString()->links() }}
+                </div>
 
-                <tbody class="table-body fz-12 align-middle">
-                  @if ( $employee_all && count($employee_all) > 0 )
-                    @foreach ( $employee_all as $index => $employee )
-                      @include('modules.employees.index-tableRow', $employee)
-                    @endforeach
-                  @else
-                    <tr class="table-row content no-employee align-middle">
-                      <td colspan="11" class="error text-danger fz-22 fw-bold text-center py-100">Sorry! Currently there are no employee available.</td>
+                <table class="table table-bordered table-hover border-secondary-3 employee-all-table">
+                  <thead class="table-header bg-dark text-white fz-14 text-center">
+                    <tr class="table-row header align-middle">
+                      <th scope="col" class="serial w-30px-min">S/L</th>
+                      <th scope="col" class="employee-name">Employee Name</th>
+                      <th scope="col" class="employee-status">Status</th>
+                      <th scope="col" class="employee-office_id">Office-ID</th>
+                      <th scope="col" class="employee-department">Department</th>
+                      <th scope="col" class="employee-designation">Designation</th>
+                      <th scope="col" class="employee-employment">Employment</th>
+                      <th scope="col" class="employee-assigned_role">Assigned Role</th>
+                      <th scope="col" class="action">---</th>
                     </tr>
-                  @endif
-                </tbody>
-              </table>
-            </div>
+                  </thead>
 
+                  @php
+                    $serial = $employee_all->currentPage() == 1 ? 1 : ((($employee_all->currentPage() - 1) * $pagination_count) + 1);
+                  @endphp
+
+                  <tbody class="table-body fz-12 align-middle">
+                    @foreach ( $employee_all as $index => $employee )
+                      @include('modules.employees.index-tableRow', ['employee' => $employee, 'serial' => $serial++])
+                    @endforeach
+                  </tbody>
+                </table>
+
+                {{-- Paginate-Links --}}
+                <div class="pagination-links {{ $employee_all->total() > $pagination_count ? 'my-20' : '' }} {{ $employee_all->currentPage() == 1 ? 'first-page' : ($employee_all->currentPage() == $employee_all->lastPage() ? 'last-page' : '') }}">
+                  {{ $employee_all->withQueryString()->links() }}
+                </div>
+                
+              @else
+                <div class="no-employee text-danger align-middle fz-22 fw-bold text-center py-100">
+                  Sorry! Currently there are no employee available.
+                </div>
+              @endif
+
+            </div>
           </div> {{-- ./page-area --}}
         </div> {{-- ./card-body --}}
       </div> {{-- ./card --}}

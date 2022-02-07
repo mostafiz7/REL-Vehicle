@@ -17,8 +17,9 @@
 
         <div class="card-body page-body p-0">
           <div class="employee-edit-area overlay-scrollbar">
-            <form method="post" action="{{ route('employee.single.edit', $employee->uid) }}"
-                  name="employeeEditForm" id="employeeEditForm" class="employee-form edit p-20 pb-0">
+            <form method="post" name="employeeEditForm" id="employeeEditForm" 
+              action="{{ route('employee.single.edit', $employee->uid) }}" 
+              class="employee-form edit p-20 pb-0">
               @csrf
 
               <div class="row">
@@ -67,13 +68,16 @@
                   @endif
                 </div>
 
+                <div class="col-md-6 col-12 mb-30 blank-space"></div>
+
                 {{--Employment-Status--}}
                 <div class="col-md-6 col-12 mb-30 employment_status">
-                  <label for="" class="required w-100 mr-15"><span>Employment Status</span></label>
+                  <label for="" class="required w-100 mr-15">
+                    <span>Employment Status</span>
+                  </label>
                   <select name="employment_status" id="employment_status" class="required form-select border-secondary brd-3 @error('employment_status') is-invalid @enderror">
-                    <option value="">Select Job Status</option>
                     @foreach ( EmploymentStatus() as $status )
-                      <option value="{{$status}}" {{$status == $employee->employment_status ? 'selected' : ''}}>
+                      <option value="{{ $status }}" {{ $status == $employee->employment_status ? 'selected' : '' }}>
                         {{ ucwords( str_replace('-', ' ', $status) ) }}
                       </option>
                     @endforeach
@@ -85,41 +89,19 @@
                     </div>
                   @endif
 
-                  {{-- <div class="row employment_status">
-                    <div class="col-lg-3 col-2 permanent">
-                      <div class="form-check">
-                        <input type="checkbox" name="employment_status" id="permanent" class="form-check-input border-secondary cur-pointer" value="permanent" />
-                        <label class="form-check-label cur-pointer" for="permanent">Permanent</label>
-                      </div>
+                  @if ( session('not-permanent') )
+                    <div class="text-danger fz-14 fw-bold" role="alert">
+                      {{ session('not-permanent') }}
                     </div>
-
-                    <div class="col-lg-3 col-2 probation">
-                      <div class="form-check">
-                        <input type="checkbox" name="employment_status" id="probation" class="form-check-input border-secondary cur-pointer" value="probation" />
-                        <label class="form-check-label cur-pointer" for="probation">Probation</label>
-                      </div>
-                    </div>
-
-                    <div class="col-lg-3 col-2 daily_basis">
-                      <div class="form-check">
-                        <input type="checkbox" name="employment_status" id="daily_basis" class="form-check-input border-secondary cur-pointer" value="daily_basis" />
-                        <label class="form-check-label cur-pointer" for="daily_basis">Daily Basis</label>
-                      </div>
-                    </div>
-
-                    <div class="col-lg-3 col-2 casual">
-                      <div class="form-check">
-                        <input type="checkbox" name="employment_status" id="casual" class="form-check-input border-secondary cur-pointer" value="casual" />
-                        <label class="form-check-label cur-pointer" for="casual">Casual</label>
-                      </div>
-                    </div>
-                  </div> --}}
+                  @endif
                 </div>
 
-                {{--Office-ID--}}
+                {{-- Office-ID --}}
                 <div class="col-md-6 col-12 mb-30 office_id">
-                  <label for="" class="{{! $employee->employment_status || $employee->employment_status == 'permanent' || ! old('employment_status') || old('employment_status') == 'permanent' ? 'required' : ''}} w-100 mr-15"><span>Office ID</span></label>
-                  <input type="text" name="office_id" id="office_id" class="{{! $employee->employment_status || $employee->employment_status == 'permanent' || ! old('employment_status') || old('employment_status') == 'permanent' ? 'required' : ''}} form-control border-secondary brd-3 @error('office_id') is-invalid @enderror" placeholder="010058" value="{{$employee->office_id}}" />
+                  <label for="" class="{{ !$employee->employment_status || $employee->employment_status == 'permanent' || old('employment_status') == 'permanent' ? 'required' : ''}} w-100 mr-15">
+                    <span>Office ID</span>
+                  </label>
+                  <input type="text" name="office_id" id="office_id" class="{{ !$employee->employment_status || $employee->employment_status == 'permanent' || old('employment_status') == 'permanent' ? 'required' : ''}} form-control border-secondary brd-3 @error('office_id') is-invalid @enderror" placeholder="010058" value="{{ $employee->office_id }}" />
 
                   @if ( $errors->has('office_id') )
                     <div class="text-danger fz-14 fw-bold" role="alert">
@@ -128,7 +110,37 @@
                   @endif
                 </div>
 
-                {{--Birth-Date--}}
+                {{-- Email-Official --}}
+                <div class="col-md-6 col-12 mb-30 email_official">
+                  <label for="" class="{{ $employee->user ? 'required' : '' }} w-100 mr-15"><span>Email Official</span></label>
+                  <input type="email" name="email_official" id="email_official" class="{{ $employee->user ? 'required' : '' }} form-control border-secondary brd-3 @error('email_official') is-invalid @enderror" placeholder="nurullah@rangs.app" value="{{ $employee->email_official }}" />
+
+                  @if ( $errors->has('email_official') )
+                    <div class="text-danger fz-14 fw-bold" role="alert">
+                      {{ $errors->first('email_official') }}
+                    </div>
+                  @endif
+
+                  @if ( $errors->has('duplicate_user') )
+                    <div class="text-danger fz-14 fw-bold" role="alert">
+                      {{ $errors->first('duplicate_user') }}
+                    </div>
+                  @endif
+                </div>
+
+                {{-- Email-Personal --}}
+                <div class="col-md-6 col-12 mb-30 email_personal">
+                  <label for="" class="w-100 mr-15"><span>Email Personal</span></label>
+                  <input type="email" name="email_personal" id="email_personal" class="form-control border-secondary brd-3 @error('email_personal') is-invalid @enderror" placeholder="nurullah@gmail.com" value="{{ $employee->email_personal }}" />
+                  
+                  @if ( $errors->has('email_personal') )
+                    <div class="text-danger fz-14 fw-bold" role="alert">
+                      {{ $errors->first('email_personal') }}
+                    </div>
+                  @endif
+                </div>
+
+                {{-- Birth-Date --}}
                 {{--<div class="col-md-6 col-12 mb-30 birth_date">
                   <label for="" class="w-100 mr-15"><span>Birth Date</span></label>
                   <div class="p-relative date-select">

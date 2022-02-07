@@ -33,6 +33,7 @@ class User_Controller extends Controller
 
     $route_selected = $route_selected == 'all' || $route_selected == "" || $route_selected == null || empty($route_selected) ? null : $route_selected;
 
+    $pagination_count = 10;
     $users = User::latest();
 
     if( ! empty($search_by) ){
@@ -52,10 +53,11 @@ class User_Controller extends Controller
       $users = $users->whereJsonContains('routes', $route_selected);
     }
 
-    $users = $users->orderBy('name', 'asc')->paginate(10);
+    $users = $users->orderBy('name', 'asc')->paginate($pagination_count);
 
     return view('admin.user.index', [
       'users'                => $users,
+      'pagination_count'     => $pagination_count,
       'search_by'            => $search_by,
       'permissions'          => Permissions(),
       'permission_selected'  => $permission_selected,
@@ -74,8 +76,10 @@ class User_Controller extends Controller
     }
 
 
-    $employees = Employee_Model::whereNull('user_id')->where('active', true)
-                               ->orderBy('name', 'asc')->get()->all();
+    $employees = Employee_Model::whereNull('user_id')                            
+                                ->where('employment_status', 'permanent')
+                                ->where('active', true)
+                                ->orderBy('name', 'asc')->get()->all();
 
     $roles     = Role_Model::get()->all();
 
@@ -102,9 +106,9 @@ class User_Controller extends Controller
     if( ! $employee ) return back()->with('not-employee', 'Please, select an employee that you want to make user!');
 
     $validator = Validator::make( $request->all(), [
-      'employee_id' => [ 'required', 'integer', 'exists:employees,id,active,1', 'unique:users,employee_id' ],
-      'username'    => [ 'required', 'string', 'min:5', 'max:20', 'unique:users,username' ],
-      'email'       => [ Rule::requiredIf(!$employee->email_official), 'email:rfc,dns', 'max:191', 'unique:users,email' ],
+      'employee_id' => [ 'required', 'integer', 'exists:employees,id,active,1,employment_status,permanent', 'unique:users,employee_id' ],
+      'username'    => [ 'required', 'string', 'min:2', 'max:20', 'unique:users,username' ],
+      'email'       => [ 'nullable', Rule::requiredIf(!$employee->email_official), 'email:rfc,dns', 'max:191', 'unique:users,email', "unique:employees,email_official, $employee->id" ],
       'password'    => [ 'required', 'string', 'min:8', 'max:12', 'confirmed' ],
       'role_id'     => [ 'required', 'integer', 'not_in:1' ],
     ], [
@@ -143,7 +147,13 @@ class User_Controller extends Controller
 
     $user_created = User::create( $request_all );
 
-    $employee->update([ 'user_id' => $user_created->id ]);
+    $employee_update['user_id'] = $user_created->id;
+
+    if( ! $employee->email_official ){
+      $employee_update['email_official'] = $user_created->email;
+    }
+
+    $employee->update( $employee_update );
 
     return back()->with('success', 'New User created successfully!');
   }
@@ -186,18 +196,18 @@ class User_Controller extends Controller
 
     if( ! $user ) return back()->with('error', 'The user not found!');
 
+    $employee = $user->employee;
+
     $validator = Validator::make( $request->all(), [
       'name'       => [ 'required', 'string', 'min:2', 'max:191' ],
       'status'     => [ 'required', 'string' ],
       'username'   => [ 'prohibited' ],
-      'email'      => [ 'required', 'email:rfc,dns', 'max:191', "unique:users,email, $user->id" ],
+      'email'      => [ 'required', 'email:rfc,dns', 'max:191', "unique:users,email, $user->id", "unique:employees,email_official, $employee->id" ],
       'password'   => [ 'nullable', 'string', 'min:8', 'max:12', 'confirmed' ],
       'role_id'    => [ 'required', 'integer' ],
       // 'role_id'   => [ 'required', 'integer', 'not_in:1' ],
     ]);
     if( $validator->fails() ) return back()->withErrors( $validator )->withInput();
-
-    $employee = Employee_Model::find( $user->employee_id );
 
     $user_info = [
       'name'  => $user->name,

@@ -92,22 +92,12 @@ class Purchase_Controller extends Controller
     $parts_id          = $request->parts_id ?? null;
     $country_origin    = $request->country_origin ?? null;
     $vehicle_id        = $request->vehicle_id ?? null;
-    // $parts_category    = $request->parts_category ?? null;
-    // $vehicle_category  = $request->vehicle_category ?? null;
-    // $supplier_by       = $request->supplier_by ?? null;
-    // $purchased_by      = $request->purchased_by ?? null;
-    // $authorized_by     = $request->authorized_by ?? null;
 
     $start_date        = $date_start ? DateTime::createFromFormat('d-m-Y', $date_start)->format('Y-m-d') : null;
     $end_date          = $date_end ? DateTime::createFromFormat('d-m-Y', $date_end)->format('Y-m-d') : null;
     $parts_id          = $parts_id == 'all' || $parts_id == "" || $parts_id == null || empty($parts_id) ? null : $parts_id;
     $country_origin    = $country_origin == 'all' || $country_origin == "" || $country_origin == null || empty($country_origin) ? null : $country_origin;
     $vehicle_id        = $vehicle_id == 'all' || $vehicle_id == "" || $vehicle_id == null || empty($vehicle_id) ? null : $vehicle_id;
-    /* $parts_category    = $parts_category == 'all' || $parts_category == "" || $parts_category == null ? null : $parts_category;
-    $vehicle_category  = $vehicle_category == 'all' || $vehicle_category == "" || $vehicle_category == null ? null : $vehicle_category;
-    $supplier_by       = $supplier_by == 'all' || $supplier_by == "" || $supplier_by == null ? null : $supplier_by;
-    $purchased_by      = $purchased_by == 'all' || $purchased_by == "" || $purchased_by == null ? null : $purchased_by;
-    $authorized_by     = $authorized_by == 'all' || $authorized_by == "" || $authorized_by == null ? null : $authorized_by; */
 
     $searchColumns       = [ 'purchase_no', 'memo_no', 'requisition_no', 'shop_name', 'shop_contact', 'shop_location', 'bill_no' ];
     /* $purchasedBy_column  = [ ['purchased_by', '=', $purchased_by] ];
@@ -155,10 +145,10 @@ class Purchase_Controller extends Controller
     }
 
     if( ! empty($parts_id) ){
-      $purchases_all = $purchases_all->whereRelation('details', 'parts_id', '=', $parts_id);
       /* ->whereHas('details', function($query) use($parts_id){
         $query->where('parts_id', '=', $parts_id);
       }) */
+      $purchases_all = $purchases_all->whereRelation('details', 'parts_id', '=', $parts_id);
     }
 
     if( ! empty($vehicle_id) ){
@@ -176,28 +166,27 @@ class Purchase_Controller extends Controller
       });
     }
 
+    $grandtotal_amount = $purchases_all->sum('total_amount');
+
     $purchases_all = $purchases_all->orderBy('date', 'desc')
-                                  ->paginate($pagination_count);
+                                    ->paginate($pagination_count);
 
+    $pagetotal_amount = $purchases_all->sum('total_amount');
 
-    $parts_all            = Parts_Model::orderBy('name', 'asc')->get()->all();
-    $vehicle_all          = Vehicle_Model::orderBy('vehicle_no', 'asc')->get()->all();
-    /* $parts_category_all   = PartsCategory_Model::orderBy('name', 'asc')->get()->all();
-    $vehicle_category_all = VehicleCategory_Model::orderBy('name', 'asc')->get()->all();
-    $supplier_all         = Supplier_Model::orderBy('name', 'asc')->get()->all();
-    $purchaser_all        = Employee_Model::where('purchase_power', 1)
-      ->where('active', 1)->orderBy('name', 'asc')->get()->all();
-    $authorizer_all       = Employee_Model::where('authorize_power', 1)
-      ->where('active', 1)->orderBy('name', 'asc')->get()->all(); */
+    $parts_all   = Parts_Model::orderBy('name', 'asc')->get()->all();
+    $vehicle_all = Vehicle_Model::orderBy('vehicle_no', 'asc')->get()->all();
+    
 
     $settings      = Settings_Model::get()->first();
     $date_format   = $settings && $settings->date_format ? $settings->date_format : 'd-M-Y';
     $time_format   = $settings && $settings->time_format ? $settings->time_format : 'h:i A';
     
-    //dd($purchases_all);
+    
     return view('modules.vehicle-module.purchase-parts.index')->with([
       'purchases_all'         => $purchases_all,
       'pagination_count'      => $pagination_count,
+      'pagetotal_amount'      => $pagetotal_amount,
+      'grandtotal_amount'     => $grandtotal_amount,
       'search_by'             => $search_by,
       'date_start'            => $date_start,
       'date_end'              => $date_end,
@@ -209,17 +198,6 @@ class Purchase_Controller extends Controller
       'countries'             => Countries(),
       'vehicle_id'            => $vehicle_id,
       'vehicle_all'           => $vehicle_all,
-      /* 'purchase_type'         => $purchase_type,
-      'purchase_type_all'     => PurchaseTypes(),
-      'purchased_by'          => $purchased_by,
-      'purchaser_all'         => $purchaser_all,
-      'authorized_by'         => $authorized_by,
-      'authorizer_all'        => $authorizer_all,
-      'parts_category'        => $parts_category,
-      'parts_category_all'    => $parts_category_all,
-      'vehicle_category'      => $vehicle_category,
-      'vehicle_category_all'  => $vehicle_category_all,
-      'supplier_by'           => $supplier_by, */
     ]);
   }
 

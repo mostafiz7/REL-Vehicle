@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Employee_Model;
@@ -49,60 +50,53 @@ class Employee_Controller extends Controller
       ->get()->all();
       */
 
-    $employee_all = null;
-    
-    if( $search_by ){
-      $employee_all = Employee_Model::where( function($q) use( $searchColumns, $search_by ){
+    $pagination_count = 10;
+    $employee_all = Employee_Model::latest();
+
+    if( ! empty($department_id) ){
+      $employee_all = $employee_all->whereRelation('department', 'id', '=', $department_id);
+    }
+
+    if( ! empty($designation_id) ){
+      $employee_all = $employee_all->whereRelation('designation', 'id', '=', $designation_id);
+    }
+
+    if( $assigned_role == 'authorize_power' ){
+      $employee_all = $employee_all->where('authorize_power', 1);
+    }
+
+    if( $assigned_role == 'purchase_power' ){
+      $employee_all = $employee_all->where('purchase_power', 1);
+    }
+
+    if( ! empty($employment_status) ){
+      $employee_all = $employee_all->where('employment_status', $employment_status);
+    }
+
+    if( $status == 'active' ){
+      $employee_all = $employee_all->where('active', 1);
+    }
+
+    if( $status == 'not-active' ){
+      $employee_all = $employee_all->where('active', 0);
+    }
+
+    if( ! empty($search_by) ){
+      $employee_all = $employee_all->where( function($q) use( $searchColumns, $search_by ){
         foreach( $searchColumns as $column )
           $q->orWhere( $column, 'like', "%{$search_by}%" );
-      })
-      ->orderBy('name', 'asc')->get()->all();
+      });
     }
 
-    elseif( $department_id ){
-      $employee_all = Employee_Model::orderBy('name', 'asc')
-      ->whereRelation('department', 'id', '=', $department_id)->get()->all();
-    }
-
-    elseif( $designation_id ){
-      $employee_all = Employee_Model::orderBy('name', 'asc')
-      ->whereRelation('designation', 'id', '=', $designation_id)->get()->all();
-    }
-
-    elseif( $assigned_role == 'authorize_power' ){
-      $employee_all = Employee_Model::where('authorize_power', 1)
-      ->orderBy('name', 'asc')->get()->all();
-    }
-    elseif( $assigned_role == 'purchase_power' ){
-      $employee_all = Employee_Model::where('purchase_power', 1)
-      ->orderBy('name', 'asc')->get()->all();
-    }
-
-    elseif( $employment_status ){
-      $employee_all = Employee_Model::where('employment_status', $employment_status)
-      ->orderBy('name', 'asc')->get()->all();
-    }
-
-    elseif( $status == 'active' ){
-      $employee_all = Employee_Model::where('active', 1)
-      ->orderBy('name', 'asc')->get()->all();
-    }
-    elseif( $status == 'not-active' ){
-      $employee_all = Employee_Model::where('active', 0)
-      ->orderBy('name', 'asc')->get()->all();
-    }
-
-    else{
-      $employee_all = Employee_Model::orderBy('name', 'asc')->get()->all();
-    }
+    $employee_all = $employee_all->orderBy('name', 'asc')
+                                  ->paginate($pagination_count);
 
     $department_all  = Department_Model::orderBy('name', 'asc')->get()->all();
     $designation_all = Designation_Model::orderBy('name', 'asc')->get()->all();
 
-    $employment_statuses = [ 'daily-basis', 'casual', 'permanent', 'probation' ];
-
     return view('modules.employees.index')->with([
       'employee_all'        => $employee_all,
+      'pagination_count'    => $pagination_count,
       'status'              => $status,
       'search_by'           => $search_by,
       'assigned_role'       => $assigned_role,
@@ -111,7 +105,7 @@ class Employee_Controller extends Controller
       'designation_id'      => $designation_id,
       'designation_all'     => $designation_all,
       'employment_status'   => $employment_status,
-      'employment_statuses' => $employment_statuses,
+      'employment_statuses' => EmploymentStatus(),
     ]);
 
   }
@@ -157,27 +151,29 @@ class Employee_Controller extends Controller
       'employment_status' => [ 'required', 'string', "in:$employment_statuses" ],
       'office_id'         => [ 'nullable', 'required_if:employment_status,==,permanent', 'string', 'max:10', 'unique:employees,office_id' ],
       /* 'office_id'         => [ 'nullable', Rule::requiredIf( $employment_status ), 'string', 'max:10', 'unique:employees,office_id' ], */
+      'email_official'    => [ 'nullable', 'email:rfc,dns', 'max:191', 'unique:employees,email_official' ],
+      'email_personal'    => [ 'nullable', 'email:rfc,dns', 'max:191' ],
       'department_id'     => [ 'required', 'integer', 'exists:departments,id' ],
       'designation_id'    => [ 'required', 'integer', 'exists:designations,id' ],
       'authorize_power'   => [ 'nullable', 'string', 'in:authorizer' ],
       'purchase_power'    => [ 'nullable', 'string', 'in:purchaser' ],
     ], [
-      /*'name.required'        => 'The designation-name is required.',
-      'name.max'             => 'The designation-name must be less than 50 characters.',
-      'name.unique'          => 'The designation-name must be unique.',*/
+      /*'name.required'        => 'The designation-name is required.',*/
     ]);
     if( $validator->fails() ) return back()->withErrors( $validator )->withInput();
 
-    $authorize_power = $request->has('authorize_power') && $request->authorize_power == 'authorizer';
-    $purchase_power  = $request->has('purchase_power') && $request->purchase_power == 'purchaser';
+    $authorize_power = $request->has('authorize_power') && $request->authorize_power == 'authorizer' && $request->employment_status == 'permanent';
+    $purchase_power  = $request->has('purchase_power') && $request->purchase_power == 'purchaser' && $request->employment_status == 'permanent';
 
     $newEmployeeData = [
       'uid'               => Str::uuid(),
       'name'              => $request->name,
       'nickname'          => ucwords( $request->nickname ),
       'active'            => true,
-      'employment_status' => $request->employment_status ?? null,
-      'office_id'         => $request->office_id ? strtoupper( $request->office_id ) : null,
+      'employment_status' => $request->employment_status,
+      'office_id'         => strtoupper( $request->office_id ),
+      'email_official'    => $request->email_official,
+      'email_personal'    => $request->email_personal,
       'designation_id'    => $request->designation_id,
       'department_id'     => $request->department_id,
       'user_id'           => null,
@@ -208,7 +204,7 @@ class Employee_Controller extends Controller
     $designation_all = Designation_Model::orderBy('name', 'asc')->get()->all();
 
     // $employment_statuses = [ 'daily-basis', 'casual', 'permanent', 'probation' ];
-
+    
     return view('modules.employees.edit')->with([
       'employee'            => $employee,
       'department_all'      => $department_all,
@@ -230,6 +226,8 @@ class Employee_Controller extends Controller
     $employee = Employee_Model::where('uid', $employee_uid)->first();
 
     if( ! $employee ) return back()->with('error', 'The employee not found in system!');
+
+    $user = $employee->user;
     
     $employment_statuses = implode(',', EmploymentStatus());
     $employment_status = $request->employment_status == 'permanent';
@@ -238,6 +236,8 @@ class Employee_Controller extends Controller
       'name'              => [ 'required', 'string', 'max:50' ],
       'nickname'          => [ 'nullable', 'string', 'max:20' ],
       'status'            => [ 'required', 'string' ],
+      'email_official'    => [ 'nullable', Rule::requiredIf($user), 'email:rfc,dns', 'max:191', "unique:employees,email_official, $employee->id" ],
+      'email_personal'    => [ 'nullable', 'email:rfc,dns', 'max:191' ],
       'employment_status' => [ 'required', 'string', "in:$employment_statuses" ],
       'office_id'         => [ 'nullable', 'required_if:employment_status,==,permanent', 'string', 'max:10', "unique:employees,office_id, $employee->id" ],
       /* 'office_id'         => [ 'nullable', Rule::requiredIf( $employment_status ), 'string', 'max:10', 'unique:employees,office_id' ], */
@@ -246,29 +246,64 @@ class Employee_Controller extends Controller
       'authorize_power'   => [ 'nullable', 'string', 'in:authorizer' ],
       'purchase_power'    => [ 'nullable', 'string', 'in:purchaser' ],
     ], [
-      /*'name.required'        => 'The designation-name is required.',
-      'name.max'             => 'The designation-name must be less than 50 characters.',
-      'name.unique'          => 'The designation-name must be unique.',*/
+      /*'name.unique' => 'The designation-name must be unique.',*/
     ]);
     if( $validator->fails() ) return back()->withErrors( $validator )->withInput();
+
+    if( $user ){
+      $duplicate_user = User::where('email', $request->email_official)
+                              ->where('id', '!=', $user->id)->first();
+      if( $duplicate_user ){
+        $validator->errors()->add('duplicate_user', 'The official-email must be unique!');
+        return back()->withErrors( $validator )->withInput();
+      }
+      if( $request->employment_status != 'permanent' ){
+        return back()->with('not-permanent', 'The employment-status should be must permanent!');
+      }
+    }
+
+    $employee_info = [
+      'name'  => $employee->name,
+      'email' => $employee->email_official,
+    ];
 
     $authorize_power = $request->has('authorize_power') && $request->authorize_power == 'authorizer' && $request->status == 'active';
     $purchase_power  = $request->has('purchase_power') && $request->purchase_power == 'purchaser' && $request->status == 'active';
 
     $employeeUpdateData = [
+      'office_id'         => $request->office_id ? strtoupper( $request->office_id ) : $employee->office_id,
       'name'              => $request->name,
       'nickname'          => ucwords( $request->nickname ),
       'active'            => $request->status == 'active',
-      'employment_status' => $request->employment_status ?? null,
-      'office_id'         => $request->office_id ? strtoupper( $request->office_id ) : null,
+      'email_official'    => $request->email_official,
+      'email_personal'    => $request->email_personal,
+      'employment_status' => $request->employment_status,
       'designation_id'    => $request->designation_id,
       'department_id'     => $request->department_id,
-      'user_id'           => null,
       'authorize_power'   => $authorize_power,
       'purchase_power'    => $purchase_power,
     ];
 
-    $employeeUpdated = $employee->update( $employeeUpdateData );
+    $employee_updated = tap($employee)->update( $employeeUpdateData );
+
+    // if employee an user - update
+    if( $user ){
+      if( $employee_info['name'] != $request->name || $employee_info['email'] != $request->email_official || !$employee_updated->active ){
+        if( $employee_info['name'] != $request->name ){
+          $user_update['name'] = $request->name;
+        }
+        
+        if( $employee_info['email'] != $request->email_official ){
+          $user_update['email'] = $request->email_official;
+        }
+
+        if( !$employee_updated->active ){
+          $user_update['active'] = false;
+        }
+
+        $user->update( $user_update );
+      }
+    }
 
     return redirect()->route('employee.all.show')->with('success', "The employee ($employee->name) updated successfully!");
   }

@@ -18,8 +18,8 @@
     @endforeach
   </td>
   <td class="shop-name">{{ $purchase->shop_name }}</td>
-  <td class="total-qty text-center">{{ $purchase->total_qty }}</td>
-  <td class="total-amount text-end">{{ number_format($purchase->total_amount, 0) }}</td>
+  <td class="quantity text-center">{{ $purchase->total_qty }}</td>
+  <td class="amount text-end">{{ number_format($purchase->total_amount, 0) }}</td>
   <td class="purchased-by">{{ $purchase->purchaser->name }}</td>
   <td class="authorized-by">{{ $purchase->authorized_by ? $purchase->authorizer->name : '- - -' }}</td>
 

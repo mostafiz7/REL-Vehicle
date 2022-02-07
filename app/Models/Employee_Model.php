@@ -81,7 +81,7 @@ class Employee_Model extends Model
 
   public function user(): \Illuminate\Database\Eloquent\Relations\HasOne
   {
-    return $this->hasOne(User::class);
+    return $this->hasOne(User::class, 'employee_id');
   }
 
 

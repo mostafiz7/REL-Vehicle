@@ -1,5 +1,5 @@
-<tr class="table-row content align-middle">
-  <td class="serial w-30px-min text-center">{{ $index+1 }}</td>
+<tr class="table-row content align-middle {{ ($index+1) % 2 == 0 ? 'bg-success-light' : '' }}">
+  <td class="serial w-30px-min text-center">{{ $serial }}</td>
   <td class="employee-name">{{ $employee->name }}</td>
   <td class="employee-status text-center">
     @if ( $employee->active )

@@ -30,8 +30,8 @@
               <div class="row">
                 {{-- Name --}}
                 <div class="col-md-6 col-12 mb-30 name">
-                  <label for="name" class="fw-bold"><span>Name</span></label>
-                  <input type="text" name="name" id="name" class="form-control border-secondary brd-3 @error('name') is-invalid @enderror" value="{{ $user->name }}" />
+                  <label for="name" class="required w-100 fw-bold"><span>Name</span></label>
+                  <input type="text" name="name" id="name" class="required form-control border-secondary brd-3 @error('name') is-invalid @enderror" value="{{ $user->name }}" />
 
                   @if ( $errors->has('name') )
                     <div class="text-danger fz-14 fw-bold" role="alert">
@@ -42,7 +42,7 @@
 
                 {{--Status--}}
                 <div class="col-md-6 col-12 mb-30 status">
-                  <label for="" class="fw-bold"><span>Status</span></label>
+                  <label for="" class="required w-100 fw-bold"><span>Status</span></label>
                   <div class="d-flex flex-wrap">
                     <span class="form-check ml-30">
                       <input type="radio" name="status" id="active" class="status form-check-input cur-pointer @error('status') is-invalid @enderror" value="active" {{ $user->active ? 'checked' : '' }} />
@@ -64,7 +64,7 @@
 
                 {{-- Username --}}
                 <div class="col-md-6 col-12 mb-30 username">
-                  <label for="" class="fw-bold"><span>Username</span></label>
+                  <label for="" class="required w-100 fw-bold"><span>Username</span></label>
                   <input disabled type="text" name="username" id="username" class="form-control border-secondary brd-3 @error('username') is-invalid @enderror" value="{{ $user->username }}" />
 
                   <div class="text-danger fz-12">Username not-changeable</div>
@@ -78,8 +78,8 @@
 
                 {{-- Email --}}
                 <div class="col-md-6 col-12 mb-30 email">
-                  <label for="email" class="fw-bold"><span>Email</span></label>
-                  <input type="email" name="email" id="email" class="form-control border-secondary brd-3 @error('email') is-invalid @enderror" value="{{ $user->email }}" />
+                  <label for="email" class="required w-100 fw-bold"><span>Email</span></label>
+                  <input type="email" name="email" id="email" class="required form-control border-secondary brd-3 @error('email') is-invalid @enderror" value="{{ $user->email }}" />
 
                   @if ( $errors->has('email') )
                     <div class="text-danger fz-14 fw-bold" role="alert">
@@ -90,7 +90,7 @@
 
                 {{-- New-Password --}}
                 <div class="col-md-6 col-12 mb-30 new-password">
-                  <label for="password" class="fw-bold"><span>New Password</span></label>
+                  <label for="password" class="w-100 fw-bold"><span>New Password</span></label>
                   <div class="input-group p-relative">
                     <input type="password" name="password" id="password" 
                     class="form-control border-secondary brd-3 z-index-9 @error('password') is-invalid @enderror" placeholder="Password" />
@@ -109,14 +109,14 @@
 
                 {{-- Confirm-New-Password --}}
                 <div class="col-md-6 col-12 mb-30 password-confirmation">
-                  <label for="password_confirmation" class="fw-bold"><span>Confirm Password</span></label>
+                  <label for="password_confirmation" class="w-100 fw-bold"><span>Confirm Password</span></label>
                   <input type="password" name="password_confirmation" id="password_confirmation" class="form-control border-secondary brd-3 @error('password') is-invalid @enderror" placeholder="Retype password" />
                 </div>
                 
                 {{-- Role-ID --}}
                 <div class="col-md-6 col-12 mb-30 role-id">
-                  <label for="role_id" class="fw-bold"><span>User Role</span></label>
-                  <select name="role_id" id="role_id" class="form-select border-secondary brd-3 @error('role_id') is-invalid @enderror">
+                  <label for="role_id" class="required w-100 fw-bold"><span>User Role</span></label>
+                  <select name="role_id" id="role_id" class="required form-select border-secondary brd-3 @error('role_id') is-invalid @enderror">
                     <option value="">Select Role</option>
                     @if ( $roles )
                       @foreach ( $roles as $role )
@@ -134,7 +134,7 @@
                 
                 {{-- Permissions --}}
                 <div class="col-md-6 col-12 mb-30 permissions">
-                  <label for="" class="fw-bold"><span>Permissions</span></label>
+                  <label for="" class="required w-100 fw-bold"><span>Permissions</span></label>
 
                   @if ( $errors->has('permissions') )
                     <div class="text-danger fz-14 fw-bold" role="alert">
@@ -161,7 +161,7 @@
 
                 {{--Routes--}}
                 <div class="col-12 mb-30 routes">
-                  <label for="" class="fw-bold"><span>Route Access</span></label>
+                  <label for="" class="required w-100 fw-bold"><span>Route Access</span></label>
 
                   @if ( $errors->has('routes') )
                     <div class="text-danger fz-14 fw-bold mb-10" role="alert">

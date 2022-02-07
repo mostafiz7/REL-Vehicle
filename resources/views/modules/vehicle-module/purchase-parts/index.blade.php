@@ -225,7 +225,7 @@
             <div class="purchase-history-details overlay-scrollbar full-height-minus minus-115 p-10">
               @if ( $purchases_all && count($purchases_all) > 0 )
                 {{-- Paginate-Links --}}
-                <div class="pagination-links h-auto {{ $purchases_all->total() > $pagination_count ? 'mb-5' : '' }} {{ $purchases_all->currentPage() == 1 ? 'first-page' : ($purchases_all->currentPage() == $purchases_all->lastPage() ? 'last-page' : '') }}">
+                <div class="pagination-links {{ $purchases_all->total() > $pagination_count ? 'mb-5' : '' }} {{ $purchases_all->currentPage() == 1 ? 'first-page' : ($purchases_all->currentPage() == $purchases_all->lastPage() ? 'last-page' : '') }}">
                   {{ $purchases_all->withQueryString()->links() }}
                 </div>
                 
@@ -238,8 +238,8 @@
                       <th scope="col" class="vehicle-number">Vehicle</th>
                       <th scope="col" class="parts-list">Parts List</th>
                       <th scope="col" class="shop-name">Shop Name</th>
-                      <th scope="col" class="total-qty">Total Qty</th>
-                      <th scope="col" class="total-amount">Total Amount</th>
+                      <th scope="col" class="quantity">QTY.</th>
+                      <th scope="col" class="amount">Amount</th>
                       <th scope="col" class="purchased-by">Purchased-By</th>
                       <th scope="col" class="authorized-by">Authorized-By</th>
                       <th scope="col" class="action">---</th>
@@ -255,12 +255,30 @@
                       @include('modules.vehicle-module.purchase-parts.index-tableRow', ['purchase' => $purchase, 'serial' => $serial++])
                     @endforeach
                   </tbody>
+
+                  <thead class="table-footer bg-secondary-3 text-dark fz-14 text-center">
+                    <tr class="table-row footer align-middle border-dark">
+                      <th scope="col" colspan="7" class="page-total text-end border-dark">Page-Total Amount</th>
+                      <th scope="col" class="amount text-end border-dark">
+                        {{ number_format($pagetotal_amount, 0) }}
+                      </th>
+                      <th scope="col" colspan="3" class="blank border-dark"></th>
+                    </tr>
+                    <tr class="table-row footer align-middle bb-2 border-dark">
+                      <th scope="col" colspan="7" class="grand-total text-end border-dark">Grand-Total Amount</th>
+                      <th scope="col" class="amount text-end border-dark">
+                        {{ number_format($grandtotal_amount, 0) }}
+                      </th>
+                      <th scope="col" colspan="3" class="blank border-dark"></th>
+                    </tr>
+                  </thead>
                 </table>
 
                 {{-- Paginate-Links --}}
-                <div class="pagination-links {{ $purchases_all->total() > $pagination_count ? 'mt-20' : '' }} {{ $purchases_all->currentPage() == 1 ? 'first-page' : ($purchases_all->currentPage() == $purchases_all->lastPage() ? 'last-page' : '') }}">
+                <div class="pagination-links {{ $purchases_all->total() > $pagination_count ? 'my-20' : '' }} {{ $purchases_all->currentPage() == 1 ? 'first-page' : ($purchases_all->currentPage() == $purchases_all->lastPage() ? 'last-page' : '') }}">
                   {{ $purchases_all->withQueryString()->links() }}
                 </div>
+                
               @else
                 <div class="no-purchase text-danger align-middle fz-22 fw-bold text-center py-100">
                   Sorry! Currently there are no record available.

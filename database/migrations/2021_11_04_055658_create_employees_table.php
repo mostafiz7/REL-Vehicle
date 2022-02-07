@@ -30,7 +30,8 @@ class CreateEmployeesTable extends Migration
       $table->string('religion')->nullable();
       $table->string('primary_contact')->unique()->nullable();
       $table->string('secondary_contact')->unique()->nullable();
-      $table->string('email_personal')->unique()->nullable();
+      //$table->string('email_personal')->unique()->nullable();
+      $table->string('email_personal')->nullable();
       $table->string('email_official')->unique()->nullable();
       $table->string('present_address')->nullable();
       $table->string('permanent_address')->nullable();
