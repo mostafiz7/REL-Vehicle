@@ -48,6 +48,14 @@ Route::get('/migration-rollback', [Home_Controller::class, 'DatabaseTableRollbac
 // For - Database-Seed
 Route::get('/db-seed', [Home_Controller::class, 'DatabaseSeed']);
 
+// Clear cache-config-&-session
+Route::get('/view-clear', [Home_Controller::class, 'ViewClear']);
+Route::get('/route-clear', [Home_Controller::class, 'RouteClear']);
+Route::get('/cache-clear', [Home_Controller::class, 'CacheClear']);
+Route::get('/config-clear', [Home_Controller::class, 'ConfigClear']);
+Route::get('/config-cache', [Home_Controller::class, 'ConfigCache']);
+
+
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin'], 'namespace' => 'admin'], function(){
 

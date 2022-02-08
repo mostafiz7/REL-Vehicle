@@ -106,6 +106,56 @@ class Home_Controller extends Controller
 
     return redirect()->route('homepage')->with('success', 'Dummy data inserted successfully!');
   }
+  
+
+  // clear-view by Artisan Command
+  public function ViewClear()
+  {
+    // Call Artisan Command in Controller
+    Artisan::call('view:clear', []);
+
+    return redirect()->route('homepage')->with('success', 'View cleared successfully!');
+  }
+  
+
+  // clear-route by Artisan Command
+  public function RouteClear()
+  {
+    // Call Artisan Command in Controller
+    Artisan::call('route:clear', []);
+
+    return redirect()->route('homepage')->with('success', 'Route cleared successfully!');
+  }
+  
+
+  // clear-cache by Artisan Command
+  public function CacheClear()
+  {
+    // Call Artisan Command in Controller
+    Artisan::call('cache:clear', []);
+
+    return redirect()->route('homepage')->with('success', 'Cache cleared successfully!');
+  }
+  
+
+  // clear-config by Artisan Command
+  public function ConfigClear()
+  {
+    // Call Artisan Command in Controller
+    Artisan::call('config:clear', []);
+
+    return redirect()->route('homepage')->with('success', 'Config cleared successfully!');
+  }
+  
+
+  // cache-config by Artisan Command
+  public function ConfigCache()
+  {
+    // Call Artisan Command in Controller
+    Artisan::call('config:cache', []);
+
+    return redirect()->route('homepage')->with('success', 'Config cached successfully!');
+  }
 
 
 
