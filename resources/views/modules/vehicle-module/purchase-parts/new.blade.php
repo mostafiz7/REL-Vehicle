@@ -469,8 +469,8 @@
                   {{--Entry-By--}}
                   <div class="order-lg-5 order-sm-5 align-self-end col-lg-3 col-md-4 col-sm-6 col-12 mb-10 entry_by">
                     {{--<label for="" class="w-100 mr-15"><span>Entry By</span></label>--}}
-                    <select {{auth()->user() ? 'disabled' : ''}} name="entry_by" id="entry_by" class="form-select border-secondary brd-3 @error('entry_by') is-invalid @enderror">
-                      <option value="">Entry By</option>
+                    <select {{auth()->user() ? 'disabled' : ''}} name="entry_by" id="entry_by" class="{{auth()->user() ? 'cur-default' : ''}} required form-select border-secondary brd-3 @error('entry_by') is-invalid @enderror">
+                      <option value="">{{auth()->user() ? auth()->user()->name : 'Entry By'}}</option>
                       @if ( $employee_all )
                         @foreach ( $employee_all as $employee )
                           <option value="{{$employee->id}}" {{$employee->id == old('entry_by') ? 'selected' : ''}}>

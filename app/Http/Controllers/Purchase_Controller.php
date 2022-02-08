@@ -295,7 +295,7 @@ class Purchase_Controller extends Controller
       'purchased_by'   => [ 'required', 'integer', 'exists:employees,id,purchase_power,1,active,1' ],
       'authorized_by'  => [ 'nullable', 'integer', 'exists:employees,id,authorize_power,1,active,1' ],
       'notes'          => [ 'nullable', 'string', 'max:1000' ],
-      'entry_by'       => [ Rule::requiredIf(!auth()->user()), 'integer', 'exists:employees,id,active,1' ],
+      'entry_by'       => [ 'nullable', Rule::requiredIf(!auth()->user()), 'integer', 'exists:employees,id,active,1' ],
 
       'total_qty'      => [ 'required', 'numeric', 'min:1', 'max:10000000' ],
       'total_amount'   => [ 'required', 'numeric', 'min:0', 'max:9000000000' ],
@@ -662,7 +662,7 @@ class Purchase_Controller extends Controller
       'purchased_by'   => [ 'required', 'integer', 'exists:employees,id,purchase_power,1,active,1' ],
       'authorized_by'  => [ 'nullable', 'integer', 'exists:employees,id,authorize_power,1,active,1' ],
       'notes'          => [ 'nullable', 'string', 'max:1000' ],
-      'entry_by'       => [ Rule::requiredIf(!auth()->user()), 'integer', 'exists:employees,id,active,1' ],
+      'entry_by'       => [ 'nullable', Rule::requiredIf(!auth()->user()), 'integer', 'exists:employees,id,active,1' ],
 
       'total_qty'      => [ 'required', 'numeric', 'min:1', 'max:10000000' ],
       'total_amount'   => [ 'required', 'numeric', 'min:0', 'max:9000000000' ],

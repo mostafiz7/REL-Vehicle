@@ -37,23 +37,29 @@ Route::get('/register', [RegisterController::class, 'registerForm'])->name('regi
 Route::get('/storage-link', [Home_Controller::class, 'CreateStorageLink']); */
 
 // Database/Migration Table programmatically by using Artisan::call()
-// For - Database-Migration-Update
+/* // For - Database-Migration-Update
 Route::get('/migration-update', [Home_Controller::class, 'DatabaseTableUpdate']);
-/* // For - Database-Migration-Fresh
+// For - Database-Migration-Fresh
 Route::get('/migration-fresh', [Home_Controller::class, 'DatabaseTableFresh']);
 // For - Database-Migration-Fresh-with-DB-Seed
 Route::get('/migration-fresh-seed', [Home_Controller::class, 'DatabaseTableFreshSeed']);
 // For - Database-Migration-Rollback
-Route::get('/migration-rollback', [Home_Controller::class, 'DatabaseTableRollback']); */
+Route::get('/migration-rollback', [Home_Controller::class, 'DatabaseTableRollback']);
 // For - Database-Seed
-Route::get('/db-seed', [Home_Controller::class, 'DatabaseSeed']);
+Route::get('/db-seed', [Home_Controller::class, 'DatabaseSeed']); */
 
 // Clear cache-config-&-session
-Route::get('/view-clear', [Home_Controller::class, 'ViewClear']);
+/* Route::get('/view-clear', [Home_Controller::class, 'ViewClear']);
 Route::get('/route-clear', [Home_Controller::class, 'RouteClear']);
 Route::get('/cache-clear', [Home_Controller::class, 'CacheClear']);
 Route::get('/config-clear', [Home_Controller::class, 'ConfigClear']);
-Route::get('/config-cache', [Home_Controller::class, 'ConfigCache']);
+Route::get('/config-cache', [Home_Controller::class, 'ConfigCache']); */
+
+/* https://vms.rangs.app/view-clear
+https://vms.rangs.app/route-clear
+https://vms.rangs.app/cache-clear
+https://vms.rangs.app/config-clear
+https://vms.rangs.app/config-cache */
 
 
 

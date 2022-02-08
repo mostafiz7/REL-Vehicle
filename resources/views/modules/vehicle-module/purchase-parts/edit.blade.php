@@ -500,11 +500,11 @@
                     <?php 
                       $entry_by = $purchase->user_id ?? $purchase->entry_by;
                     ?>
-                    <select {{auth()->user() ? 'readonly' : ''}} name="entry_by" id="entry_by" class="form-select border-secondary brd-3 @error('entry_by') is-invalid @enderror">
+                    <select {{auth()->user() ? 'disabled' : ''}} name="entry_by" id="entry_by" class="{{auth()->user() ? 'cur-default' : ''}} required form-select border-secondary brd-3 @error('entry_by') is-invalid @enderror">
                       <option value="">Entry By</option>
                       @if ( $employee_all )
                         @foreach ( $employee_all as $employee )
-                          <option value="{{$employee->id}}" {{$employee->id == $entry_by ? 'selected' : ''}}>
+                          <option value="{{$employee->id}}" {{auth()->user() && auth()->user()->employee->id == $employee->id ? 'selected' : ''}}>
                             {{ $employee->name }}
                           </option>
                         @endforeach
