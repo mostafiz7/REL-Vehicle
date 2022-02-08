@@ -17,7 +17,7 @@ class UpdateUsersTable extends Migration
       // $table->boolean('active')->default(1)->after('username');
       // $table->tinyText('role')->after('password');
       // $table->tinyInteger('role_id')->after('role');
-      $table->tinyInteger('role_id')->after('password');
+      $table->unsignedTinyInteger('role_id')->after('password');
       $table->unsignedBigInteger('employee_id')->unique()->after('role_id');
 
       $table->foreign('role_id')

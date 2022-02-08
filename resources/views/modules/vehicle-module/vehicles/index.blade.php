@@ -7,8 +7,14 @@
   <div class="container-fluid">
     <div class="page-content pt-10">
       <div class="card">
-        <div class="card-header page-header bg-success text-white">
+        <div class="card-header page-header d-flex justify-content-between align-items-center bg-success text-white">
           <h5 class="title mb-0">Vehicle Index</h5>
+
+          <div class="">
+            <a href="{{ route('vehicle.add.new') }}" class="btn btn-light btn-sm fw-bold">
+              New Vehicle
+            </a>
+          </div>
         </div>
 
 
@@ -118,7 +124,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                       <label for="" class="fw-bold text-end mr-10"><span>Status</span></label>
                       <select name="status" id="status" class="form-select d-inline-block border-secondary-1 brd-3">
-                        <option value="">General</option>
+                        <option value="">All</option>
                         <option value="enabled" {{ $status == 'enabled' ? 'selected' : '' }}>Enabled</option>
                         <option value="disabled" {{ $status == 'disabled' ? 'selected' : '' }}>Disabled</option>
                       </select>
@@ -142,37 +148,52 @@
             <div class="blank h-auto bt-1 border-secondary-1"></div>
 
             <div class="vehicle-all-details overlay-scrollbar full-height-minus minus-110 p-10">
-              <table class="table table-bordered table-hover border-secondary-3 vehicle-all-table">
-                <thead class="table-header bg-dark text-white fz-14 text-center">
-                  <tr class="table-row header align-middle">
-                    <th scope="col" class="serial w-30px-min">S/L</th>
-                    <th scope="col" class="vehicle-no">Vehicle No.</th>
-                    <th scope="col" class="vehicle-status">Status</th>
-                    <th scope="col" class="vehicle-brand">Brand</th>
-                    <th scope="col" class="vehicle-category">Category</th>
-                    <th scope="col" class="vehicle-cc">CC</th>
-                    <th scope="col" class="vehicle-origin">Origin</th>
-                    <th scope="col" class="vehicle-department">Department</th>
-                    <th scope="col" class="vehicle-driver">Driver</th>
-                    <th scope="col" class="vehicle-helper">Helper</th>
-                    <th scope="col" class="action">---</th>
-                  </tr>
-                </thead>
+              @if ( $vehicle_all && count($vehicle_all) > 0 )
+                {{-- Paginate-Links --}}
+                <div class="pagination-links {{ $vehicle_all->total() > $pagination_count ? 'mb-5' : '' }} {{ $vehicle_all->currentPage() == 1 ? 'first-page' : ($vehicle_all->currentPage() == $vehicle_all->lastPage() ? 'last-page' : '') }}">
+                  {{ $vehicle_all->withQueryString()->links() }}
+                </div>
 
-                <tbody class="table-body fz-12">
-                  @if ( $vehicle_all && count($vehicle_all) > 0 )
-                    @foreach ( $vehicle_all as $index => $vehicle )
-                      @include('modules.vehicle-module.vehicles.index-tableRow', $vehicle)
-                    @endforeach
-                  @else
-                    <tr class="table-row content no-vehicle align-middle">
-                      <td colspan="11" class="error text-danger fz-22 fw-bold text-center py-100">Sorry! Currently there are no vehicle available.</td>
+                <table class="table table-bordered table-hover border-secondary-3 vehicle-all-table">
+                  <thead class="table-header bg-dark text-white fz-14 text-center">
+                    <tr class="table-row header align-middle">
+                      <th scope="col" class="serial w-30px-min">S/L</th>
+                      <th scope="col" class="vehicle-no">Vehicle No.</th>
+                      <th scope="col" class="vehicle-status">Status</th>
+                      <th scope="col" class="vehicle-brand">Brand</th>
+                      <th scope="col" class="vehicle-category">Category</th>
+                      <th scope="col" class="vehicle-cc">CC</th>
+                      <th scope="col" class="vehicle-origin">Origin</th>
+                      <th scope="col" class="vehicle-department">Department</th>
+                      <th scope="col" class="vehicle-driver">Driver</th>
+                      <th scope="col" class="vehicle-helper">Helper</th>
+                      <th scope="col" class="action">---</th>
                     </tr>
-                  @endif
-                </tbody>
-              </table>
-            </div>
+                  </thead>
 
+                  @php
+                    $serial = $vehicle_all->currentPage() == 1 ? 1 : ((($vehicle_all->currentPage() - 1) * $pagination_count) + 1);
+                  @endphp
+
+                  <tbody class="table-body fz-12">
+                    @foreach ( $vehicle_all as $index => $vehicle )
+                      @include('modules.vehicle-module.vehicles.index-tableRow', ['vehicle' => $vehicle, 'serial' => $serial++])
+                    @endforeach
+                  </tbody>
+                </table>
+
+                {{-- Paginate-Links --}}
+                <div class="pagination-links {{ $vehicle_all->total() > $pagination_count ? 'my-20' : '' }} {{ $vehicle_all->currentPage() == 1 ? 'first-page' : ($vehicle_all->currentPage() == $vehicle_all->lastPage() ? 'last-page' : '') }}">
+                  {{ $vehicle_all->withQueryString()->links() }}
+                </div>
+
+              @else
+                <div class="no-vehicle text-danger align-middle fz-22 fw-bold text-center py-100">
+                  Sorry! Currently there are no vehicle available.
+                </div>
+              @endif
+
+            </div>
           </div> {{-- ./page-area --}}
         </div> {{-- ./card-body --}}
       </div> {{-- ./card --}}

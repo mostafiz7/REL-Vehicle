@@ -194,31 +194,31 @@
                 </a>
                 <ul class="dropdown-menu mt--1 brd-0" aria-labelledby="Header-Nav-Settings">
                   <li class="">
-                    <a href="{{ route('database.migration.update') }}"
+                    <a href="{{ url('/migration-update') }}"
                       class="dropdown-item {{ strpos($viewName, 'settings') ? 'active' : '' }}">
                       Migrate Update
                     </a>
                   </li>
                   <li class="">
-                    <a href="{{ route('database.migration.fresh') }}"
+                    <a href="{{ url('/migration-fresh') }}"
                       class="dropdown-item {{ strpos($viewName, 'settings') ? 'active' : '' }}">
                       Migrate Fresh
                     </a>
                   </li>
                   <li class="">
-                    <a href="{{ route('database.migration.fresh.seed') }}"
+                    <a href="{{ url('/migration-fresh-seed') }}"
                       class="dropdown-item {{ strpos($viewName, 'settings') ? 'active' : '' }}">
                       Migrate Fresh Seed
                     </a>
                   </li>
                   <li class="">
-                    <a href="{{ route('database.migration.rollback') }}"
+                    <a href="{{ url('/migration-rollback') }}"
                       class="dropdown-item {{ strpos($viewName, 'settings') ? 'active' : '' }}">
                       Migrate Rollback
                     </a>
                   </li>
                   <li class="">
-                    <a href="{{ route('database.seed') }}"
+                    <a href="{{ url('/db-seed') }}"
                       class="dropdown-item {{ strpos($viewName, 'settings') ? 'active' : '' }}">
                       Database Seed
                     </a>

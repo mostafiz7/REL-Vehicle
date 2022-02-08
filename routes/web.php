@@ -33,15 +33,20 @@ Route::get('/register', [RegisterController::class, 'registerForm'])->name('regi
 
 
 // Symbolic-Link & Laravel-Storage-Link
-Route::get('/symlink', [Home_Controller::class, 'CreateSymbolicLink']);
-Route::get('/storage-link', [Home_Controller::class, 'CreateStorageLink']);
+/* Route::get('/symlink', [Home_Controller::class, 'CreateSymbolicLink']);
+Route::get('/storage-link', [Home_Controller::class, 'CreateStorageLink']); */
 
 // Database/Migration Table programmatically by using Artisan::call()
-Route::get('/migration-update', [Home_Controller::class, 'DatabaseTableUpdate'])->name('database.migration.update');
-Route::get('/migration-fresh', [Home_Controller::class, 'DatabaseTableFresh'])->name('database.migration.fresh');
-Route::get('/migration-fresh-seed', [Home_Controller::class, 'DatabaseTableFreshSeed'])->name('database.migration.fresh.seed');
-Route::get('/migration-rollback', [Home_Controller::class, 'DatabaseTableRollback'])->name('database.migration.rollback');
-Route::get('/db-seed', [Home_Controller::class, 'DatabaseSeed'])->name('database.seed');
+// For - Database-Migration-Update
+Route::get('/migration-update', [Home_Controller::class, 'DatabaseTableUpdate']);
+/* // For - Database-Migration-Fresh
+Route::get('/migration-fresh', [Home_Controller::class, 'DatabaseTableFresh']);
+// For - Database-Migration-Fresh-with-DB-Seed
+Route::get('/migration-fresh-seed', [Home_Controller::class, 'DatabaseTableFreshSeed']);
+// For - Database-Migration-Rollback
+Route::get('/migration-rollback', [Home_Controller::class, 'DatabaseTableRollback']); */
+// For - Database-Seed
+Route::get('/db-seed', [Home_Controller::class, 'DatabaseSeed']);
 
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin'], 'namespace' => 'admin'], function(){

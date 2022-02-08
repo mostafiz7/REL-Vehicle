@@ -7,8 +7,11 @@
   <div class="container-lg">
     <div class="page-content pt-10">
       <div class="card">
-        <div class="card-header page-header d-flex justify-content-between align-items-center bg-success text-white">
-          <h5 class="title mb-0">Edit User</h5>
+        <div class="card-header page-header d-flex justify-content-between align-items-center bg-purple text-white">
+          <h5 class="title mb-0">
+            <span class="mr-20">User</span>
+            <span class="edit-mode color-red">Edit-Mode</span>
+          </h5>
 
           <div class="">
             <a href="{{ route('user.add.new') }}" class="btn btn-light btn-sm fw-bold">
@@ -64,7 +67,7 @@
 
                 {{-- Username --}}
                 <div class="col-md-6 col-12 mb-30 username">
-                  <label for="" class="required w-100 fw-bold"><span>Username</span></label>
+                  <label for="" class="w-100 fw-bold"><span>Username</span></label>
                   <input disabled type="text" name="username" id="username" class="form-control border-secondary brd-3 @error('username') is-invalid @enderror" value="{{ $user->username }}" />
 
                   <div class="text-danger fz-12">Username not-changeable</div>

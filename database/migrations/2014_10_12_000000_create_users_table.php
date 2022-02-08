@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
       $table->boolean('active')->default(1);
       $table->string('password');
       // $table->tinyText('role');
-      // $table->tinyInteger('role_id');
+      // $table->unsignedTinyInteger('role_id');
       // $table->unsignedBigInteger('employee_id')->unique();
       $table->timestamp('email_verified_at')->nullable();
       $table->json('permissions');

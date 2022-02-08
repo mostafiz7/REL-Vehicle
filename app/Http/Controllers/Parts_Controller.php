@@ -40,91 +40,39 @@ class Parts_Controller extends Controller
       ->get()->all();
       */
 
-    $parts_all = null;
+    $pagination_count = 10;
+    $parts_all = Parts_Model::latest();
 
-    if( $search_by && ! $status && ! $parts_category ){
-      $parts_all = Parts_Model::where( function($q) use( $searchColumns, $search_by ){
-        foreach( $searchColumns as $column )
-          $q->orWhere( $column, 'like', "%{$search_by}%" );
-      })
-      ->orderBy('name', 'asc')->get()->all();
-
-    } elseif( $search_by && $status == 'enabled' && ! $parts_category ){
-      $parts_all = Parts_Model::where('enabled', 1)
-      ->where( function($q) use( $searchColumns, $search_by ){
-        foreach( $searchColumns as $column )
-          $q->orWhere( $column, 'like', "%{$search_by}%" );
-      })
-      ->orderBy('name', 'asc')->get()->all();
-
-    } elseif( $search_by && $status == 'disabled' && ! $parts_category ){
-      $parts_all = Parts_Model::where('enabled', 0)
-      ->where( function($q) use( $searchColumns, $search_by ){
-        foreach( $searchColumns as $column )
-          $q->orWhere( $column, 'like', "%{$search_by}%" );
-      })
-      ->orderBy('name', 'asc')->get()->all();
-
-    } elseif( ! $search_by && $parts_category && ! $status ){
-      $parts_all = Parts_Model::where('category_id', $parts_category)
-      ->orderBy('name', 'asc')->get()->all();
-
-    } elseif( ! $search_by && $parts_category && $status == 'enabled' ){
-      $parts_all = Parts_Model::where('enabled', 1)
-      ->where('category_id', $parts_category)
-      ->orderBy('name', 'asc')->get()->all();
-
-    } elseif( ! $search_by && $parts_category && $status == 'disabled' ){
-      $parts_all = Parts_Model::where('enabled', 0)
-      ->where('category_id', $parts_category)
-      ->orderBy('name', 'asc')->get()->all();
-
-    } elseif( $search_by && $parts_category && ! $status ){
-      $parts_all = Parts_Model::where( function($q) use( $searchColumns, $search_by ){
-        foreach( $searchColumns as $column )
-          $q->orWhere( $column, 'like', "%{$search_by}%" );
-      })
-      ->where('category_id', $parts_category)
-      ->orderBy('name', 'asc')->get()->all();
-
-    } elseif( $search_by && $parts_category && $status == 'enabled' ){
-      $parts_all = Parts_Model::where('enabled', 1)
-      ->where( function($q) use( $searchColumns, $search_by ){
-        foreach( $searchColumns as $column )
-          $q->orWhere( $column, 'like', "%{$search_by}%" );
-      })
-      ->where('category_id', $parts_category)
-      ->orderBy('name', 'asc')->get()->all();
-
-    } elseif( $search_by && $parts_category && $status == 'disabled' ){
-      $parts_all = Parts_Model::where('enabled', 0)
-      ->where( function($q) use( $searchColumns, $search_by ){
-        foreach( $searchColumns as $column )
-          $q->orWhere( $column, 'like', "%{$search_by}%" );
-      })
-      ->where('category_id', $parts_category)
-      ->orderBy('name', 'asc')->get()->all();
-
-    } elseif( ! $search_by && ! $parts_category && $status == 'enabled' ){
-      $parts_all = Parts_Model::where('enabled', 1)
-      ->orderBy('name', 'asc')->get()->all();
-
-    } elseif( ! $search_by && ! $parts_category && $status == 'disabled' ){
-      $parts_all = Parts_Model::where('enabled', 0)
-      ->orderBy('name', 'asc')->get()->all();
-
-    } else{
-      $parts_all = Parts_Model::orderBy('name', 'asc')->get()->all();
+    if( $status == 'enabled' ){
+      $parts_all = $parts_all->where('enabled', 1);
     }
+    if( $status == 'disabled' ){
+      $parts_all = $parts_all->where('enabled', 0);
+    }
+
+    if( ! empty($parts_category) ){
+      $parts_all = $parts_all->where('category_id', $parts_category);
+    }
+
+    if( ! empty($search_by) ){
+      $parts_all = $parts_all->where( function($q) use( $searchColumns, $search_by ){
+        foreach( $searchColumns as $column )
+          $q->orWhere( $column, 'like', "%{$search_by}%" );
+      });
+    }
+
+    $parts_all = $parts_all->orderBy('name', 'asc')
+                            ->paginate($pagination_count);
 
     $category_all = PartsCategory_Model::orderBy('name', 'asc')->get()->all();
 
     return view('modules.vehicle-module.parts.index')->with([
-      'search_by'      => $search_by,
-      'status'         => $status,
-      'parts_category' => $parts_category,
-      'parts_all'      => $parts_all,
-      'category_all'   => $category_all,
+      'parts_all'         => $parts_all,
+      'pagination_count'  => $pagination_count,
+      'search_by'         => $search_by,
+      'status'            => $status,
+      'parts_category'    => $parts_category,
+      'category_all'      => $category_all,
     ]);
   }
 

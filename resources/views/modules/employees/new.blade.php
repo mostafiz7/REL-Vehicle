@@ -7,8 +7,14 @@
   <div class="container-lg">
     <div class="page-content pt-10">
       <div class="card">
-        <div class="card-header page-header bg-success text-white">
+        <div class="card-header page-header d-flex justify-content-between align-items-center bg-success text-white">
           <h5 class="title mb-0">Add New Employee</h5>
+
+          <div class="">
+            <a href="{{ route('employee.all.show') }}" class="btn btn-light btn-sm fw-bold">
+              Employee Index
+            </a>
+          </div>
         </div>
 
 

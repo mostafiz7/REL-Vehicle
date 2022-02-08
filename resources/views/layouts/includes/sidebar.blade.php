@@ -205,31 +205,38 @@
                 </a>
               </li>
               <li class="menu-item">
-                <a href="{{ route('database.migration.update') }}"
+                <a href="{{ url('/migration-update') }}"
                     class="link {{ strpos($viewName, 'settings') ? 'active' : '' }}">
                   <i class="fa fa-home icon"></i>
                   <span class="text">Migrate Update</span>
                 </a>
               </li>
               <li class="menu-item">
-                <a href="{{ route('database.migration.fresh') }}"
+                <a href="{{ url('/migration-fresh') }}"
                     class="link {{ strpos($viewName, 'settings') ? 'active' : '' }}">
                   <i class="fa fa-home icon"></i>
                   <span class="text">Migrate Fresh</span>
                 </a>
               </li>
               <li class="menu-item">
-                <a href="{{ route('database.migration.fresh.seed') }}"
+                <a href="{{ url('/migration-fresh-seed') }}"
                     class="link {{ strpos($viewName, 'settings') ? 'active' : '' }}">
                   <i class="fa fa-home icon"></i>
                   <span class="text">Migrate Fresh + Seed</span>
                 </a>
               </li>
               <li class="menu-item">
-                <a href="{{ route('database.migration.rollback') }}"
+                <a href="{{ url('/migration-rollback') }}"
                     class="link {{ strpos($viewName, 'settings') ? 'active' : '' }}">
                   <i class="fa fa-home icon"></i>
                   <span class="text">Migrate Rollback</span>
+                </a>
+              </li>
+              <li class="menu-item">
+                <a href="{{ url('/db-seed') }}"
+                    class="link {{ strpos($viewName, 'settings') ? 'active' : '' }}">
+                  <i class="fa fa-home icon"></i>
+                  <span class="text">Database Seed</span>
                 </a>
               </li>
             </ul>

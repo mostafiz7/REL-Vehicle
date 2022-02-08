@@ -7,11 +7,20 @@
   <div class="container-lg">
     <div class="page-content pt-10">
       <div class="card">
-        <div class="card-header page-header bg-purple text-white">
+        <div class="card-header page-header d-flex justify-content-between align-items-center bg-purple text-white">
           <h5 class="title mb-0">
             <span class="mr-20">Parts</span>
             <span class="edit-mode color-red">Edit-Mode</span>
           </h5>
+
+          <div class="">
+            <a href="{{ route('vehicle.parts.add.new') }}" class="btn btn-light btn-sm fw-bold">
+              New Parts
+            </a>
+            <a href="{{ route('vehicle.parts.all') }}" class="btn btn-light btn-sm fw-bold ml-5">
+              Parts Index
+            </a>
+          </div>
         </div>
 
 

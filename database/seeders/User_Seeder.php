@@ -21,21 +21,21 @@ class User_Seeder extends Seeder
     User::create([
       'uid'               => Str::uuid(),
       'name'              => 'Nurullah Mohammad',
-      'email'             => 'md.nurullah999@gmail.com',
+      'email'             => 'nurullah@rangs.com.bd',
       'username'          => 'nurullah',
       'active'            => 1,
-      'password'          => '00',
+      'password'          => '000',
       'role_id'           => 1,
       'employee_id'       => 1,
       'email_verified_at' => now(),
       'permissions'       => ['index', 'create', 'view', 'edit', 'delete', 'print'],
       'routes'            => [
         'admin.dashboard',
-        'database.migration.update',
+        /* 'database.migration.update',
         'database.migration.fresh',
         'database.migration.fresh.seed',
         'database.migration.rollback',
-        'database.seed',
+        'database.seed', */
         'employee.all.show',
         'employee.add.new',
         'employee.single.edit',
@@ -66,7 +66,11 @@ class User_Seeder extends Seeder
     ]); */
 
 
-    Employee_Model::find(1)->update([ 'user_id' => 1 ]);
+    Employee_Model::find(1)->update([
+      'email_official'    => 'nurullah@rangs.com.bd',
+      'employment_status' => 'permanent',
+      'user_id'           => 1,
+    ]);
     
   }
 

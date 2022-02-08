@@ -42,7 +42,7 @@ class Vehicle_Controller extends Controller
     
     $searchColumns  = [ 'vehicle_no', 'slug', 'helper_name', 'engine_cc', 'origin' ];
 
-    // Filter or Search using relation
+    // filter or search using relationship
     /*
     $vehicle_all = Vehicle_Model::orderBy('vehicle_no', 'asc')
       //->with('details')->has('details')
@@ -51,100 +51,47 @@ class Vehicle_Controller extends Controller
         $query->where('vehicle_id', '=', $vehicle_id);
       })
       ->get()->all();
-      */
+    */
 
-    $vehicle_all = null;
+    $pagination_count = 10;
+    $vehicle_all = Vehicle_Model::latest();
 
-    if( $search_by && ! $status && ! $category_id ){
-      $vehicle_all = Vehicle_Model::where( function($q) use( $searchColumns, $search_by ){
-        foreach( $searchColumns as $column )
-          $q->orWhere( $column, 'like', "%{$search_by}%" );
-      })
-      ->orderBy('vehicle_no', 'asc')->get()->all();
-
-    } elseif( $search_by && $status == 'enabled' && ! $category_id ){
-      $vehicle_all = Vehicle_Model::where('enabled', 1)
-      ->where( function($q) use( $searchColumns, $search_by ){
-        foreach( $searchColumns as $column )
-          $q->orWhere( $column, 'like', "%{$search_by}%" );
-      })
-      ->orderBy('vehicle_no', 'asc')->get()->all();
-
-    } elseif( $search_by && $status == 'disabled' && ! $category_id ){
-      $vehicle_all = Vehicle_Model::where('enabled', 0)
-      ->where( function($q) use( $searchColumns, $search_by ){
-        foreach( $searchColumns as $column )
-          $q->orWhere( $column, 'like', "%{$search_by}%" );
-      })
-      ->orderBy('vehicle_no', 'asc')->get()->all();
-
-    } elseif( ! $search_by && $category_id && ! $status ){
-      $vehicle_all = Vehicle_Model::where('category_id', $category_id)
-      ->orderBy('vehicle_no', 'asc')->get()->all();
-
-    } elseif( ! $search_by && $category_id && $status == 'enabled' ){
-      $vehicle_all = Vehicle_Model::where('enabled', 1)
-      ->where('category_id', $category_id)
-      ->orderBy('vehicle_no', 'asc')->get()->all();
-
-    } elseif( ! $search_by && $category_id && $status == 'disabled' ){
-      $vehicle_all = Vehicle_Model::where('enabled', 0)
-      ->where('category_id', $category_id)
-      ->orderBy('vehicle_no', 'asc')->get()->all();
-
-    } elseif( $search_by && $category_id && ! $status ){
-      $vehicle_all = Vehicle_Model::where( function($q) use( $searchColumns, $search_by ){
-        foreach( $searchColumns as $column )
-          $q->orWhere( $column, 'like', "%{$search_by}%" );
-      })
-      ->where('category_id', $category_id)
-      ->orderBy('vehicle_no', 'asc')->get()->all();
-
-    } elseif( $search_by && $category_id && $status == 'enabled' ){
-      $vehicle_all = Vehicle_Model::where('enabled', 1)
-      ->where( function($q) use( $searchColumns, $search_by ){
-        foreach( $searchColumns as $column )
-          $q->orWhere( $column, 'like', "%{$search_by}%" );
-      })
-      ->where('category_id', $category_id)
-      ->orderBy('vehicle_no', 'asc')->get()->all();
-
-    } elseif( $search_by && $category_id && $status == 'disabled' ){
-      $vehicle_all = Vehicle_Model::where('enabled', 0)
-      ->where( function($q) use( $searchColumns, $search_by ){
-        foreach( $searchColumns as $column )
-          $q->orWhere( $column, 'like', "%{$search_by}%" );
-      })
-      ->where('category_id', $category_id)
-      ->orderBy('vehicle_no', 'asc')->get()->all();
-
-    } elseif( ! $search_by && ! $category_id && $status == 'enabled' ){
-      $vehicle_all = Vehicle_Model::where('enabled', 1)
-      ->orderBy('vehicle_no', 'asc')->get()->all();
-
-    } elseif( ! $search_by && ! $category_id && $status == 'disabled' ){
-      $vehicle_all = Vehicle_Model::where('enabled', 0)
-      ->orderBy('vehicle_no', 'asc')->get()->all();
-
-    } else{
-      $vehicle_all = Vehicle_Model::orderBy('vehicle_no', 'asc')->get()->all();
+    if( $status == 'enabled' ){
+      $vehicle_all = $vehicle_all->where('enabled', 1);
+    }
+    if( $status == 'disabled' ){
+      $vehicle_all = $vehicle_all->where('enabled', 0);
     }
 
-    // Filtered by Relationship
-    if( $brand_id ){
-      $vehicle_all = Vehicle_Model::orderBy('vehicle_no', 'asc')
-      ->whereRelation('brand', 'id', '=', $brand_id)->get()->all();
-
-    } elseif( $department_id ){
-      $vehicle_all = Vehicle_Model::orderBy('vehicle_no', 'asc')
-      ->whereRelation('department', 'id', '=', $department_id)->get()->all();
-
-    } elseif( $driver_id ){
-      $vehicle_all = Vehicle_Model::whereRelation('driver', 'id', '=', $driver_id)->get();
-
-    } elseif( $helper_id ){
-      $vehicle_all = Vehicle_Model::whereRelation('helper', 'id', '=', $helper_id)->get();
+    if( ! empty($brand_id) ){
+      $vehicle_all = $vehicle_all->where('brand_id', $brand_id);
     }
+
+    if( ! empty($category_id) ){
+      $vehicle_all = $vehicle_all->where('category_id', $category_id);
+    }
+
+    if( ! empty($department_id) ){
+      $vehicle_all = $vehicle_all->where('department_id', $department_id);
+    }
+
+    if( ! empty($driver_id) ){
+      $vehicle_all = $vehicle_all->where('driver_id', $driver_id);
+    }
+
+    if( ! empty($helper_id) ){
+      $vehicle_all = $vehicle_all->where('helper_id', $helper_id);
+    }
+
+    if( ! empty($search_by) ){
+      $vehicle_all = $vehicle_all->where( function($q) use( $searchColumns, $search_by ){
+        foreach( $searchColumns as $column )
+          $q->orWhere( $column, 'like', "%{$search_by}%" );
+      });
+    }
+
+    $vehicle_all = $vehicle_all->orderBy('vehicle_no', 'asc')
+                                ->paginate($pagination_count);
 
     $brand_all       = Brand_Model::orderBy('name', 'asc')->get()->all();
     $category_all    = VehicleCategory_Model::orderBy('name', 'asc')->get()->all();
@@ -156,6 +103,8 @@ class Vehicle_Controller extends Controller
       ->orderBy('name', 'asc')->get()->all();
       
     return view('modules.vehicle-module.vehicles.index')->with([
+      'vehicle_all'      => $vehicle_all,
+      'pagination_count' => $pagination_count,
       'search_by'        => $search_by,
       'status'           => $status,
       'brand_id'         => $brand_id,
@@ -168,7 +117,6 @@ class Vehicle_Controller extends Controller
       'driver_all'       => $driver_all,
       'helper_id'        => $helper_id,
       'helper_all'       => $helper_all,
-      'vehicle_all'      => $vehicle_all,
     ]);
   }
 
