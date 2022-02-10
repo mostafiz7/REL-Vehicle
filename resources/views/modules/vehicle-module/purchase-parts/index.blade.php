@@ -235,6 +235,7 @@
                       <th scope="col" class="serial w-30px-min">S/L</th>
                       <th scope="col" class="purchase-number">Purchase No.#</th>
                       <th scope="col" class="purchase-date">Date</th>
+                      <th scope="col" class="memo-no">Memo</th>
                       <th scope="col" class="vehicle-number">Vehicle</th>
                       <th scope="col" class="parts-list">Parts List</th>
                       <th scope="col" class="shop-name">Shop Name</th>
@@ -258,14 +259,14 @@
 
                   <thead class="table-footer bg-secondary-3 text-dark fz-14 text-center">
                     <tr class="table-row footer align-middle border-dark">
-                      <th scope="col" colspan="7" class="page-total text-end border-dark">Page-Total Amount</th>
+                      <th scope="col" colspan="8" class="page-total text-end border-dark">Page-Total Amount</th>
                       <th scope="col" class="amount text-end border-dark">
                         {{ number_format($pagetotal_amount, 0) }}
                       </th>
                       <th scope="col" colspan="3" class="blank border-dark"></th>
                     </tr>
                     <tr class="table-row footer align-middle bb-2 border-dark">
-                      <th scope="col" colspan="7" class="grand-total text-end border-dark">Grand-Total Amount</th>
+                      <th scope="col" colspan="8" class="grand-total text-end border-dark">Grand-Total Amount</th>
                       <th scope="col" class="amount text-end border-dark">
                         {{ number_format($grandtotal_amount, 0) }}
                       </th>

@@ -7,6 +7,7 @@
     </a>
   </td>
   <td class="purchase-date text-center">{{ date($date_format, strtotime($purchase->date)) }}</td>
+  <td class="memo-no text-center">{{ $purchase->memo_no }}</td>
   <td class="vehicle-number">{{ $purchase->vehicle->vehicle_no }}</td>
   <td class="parts-list">
     @foreach ( $purchase->details as $purchaseItem )

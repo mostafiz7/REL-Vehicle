@@ -134,7 +134,8 @@ class Purchase_Controller extends Controller
 
     $purchase_type = 'vehicle-parts';
     $pagination_count = 10;
-    $purchases_all = Purchase_Model::where('purchase_type', $purchase_type)->latest();
+    $purchases_all = Purchase_Model::where('purchase_type', $purchase_type);
+    //$purchases_all = Purchase_Model::where('purchase_type', $purchase_type)->latest();
 
     if( ! empty($start_date) ){
       $purchases_all = $purchases_all->whereDate('date', '>=', date($start_date));
@@ -1019,24 +1020,19 @@ class Purchase_Controller extends Controller
     ]);
     if( $validator->fails() ) return back()->withErrors($validator)->withInput();
 
-    $purchase_type = 'vehicle-parts';
-    $vehicleParts_purchase_all = null;
-
     $date_start = $request -> date_start ?? null;
     $date_end   = $request -> date_end ?? null;
-    $parts_id   = $request -> parts_id ?? null; // Filter in View
-    $vehicle_id = $request -> vehicle_id ?? null; // Filter in View
+    $parts_id   = $request -> parts_id ?? null;
+    $vehicle_id = $request -> vehicle_id ?? null;
 
     $start_date = $date_start ? DateTime ::createFromFormat( 'd-m-Y', $date_start ) -> format( 'Y-m-d' ) : null;
     $end_date   = $date_end ? DateTime ::createFromFormat( 'd-m-Y', $date_end ) -> format( 'Y-m-d' ) : null;
-    $parts_id   = $parts_id == 'all' || $parts_id == '' || $parts_id == null ? null : $parts_id;
-    $vehicle_id = $vehicle_id == 'all' || $vehicle_id == '' || $vehicle_id == null ? null : $vehicle_id;
+    $parts_id   = $parts_id == 'all' || $parts_id == '' || $parts_id == null || empty($parts_id) ? null : $parts_id;
+    $vehicle_id = $vehicle_id == 'all' || $vehicle_id == '' || $vehicle_id == null || empty($vehicle_id) ? null : $vehicle_id;
 
 
     // Filter or Search using relation
     /*$purchase_all = Purchase_Model::where('purchase_type', $purchase_type)
-      ->whereDate('date', '>=', date($start_date))
-      //->whereDate('date', '<=', date($end_date))
       ->orderBy('date', 'desc')
       //->with('details')->has('details')
       //->whereRelation('details', 'parts_id', '=', $parts_id)
@@ -1048,149 +1044,43 @@ class Purchase_Controller extends Controller
     return $purchase_all;*/
 
 
-    // search criteria only for start-date
-    if( $start_date && !$end_date && !$parts_id && !$vehicle_id ){
-      $vehicleParts_purchase_all = Purchase_Model::where( 'purchase_type', $purchase_type )
-        ->whereDate( 'date', '>=', date( $start_date ) )
-        ->orderBy( 'date', 'desc' )->get()->all();
+    $purchase_type = 'vehicle-parts';
+    $pagination_count = 10;
+    $purchases_all = Purchase_Model::where('purchase_type', $purchase_type);
+    // $purchases_all = Purchase_Model::where('purchase_type', $purchase_type)->latest();
+
+    if( ! empty($start_date) ){
+      $purchases_all = $purchases_all->whereDate('date', '>=', date($start_date));
     }
-    // search criteria for start-date & end-date
-    elseif( $start_date && $end_date && !$parts_id && !$vehicle_id ){
-      $vehicleParts_purchase_all = Purchase_Model::where( 'purchase_type', $purchase_type )
-        ->whereDate( 'date', '>=', date( $start_date ) )
-        ->whereDate( 'date', '<=', date( $end_date ) )
-        ->orderBy( 'date', 'desc' )->get()->all();
+
+    if( ! empty($end_date) ){
+      $purchases_all = $purchases_all->whereDate('date', '<=', date($end_date));
     }
-    // search criteria for start-date & parts-id
-    elseif( $start_date && !$end_date && $parts_id && !$vehicle_id ){
-      $vehicleParts_purchase_all = Purchase_Model::where( 'purchase_type', $purchase_type )
-        ->whereDate( 'date', '>=', date( $start_date ) )
-        ->whereRelation('details', 'parts_id', '=', $parts_id)
-        /* ->whereHas('details', function($query) use($parts_id){
-          $query->where('parts_id', '=', $parts_id);
-        }) */
-        ->orderBy( 'date', 'desc' )->get()->all();
+
+    if( ! empty($parts_id) ){
+      /* ->whereHas('details', function($query) use($parts_id){
+        $query->where('parts_id', '=', $parts_id);
+      }) */
+      $purchases_all = $purchases_all->whereRelation('details', 'parts_id', '=', $parts_id);
     }
-    // search criteria for start-date & vehicle-id
-    elseif( $start_date && !$end_date && !$parts_id && $vehicle_id ){
-      $vehicleParts_purchase_all = Purchase_Model::where( 'purchase_type', $purchase_type )
-        ->whereDate( 'date', '>=', date( $start_date ) )
-        ->whereRelation('details', 'vehicle_id', '=', $vehicle_id)
-        /* ->whereHas('details', function($query) use($parts_id){
-          $query->where('parts_id', '=', $parts_id);
-        }) */
-        ->orderBy( 'date', 'desc' )->get()->all();
+
+    if( ! empty($vehicle_id) ){
+      $purchases_all = $purchases_all->whereRelation('details', 'vehicle_id', '=', $vehicle_id);
     }
-    // search criteria for start-date, end-date & parts-id
-    elseif( $start_date && $end_date && $parts_id && !$vehicle_id ){
-      $vehicleParts_purchase_all = Purchase_Model::where( 'purchase_type', $purchase_type )
-        ->whereDate( 'date', '>=', date( $start_date ) )
-        ->whereDate( 'date', '<=', date( $end_date ) )
-        ->whereRelation('details', 'parts_id', '=', $parts_id)
-        /* ->whereHas('details', function($query) use($parts_id){
-          $query->where('parts_id', '=', $parts_id);
-        }) */
-        ->orderBy( 'date', 'desc' )->get()->all();
-    }
-    // search criteria for start-date, end-date & vehicle-id
-    elseif( $start_date && $end_date && !$parts_id && $vehicle_id ){
-      $vehicleParts_purchase_all = Purchase_Model::where( 'purchase_type', $purchase_type )
-        ->whereDate( 'date', '>=', date( $start_date ) )
-        ->whereDate( 'date', '<=', date( $end_date ) )
-        ->whereRelation('details', 'vehicle_id', '=', $vehicle_id)
-        /* ->whereHas('details', function($query) use($parts_id){
-          $query->where('parts_id', '=', $parts_id);
-        }) */
-        ->orderBy( 'date', 'desc' )->get()->all();
-    }
-    // search criteria for start-date, parts-id & vehicle-id
-    elseif( $start_date && !$end_date && $parts_id && $vehicle_id ){
-      $vehicleParts_purchase_all = Purchase_Model::where( 'purchase_type', $purchase_type )
-        ->whereDate( 'date', '>=', date( $start_date ) )
-        // ->whereRelation('details', 'vehicle_id', '=', $vehicle_id)
-        ->whereHas('details', function($query) use($parts_id, $vehicle_id){
-          $query->where('parts_id', '=', $parts_id)
-            ->where('vehicle_id', '=', $vehicle_id);
-        })
-        ->orderBy( 'date', 'desc' )->get()->all();
-    }
-    // search criteria only for end-date
-    elseif( !$start_date && $end_date && !$parts_id && !$vehicle_id ){
-      $vehicleParts_purchase_all = Purchase_Model::where( 'purchase_type', $purchase_type )
-        ->whereDate( 'date', '<=', date( $end_date ) )
-        ->orderBy( 'date', 'desc' )->get()->all();
-    }
-    // search criteria for end-date & parts-id
-    elseif( !$start_date && $end_date && $parts_id && !$vehicle_id ){
-      $vehicleParts_purchase_all = Purchase_Model::where( 'purchase_type', $purchase_type )
-      ->whereDate( 'date', '<=', date( $end_date ) )
-        ->whereRelation('details', 'parts_id', '=', $parts_id)
-        /* ->whereHas('details', function($query) use($parts_id){
-          $query->where('parts_id', '=', $parts_id);
-        }) */
-        ->orderBy( 'date', 'desc' )->get()->all();
-    }
-    // search criteria for end-date & vehicle-id
-    elseif( !$start_date && $end_date && !$parts_id && $vehicle_id ){
-      $vehicleParts_purchase_all = Purchase_Model::where( 'purchase_type', $purchase_type )
-      ->whereDate( 'date', '<=', date( $end_date ) )
-        ->whereRelation('details', 'vehicle_id', '=', $vehicle_id)
-        /* ->whereHas('details', function($query) use($parts_id){
-          $query->where('parts_id', '=', $parts_id);
-        }) */
-        ->orderBy( 'date', 'desc' )->get()->all();
-    }
-    // search criteria for end-date, parts-id & vehicle-id
-    elseif( !$start_date && $end_date && $parts_id && $vehicle_id ){
-      $vehicleParts_purchase_all = Purchase_Model::where( 'purchase_type', $purchase_type )
-        ->whereDate( 'date', '<=', date( $end_date ) )
-        // ->whereRelation('details', 'vehicle_id', '=', $vehicle_id)
-        ->whereHas('details', function($query) use($parts_id, $vehicle_id){
-          $query->where('parts_id', '=', $parts_id)
-            ->where('vehicle_id', '=', $vehicle_id);
-        })
-        ->orderBy( 'date', 'desc' )->get()->all();
-    }
-    // search criteria for parts-id
-    elseif( !$start_date && !$end_date && $parts_id && !$vehicle_id ){
-      $vehicleParts_purchase_all = Purchase_Model::where( 'purchase_type', $purchase_type )
-        ->whereRelation('details', 'parts_id', '=', $parts_id)
-        /* ->whereHas('details', function($query) use($parts_id){
-          $query->where('parts_id', '=', $parts_id);
-        }) */
-        ->orderBy( 'date', 'desc' )->get()->all();
-    }
-    // search criteria for parts-id & vehicle-id
-    elseif( !$start_date && !$end_date && $parts_id && $vehicle_id ){
-      $vehicleParts_purchase_all = Purchase_Model::where( 'purchase_type', $purchase_type )
-        // ->whereRelation('details', 'vehicle_id', '=', $vehicle_id)
-        ->whereHas('details', function($query) use($parts_id, $vehicle_id){
-          $query->where('parts_id', '=', $parts_id)
-            ->where('vehicle_id', '=', $vehicle_id);
-        })
-        ->orderBy( 'date', 'desc' )->get()->all();
-    }
-    // search criteria for vehicle-id
-    elseif( !$start_date && !$end_date && !$parts_id && $vehicle_id ){
-      $vehicleParts_purchase_all = Purchase_Model::where( 'purchase_type', $purchase_type )
-        ->whereRelation('details', 'vehicle_id', '=', $vehicle_id)
-        /* ->whereHas('details', function($query) use($parts_id){
-          $query->where('parts_id', '=', $parts_id);
-        }) */
-        ->orderBy( 'date', 'desc' )->get()->all();
-    }
-    // search criteria for start-date, end-date, parts-id & vehicle-id
-    elseif( $start_date && $end_date && $parts_id && $vehicle_id ){
-      $vehicleParts_purchase_all = Purchase_Model::where( 'purchase_type', $purchase_type )
-        ->whereDate( 'date', '>=', date( $start_date ) )
-        ->whereDate( 'date', '<=', date( $end_date ) )
-        // ->whereRelation('details', 'vehicle_id', '=', $vehicle_id)
-        ->whereHas('details', function($query) use($parts_id, $vehicle_id){
-          $query->where('parts_id', '=', $parts_id)
-            ->where('vehicle_id', '=', $vehicle_id);
-        })
-        ->orderBy( 'date', 'desc' )->get()->all();
-    }
+
+    /* if( ! empty($search_by) ){
+      $purchases_all = $purchases_all->where( function($q) use( $searchColumns, $search_by ){
+        foreach( $searchColumns as $column )
+          $q->orWhere( $column, 'like', "%{$search_by}%" );
+      });
+    } */
+
+    $grandtotal_amount = $purchases_all->sum('total_amount');
+
+    $purchases_all = $purchases_all->orderBy('date', 'desc')
+                                    ->paginate($pagination_count);
+
+    $pagetotal_amount = $purchases_all->sum('total_amount');
 
 
     $parts_all   = Parts_Model::orderBy( 'name', 'asc' )->get()->all();
@@ -1200,14 +1090,17 @@ class Purchase_Controller extends Controller
     $date_format = $settings && $settings->date_format ? $settings->date_format : 'd-M-Y';
 
     return view('modules.vehicle-module.purchase-parts.searchResult')->with([
-      'date_start'    => $date_start,
-      'date_end'      => $date_end,
-      'date_format'   => $date_format,
-      'parts_id'      => $parts_id,
-      'parts_all'     => $parts_all,
-      'vehicle_id'    => $vehicle_id,
-      'vehicle_all'   => $vehicle_all,
-      'purchases_all' => $vehicleParts_purchase_all,
+      'purchases_all'     => $purchases_all,
+      'pagination_count'  => $pagination_count,
+      'pagetotal_amount'  => $pagetotal_amount,
+      'grandtotal_amount' => $grandtotal_amount,
+      'date_start'        => $date_start,
+      'date_end'          => $date_end,
+      'date_format'       => $date_format,
+      'parts_id'          => $parts_id,
+      'parts_all'         => $parts_all,
+      'vehicle_id'        => $vehicle_id,
+      'vehicle_all'       => $vehicle_all,
     ]);
   }
   

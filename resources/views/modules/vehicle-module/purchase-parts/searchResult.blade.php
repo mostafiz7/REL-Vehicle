@@ -7,12 +7,15 @@
   <div class="container-fluid">
     <div class="page-content pt-10">
       <div class="card">
-        <div class="card-header page-header bg-success text-white">
-          <div class="d-flex justify-content-between align-items-center">
-            <h5 class="title mb-0">Purchase Search</h5>
-            <span class="">
-              <a href="{{ route('vehicle.parts.purchase.all') }}" class="btn btn-purple py-5 px-10">Deep Search</a>
-            </span>
+        <div class="card-header page-header d-flex justify-content-between align-items-center bg-success text-white">
+          <h5 class="title mb-0">Purchase Search</h5>
+
+          <div class="">
+            <a href="{{ route('vehicle.parts.purchase.all') }}" class="btn btn-purple btn-sm fw-bold">Deep Search</a>
+
+            <a href="{{ route('vehicle.parts.purchase.new') }}" class="btn btn-light btn-sm fw-bold ml-5">
+              New Purchase
+            </a>
           </div>
         </div>
 
@@ -99,45 +102,57 @@
             <div class="blank h-auto bt-1 border-secondary-1"></div>
 
             <div class="purchase-history-details overlay-scrollbar full-height-minus minus-100 p-10">
-              <table class="table table-bordered table-hover border-secondary-3 purchase-history-table">
-                <thead class="table-header bg-dark text-white fz-14 text-center">
-                  <tr class="table-row header align-middle">
-                    <th scope="col" class="serial w-30px-min">S/L</th>
-                    <th scope="col" class="purchase-number">Purchase No.#</th>
-                    <th scope="col" class="purchase-date">Date</th>
-                    <th scope="col" class="vehicle-number">Vehicle</th>
-                    <th scope="col" class="parts-list">Parts List</th>
-                    <th scope="col" class="shop-name">Shop Name</th>
-                    <th scope="col" class="total-qty">Total Qty</th>
-                    <th scope="col" class="total-amount">Total Amount</th>
-                    <th scope="col" class="purchased-by">Purchased-By</th>
-                    <th scope="col" class="authorized-by">Authorized-By</th>
-                    <th scope="col" class="action">---</th>
-                  </tr>
-                </thead>
+              @if ( $date_start || $date_end || $parts_id || $vehicle_id )
+                @if ( $purchases_all && count($purchases_all) > 0 )
+                  {{-- Paginate-Links --}}
+                  <div class="pagination-links {{ $purchases_all->total() > $pagination_count ? 'mb-5' : '' }} {{ $purchases_all->currentPage() == 1 ? 'first-page' : ($purchases_all->currentPage() == $purchases_all->lastPage() ? 'last-page' : '') }}">
+                    {{ $purchases_all->withQueryString()->links() }}
+                  </div>
 
-                <tbody class="table-body fz-12 align-middle">
-                  @if ( $date_start || $date_end || $parts_id || $vehicle_id )
-                    @if ( $purchases_all && count($purchases_all) > 0 )
-                      @foreach ( $purchases_all as $index => $purchase )
-                        @include('modules.vehicle-module.purchase-parts.index-tableRow', $purchase)
-                      @endforeach
-                    @else
-                      <tr class="table-row content no-purchase align-middle">
-                        <td colspan="11" class="error text-danger fz-22 fw-bold text-center py-100">
-                          Sorry! Currently there are no record available.
-                        </td>
+                  <table class="table table-bordered table-hover border-secondary-3 purchase-history-table">
+                    <thead class="table-header bg-dark text-white fz-14 text-center">
+                      <tr class="table-row header align-middle">
+                        <th scope="col" class="serial w-30px-min">S/L</th>
+                        <th scope="col" class="purchase-number">Purchase No.#</th>
+                        <th scope="col" class="purchase-date">Date</th>
+                        <th scope="col" class="memo-no">Memo</th>
+                        <th scope="col" class="vehicle-number">Vehicle</th>
+                        <th scope="col" class="parts-list">Parts List</th>
+                        <th scope="col" class="shop-name">Shop Name</th>
+                        <th scope="col" class="total-qty">Total Qty</th>
+                        <th scope="col" class="total-amount">Total Amount</th>
+                        <th scope="col" class="purchased-by">Purchased-By</th>
+                        <th scope="col" class="authorized-by">Authorized-By</th>
+                        <th scope="col" class="action">---</th>
                       </tr>
-                    @endif
-                  @else
-                    <tr class="table-row content no-purchase align-middle">
-                      <td colspan="11" class="error text-danger fz-22 fw-bold text-center py-100">
-                        Please, select any search criteria!
-                      </td>
-                    </tr>
-                  @endif
-                </tbody>
-              </table>
+                    </thead>
+
+                    @php
+                      $serial = $purchases_all->currentPage() == 1 ? 1 : ((($purchases_all->currentPage() - 1) * $pagination_count) + 1);
+                    @endphp
+
+                    <tbody class="table-body fz-12 align-middle">
+                      @foreach ( $purchases_all as $index => $purchase )
+                        @include('modules.vehicle-module.purchase-parts.index-tableRow', ['purchase' => $purchase, 'serial' => $serial++])
+                      @endforeach
+                    </tbody>
+                  </table>
+
+                  {{-- Paginate-Links --}}
+                  <div class="pagination-links {{ $purchases_all->total() > $pagination_count ? 'my-20' : '' }} {{ $purchases_all->currentPage() == 1 ? 'first-page' : ($purchases_all->currentPage() == $purchases_all->lastPage() ? 'last-page' : '') }}">
+                    {{ $purchases_all->withQueryString()->links() }}
+                  </div>
+
+                @else
+                  <div class="no-purchase text-danger align-middle fz-22 fw-bold text-center py-100">
+                    Sorry! Currently there are no record available.
+                  </div>
+                @endif
+              @else
+                <div class="no-purchase text-danger align-middle fz-22 fw-bold text-center py-100">
+                  Please, select any search criteria!
+                </div>
+              @endif
             </div>
 
 
